@@ -1,0 +1,38 @@
+@use 'sass:map';
+@use 'sass:meta';
+
+$textos: (
+    'titulo':4em,
+    'subtitulo': 3em,
+    'parrafo': 1em,
+    'cta': 1.5em
+);
+
+$colores: (
+    'primary': #000,
+    'secondary': #f00,
+    'titulo': steelblue
+);
+
+$estilosGenerales: map.merge($textos, $colores);
+
+@mixin recorrerMap($mapa) {
+    @each $clave, $valor in $mapa{
+        .#{$clave}{
+            @if(meta.type-of($valor) == color){
+                color: $valor;
+            }@else{
+                font-size: $valor;
+            }
+        }
+    }
+}
+
+@include recorrerMap($estilosGenerales);
+
+// $newMapa: map.set($mapa, "key", value);
+
+// $textos2: map.set($textos, "copy", 1);
+// $textos2: map.set($textos, "titulo", 8);
+
+// @include recorrerMap($textos2);

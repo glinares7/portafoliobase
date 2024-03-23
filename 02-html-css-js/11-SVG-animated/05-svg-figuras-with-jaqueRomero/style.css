@@ -1,0 +1,36 @@
+/* animar rectangulo */
+#rectangulo-feliz{
+    fill: none;
+    stroke: blueviolet;
+    stroke-width: 8;
+
+    stroke-dasharray: 1500;
+    stroke-dashoffset: 1500;
+
+    animation: animacionFeliz 1s ease-in infinite alternate;
+}
+
+#star{
+  
+   stroke: blueviolet;
+
+    stroke-width: 8;
+
+    stroke-dasharray: 1500;
+    stroke-dashoffset: 1500;
+
+    animation: animacionFeliz1 2s ease-in infinite ;
+}
+
+
+@keyframes animacionFeliz {
+     100% {
+          stroke-dashoffset: 0;
+     }    
+}
+
+@keyframes animacionFeliz1 {
+     100% {
+          stroke-dashoffset: 0;
+     }    
+}

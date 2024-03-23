@@ -1,0 +1,95 @@
+.containerEmojis {
+    width: 800px;
+    height: 800px;
+    display: flex;
+    margin: 1em auto;
+}
+
+.circulo--emojiLike {
+    fill: #10b5e8;
+}
+.manita--emojiLike{
+    fill: white;
+    transform-origin: left bottom;
+    animation: animation--like 2s ease-out infinite;
+}
+
+.circulo--emojiCorazon{
+    fill: #ff486b;
+}
+
+.corazon--emojiCorazon{
+    fill: white;
+    transform-origin:center center;
+    animation: animation--corazon 2s ease-out infinite;
+}
+.circulo--emojiFeliz{
+    fill: #f0dd69;
+}
+
+.ojos--emojiFeliz{
+    fill: none;
+    stroke: #333;
+    stroke-width: 4px;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    animation : animation--feliz 2s ease-out infinite;
+
+}
+.fondoboca--emojifeliz{
+    fill: #333;
+    animation : animation--carcajada 2s ease-out infinite;
+}
+
+.lengua--emojifeliz{
+    fill: #ff486b;
+    animation : animation--carcajada 2s ease-out infinite;
+}
+
+
+@keyframes animation--like{
+    25%{
+        transform: rotate(2deg);
+    }
+    50%{
+        transform: rotate(-2deg) translateY(-5px);
+    }
+    75%{
+       transform: rotate(2deg);
+    }
+}
+
+@keyframes animation--corazon{
+    0%{
+        transform: scale(1);
+    }
+    50%{
+        transform: scale(1.1);
+    }
+    75%{
+        transform: scale(1);
+    }
+
+}
+
+@keyframes animation--feliz{
+    25%, 75%{
+        transform: translateY(-10px);
+    }
+    50%{
+        transform: translateY(5px);
+    }
+
+
+}
+@keyframes animation--carcajada{
+    25%, 75%{
+        transform: translateY(-5px);
+    }
+    50%{
+        transform: translateY(5px);
+    }
+
+
+}

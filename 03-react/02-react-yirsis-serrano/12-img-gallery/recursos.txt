@@ -1,0 +1,94 @@
+instalaciones necesarias del proyecto
+
+create react app
+    yarn create react-app my-app
+    npx create-react-app 05-image-gallery-app --template cra-template-pwa
+
+vite
+    yarn create vite
+    yarn create vite proy-reac --template  react
+
+
+
+unsplash developer
+    https://unsplash.com/developers
+
+
+    logearte a la cuenta
+        crear appp
+            obtener el api key
+        
+    postman
+        header
+            Authorization: Client-ID YOUR_ACCESS_KEY
+        url
+            https://api.unsplash.com/photos/?client_id=YOUR_ACCESS_KEY
+
+    
+    validación ppostman in proyect
+        https://api.unsplash.com/photos/random?client_id=7z9AGmq0APUrPC9L7-x7onnHLrYPNFO8Bhk-cQe7NZk
+
+        detalle
+            https://api.unsplash.com/search/photos/?query=home&per_page=50&client_id=7z9AGmq0APUrPC9L7-x7onnHLrYPNFO8Bhk-cQe7NZk
+
+
+    material desing
+        boostrap
+            icon
+                google material desing
+                    insert icon
+            
+        agregar el CDN
+            material.io
+                get started
+                    https://material.io/develop/web/getting-started
+
+        
+    
+    components -> nuestros jsx
+    hooks -> variables,constantes
+    helper -> las operaciones, etc
+    memos -> los que re se reusan n veces y no deseas que se vuelvan a ejecutar
+
+
+    Para ejecutar el PWA
+        requiere
+            descargar las diferentes resoluciones de los iconos
+            personalizar el ico de tu preferencia
+        index
+            cambiar el color de tipo
+                color-theme -> tu preferencia
+                apple-touch-icon -> seleccionar android/androind/...192-192.png
+
+        manifest.json
+            persolalizar a tu gusto
+            agregamos
+                 la descripcion
+                 el theme color 
+                 background-color
+
+----------------------------------------------------------------------------------------------
+REFERENCIAS
+    https://api.unsplash.com/photos/?client_id=7z9AGmq0APUrPC9L7-x7onnHLrYPNFO8Bhk-cQe7NZk
+
+    bOOSTRAP
+        https://getbootstrap.com/docs/4.3/components/card/
+    
+    key
+        https://unsplash.com/oauth/applications/351534
+    documentation
+        https://unsplash.com/documentation
+
+
+Iconfinder
+    https://www.iconfinder.com/search?q=images
+
+pwa image generator
+    https://www.pwabuilder.com/imagegenerator
+
+icon converter png ~ ico
+
+-----------------------------------------------------------------------------------------------
+
+
+

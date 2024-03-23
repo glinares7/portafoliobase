@@ -1,0 +1,14 @@
+{
+  "name": "02-gh-pages-site",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "gh-pages -d /home/linarespc/Documentos/portafolio/2-html-css-js/7-firebase/02-gh-pages-site"
+  },
+  "author": "Gianmarco LInares",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
+  }
+}

@@ -1,0 +1,92 @@
+creamos un nuevo proyecto
+    npx create-react-app 11-testing --template cra-template-pwa
+testing
+    Jest-dom
+        global
+    user-event
+        eventos en react
+            click - texto 
+    
+    test
+        script que ejecuta el test
+    
+
+    react testing library
+        enfocado en la libreria de react
+    
+    documentacion
+        htto://reactjs.org/docs/testing.html
+            testing
+                testing overview
+
+    testing library
+        mejora su codigo  a su manera usadon react
+
+        core-api
+            queries
+                byTestId
+                    metadatos desde jsx
+    framework
+        DOM testing library
+            react testing library
+                example -> componetes pruebas
+        React native
+            Navite testing library
+
+        vue marko angular prereact
+
+    - - - - Migrate from Enzyme in react 16 (adaptadores) - - - - 
+        supprt enzyme  
+
+
+
+    usar test en react
+        ejecuta test-library
+            ./src/App.test.js
+                    npm 
+                        npm rum test
+                    yarn
+                        yarn test
+
+
+        App.test.js
+            compilador de pruebas
+        setup.js
+            configurar y hacer configuraciones automatica
+                intelesense
+                    saypress
+                    enzcy
+            archivos de prueba
+                file.test.js
+                file.spec.js
+
+        test suite  (archivos de prueba)
+  - - -          
+    test
+        testing unitario
+
+    it
+        conjunto de pruebas(test)
+    describe
+        agrupación de pruebas
+            expect
+                resultado esperado 
+        testing-library/react
+            screen
+                evita volver a crear varias instacias de un mismo render(wraper)
+            fireEvent
+
+            getByText
+            getByRole
+            getByLabelText
+                varias etiquetas usan lo mismo
+            useEvent()
+                camptura los eventos
+
+
+
+Renderizar en pruebas el buttonCounter.jsx(pendiente)
+    - - -
+    nfn -> const ~ function
+
+    

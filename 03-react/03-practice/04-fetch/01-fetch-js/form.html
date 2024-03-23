@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>metodo GET</title>
+</head>
+
+<body>
+    <h1>aqui va los datos</h1>
+    <h2 id="val1"></h2>
+    <h2 id="val2"></h2>
+
+    <a href="index.html">atras</a>
+
+    <script>
+
+        let url = new URLSearchParams(location.search)
+        console.log("location", url.get("valor1"));
+
+        val1.textContent = url.get("valor1")
+        val2.textContent = url.get("valor2")
+
+
+        const post1 = document.getElementById("post1")
+
+        // post1.addEventListener("submit", () => {
+        //     console.log("se hixo el pedido");
+        // })
+    </script>
+</body>
+
+</html>

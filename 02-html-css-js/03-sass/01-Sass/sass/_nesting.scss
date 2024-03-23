@@ -1,0 +1,70 @@
+.card{
+    color: teal;
+
+    &--grid{
+        display: grid;
+    }
+
+    &__title{
+        text-align: center;
+    }
+
+    &__cta{
+        color: crimson;
+
+        &--green{
+            color: green;
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// .menu{
+
+//     > {
+
+//         .close{
+//             display: none;
+//         }
+    
+//         .open{
+//             display: block;
+//         }
+
+//     }
+
+
+//     a{
+//         text-decoration: none;
+
+        
+//     }
+
+//     @media (min-width:500px){
+//         background-color: steelblue;
+//         text-decoration: none;
+//         display: grid;
+
+//         a{
+//             text-decoration: underline;
+//         }
+//     }
+
+
+//     @keyframes show {
+//         100%{
+//             transform: unset;
+//         }
+//     }
+// }

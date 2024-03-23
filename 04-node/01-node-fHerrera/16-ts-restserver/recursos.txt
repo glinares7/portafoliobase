@@ -1,0 +1,105 @@
+
+puto fuerte de typescript
+    reconoce en tiempo de escritura los errores
+
+typescript instalciones necesarias
+    sudo npm install -g typescript
+
+    compilador de typescript
+        tsc --init
+            dentro del archivo tsconfig.json
+                habilitar la configuracion
+                    "target": "es2016",  
+                    "module": "commonjs",                                
+                    "moduleResolution": "node", 
+                    "sourceMap": true,
+                    "outDir": "./dist", 
+                    "esModuleInterop": true, 
+                    "forceConsistentCasingInFileNames": true,
+                    "strict": true,
+                    "skipLibCheck": true 
+
+
+
+    para hace la compilación de ts a js nativo (recompila cuanto se actualizen las dependencias)
+        tsc
+
+    vamos a correr la aplicación desde el dist (orientado a ts)
+        node dist/app.js
+
+    reglas adicionales a ts
+        npm i tslint --save-dev
+
+    archivo de configuracion de tslint 
+        npm i typescript --save-dev
+
+    inicializar el archivo de configuración de tslint
+        ./node_modules/.bin/tslint --init
+
+        para que no me marque error en la consola dentro de las reglas de tslint    
+            "rules": {
+                "no-console":false
+            },
+
+
+    cuales son las firmas de las funciones , metodos , etc
+        habilita todo el tipado de typescript
+            npm i --save-dev @types/express
+
+
+
+
+    para compilar ts con express considerar
+        tsc
+
+        tsc --watch
+        nodemon dist/app.js
+
+
+    recordar
+        noinplicitany : true  -> tsconfig.json
+            no necesariamente lleva tipado
+
+
+    requisitos para correr los middleware
+        cors    npm i --save-dev @types/cors
+        lectura del body 
+        carpeta public
+
+
+
+conexión a base de datos
+        usuario -> root
+        contraseña -> null
+
+    ammps
+        https://ampps.com/downloads/
+
+    wampServer for windows
+        https://www.wampserver.com/en/
+
+    xampp
+        https://www.apachefriends.org/es/index.html
+    
+    tablePlus 
+        https://tableplus.com/download
+
+
+    sequelize
+        https://sequelize.org/docs/v6/getting-started/
+
+        npm install --save sequelize
+
+            dependiendo con que base de datos instalamos la dependencia necesaria
+                # One of the following:
+                    $ npm install --save pg pg-hstore # Postgres
+                    $ npm install --save mysql2
+                    $ npm install --save mariadb
+                    $ npm install --save sqlite3
+                    $ npm install --save tedious # Microsoft SQL Server
+                    $ npm install --save oracledb # Oracle Database
+
+
+        conectar la base de datos
+            https://sequelize.org/docs/v6/getting-started/
+                

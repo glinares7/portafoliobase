@@ -1,0 +1,12 @@
+.capitulo5__sidebar {
+  border: 1px solid #000;
+  display: flex;
+  .item__sidebar {
+    width: 100%;
+  }
+  & > .item__sidebar1 {
+    & + .item__sidebar2 {
+      background-color: aqua;
+    }
+  }
+}

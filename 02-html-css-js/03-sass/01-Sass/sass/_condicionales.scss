@@ -1,0 +1,12 @@
+$display: block;
+
+
+.hero{
+    @if $display == grid{
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+    @else{
+        display: $display;
+    }
+}

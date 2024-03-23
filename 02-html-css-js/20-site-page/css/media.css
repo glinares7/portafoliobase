@@ -1,0 +1,77 @@
+
+@media only screen and (max-width:600px){
+    .navbar{
+       
+        background-color:#ca4172;
+        height: 80px;
+        box-shadow: 2px 2px 15px 0px rgba(0,0,0,.42);
+        align-items: center;
+   
+    }
+
+    /* .navbar .brand{
+        z-index: 50;
+    } */
+    .navbar .menu{
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        width: 50vw;
+        background-color:#ca4172;
+        height: 50vh;
+        left: -1em;
+        transform: translateY(-120%);
+        transition: all 1.4s;
+        /* z-index: 30; */
+
+    
+    }
+
+
+
+
+    /*? la clase de va iniciar en js/scripts.js */
+    .navbar .menu-togle{
+        transform: translateY(0%);
+   
+    }
+
+    .menu li{
+        margin-top: 3em;
+
+    }
+
+ 
+
+    .navbar .menu-bar{
+        display: block;
+        font-size: 2em;
+        color: #fff;
+        cursor: pointer;
+    }
+
+    /*? main-section */
+    .main{
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        text-align: center;
+        height: 70vh;
+    }
+
+    .main img{
+        width: 12em;
+    }
+    .main h1{
+        margin-top: -80px;
+    }
+
+    .main .button-content{
+        display: flex;
+        flex-direction: column;
+        margin: 30px;
+    }
+} 

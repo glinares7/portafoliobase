@@ -1,0 +1,667 @@
+
+package.json    
+        "cors": "^2.8.5",
+        "dotenv": "^16.0.3",
+        "express": "^4.18.2",
+        "socket.io": "^4.6.1"
+
+
+
+.env    
+    PORT=8080
+
+    
+
+app.js
+    const Server = require("./models/server");
+
+    require("dotenv").config();
+    const server = new Server();
+
+    server.listen();
+
+
+../models/server
+    const express = require("express");
+    const cors = require("cors");
+    const { socketController } = require("../sockets/controller");
+
+
+    class Server {
+  constructor() {
+    this.app = express();
+    this.port = process.env.PORT;
+    this.server = require("http").createServer(this.app);
+    this.io = require("socket.io")(this.server);
+    this.paths = {};
+
+    // Conectar a base de datos
+
+    // Middlewares
+    this.middlewares();
+
+    // Rutas de mi aplicación
+    this.routes();
+
+    //configuracion de socket
+    this.sockets();
+  }
+
+  middlewares() {
+    // CORS
+    this.app.use(cors());
+
+    // Lectura y parseo del body
+
+    // Directorio Público
+    this.app.use(express.static("public"));
+
+    // fileuploads -  Carga de archivos
+  }
+
+  routes() {
+    // this.app.use(this.paths.auth, require("../routes/auth"));
+  }
+
+  sockets() {
+    this.io.on("connection", socketController);
+  }
+  listen() {
+    this.server.listen(this.port, () => {
+      console.log("Servidor corriendo en puerto", this.port);
+        });
+    }
+    }
+
+    module.exports = Server;
+
+
+./nodemon.json
+    {
+        "ignore":"db/*.json"
+    }
+
+
+
+../db/data.json
+
+    {
+        "ultimo":53,
+        "hoy":6,
+        "tickets":[
+    { "numero": 50, "escritorio": null },
+    { "numero": 51, "escritorio": null },
+    { "numero": 52, "escritorio": null },
+    { "numero": 53, "escritorio": null }
+        ],
+        "ultimos4":[
+            {"numero":49,"escritorio":"Escritorio 2"},
+            {"numero":48,"escritorio":"Escritorio 1"},
+            {"numero":47,"escritorio":"Escritorio 3"},
+            {"numero":46,"escritorio":"Escritorio 1"}
+        ]
+    }
+
+
+
+** Aqui se hace referencia a db.json **
+
+../models/ticket-control.js
+    const path = require("path");
+    const fs = require("fs");
+
+    class Ticket {
+    constructor(numero, escritorio) {
+        this.numero = numero;
+        this.escritorio = escritorio;
+    }
+    }
+    class TicketControl {
+    constructor() {
+        this.ultimo = 0;
+        this.hoy = new Date().getDate(); //5
+        this.tickets = [];
+        this.ultimos4 = [];
+
+        this.init();
+    }
+
+    //*   GETTER
+    get toJson() {
+        return {
+        ultimo: this.ultimo,
+        hoy: this.hoy,
+        tickets: this.tickets,
+        ultimos4: this.ultimos4,
+        };
+    }
+
+    init() {
+        const { hoy, tickets, ultimos4, ultimo } = require("../db/data.json");
+        if (hoy === this.hoy) {
+        (this.tickets = tickets),
+            (this.ultimo = ultimo),
+            (this.ultimos4 = ultimos4);
+        } else {
+        //Es otro día
+        this.guardarDB();
+        }
+    }
+
+    guardarDB() {
+        const dbPath = path.join(__dirname, "../db/data.json");
+        //* writeFileSync almacena un string , por lo mismo se debe parsear a string
+        fs.writeFileSync(dbPath, JSON.stringify(this.toJson));
+    }
+
+    siguiente() {
+        this.ultimo += 1;
+        const ticket = new Ticket(this.ultimo, null);
+        this.tickets.push(ticket);
+
+        this.guardarDB();
+
+        // return 'Ticket'+ this.ultimo
+        return "Ticket" + ticket.numero;
+    }
+
+    atenderTicket(escritorio) {
+        //No tenemos tickets
+
+        if (this.tickets.length === 0) {
+        return null;
+        }
+
+        const ticket = this.tickets.shift(); // this.tickets[0]
+        ticket.escritorio = escritorio;
+
+        this.ultimos4.unshift(ticket);
+        if (this.ultimos4.length > 4) {
+        this.ultimos4.splice(-1, 1);
+        }
+        // console.log(this.ultimos4);
+        this.guardarDB();
+        return ticket;
+    }
+    }
+
+    module.exports = {
+    TicketControl,
+    };
+
+
+
+
+../sockets/cntroller
+
+    const { TicketControl } = require("../models/ticket-control");
+
+    const ticketControl = new TicketControl();
+
+    const socketController = (socket) => {
+    // console.log("cliente conectado", socket.id);
+
+    // socket.on("disconnect", () => {
+    // console.log("Cliente desconectado", socket.id);
+    // });
+
+    //*Cuanto un cliente se conecta
+    socket.emit("ultimo-ticket", ticketControl.ultimo);
+    socket.emit("estado-actual", ticketControl.ultimos4);
+
+    //todo 'tickets-pendientes' , ticketControl.tickets.length ~ broadcast
+
+    socket.emit("tickets-pendientes", ticketControl.tickets.length);
+
+    socket.on("siguiente-ticket", (payload, callback) => {
+        const siguiente = ticketControl.siguiente();
+
+        callback(siguiente);
+
+        //todo Notificar que hay un nuevo ticket pendiente de asignar
+        socket.broadcast.emit("tickets-pendientes", ticketControl.tickets.length);
+    });
+
+    socket.on("atender-ticket", ({ escritorio }, callback) => {
+        // console.log(escritorio);
+        if (!escritorio) {
+        return callback({
+            ok: false,
+            msg: "El escritorio es obligatorio",
+        });
+        }
+
+        const ticket = ticketControl.atenderTicket(escritorio);
+
+        //todo notificar cambio en los ultimos 4
+        socket.broadcast.emit("estado-actual", ticketControl.ultimos4);
+        socket.emit("tickets-pendientes", ticketControl.tickets.length);
+        socket.broadcast.emit("tickets-pendientes", ticketControl.tickets.length);
+
+        if (!ticket) {
+        callback({
+            ok: false,
+            msg: "Ya no hay tickets pendientes ",
+        });
+        } else {
+        callback({
+            ok: true,
+            ticket,
+        });
+        }
+    });
+    };
+
+    module.exports = {
+    socketController,
+    };
+
+
+
+./public/index.html
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Programa de Colas</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    </head>
+
+    <body class="container">
+        <h1 class="mt-5">Programa de Colas</h1>
+
+        <div class="row">
+            <div class="col-6">
+
+                <a class="btn btn-primary" href="publico.html">Pantalla publica</a>
+                <a class="btn btn-secondary" href="nuevo-ticket.html">Crear Tickets</a>
+
+            </div>
+
+            <div class="col-6">
+                <form action="escritorio.html">
+
+                    <input name="escritorio" 
+                        type="text" 
+                        class="form-control" 
+                        placeholder="Escritorio" 
+                        autofocus 
+                        required>
+
+                    <br>
+                    <button type="submit" class="btn btn-primary">
+                        Ingresar
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </body>
+
+    </html>
+
+
+./public/publico.html
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Pantalla del publico</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/style.css">
+
+    </head>
+
+    <body>
+
+        <table>
+            <tr>
+                <td valign="middle" class="ticket-actual">
+                    <span id="lblTicket1" class="ticket-actual-numero"></span>
+                    <br>
+                    <span id="lblEscritorio1" class="ticket-actual-escritorio"></span>
+                </td>
+                <td>
+                    <table>
+                        <tr>
+                            <td>
+                                <span id="lblTicket2" class="ticket-secundario"></span>
+                                <br>
+                                <span id="lblEscritorio2"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span id="lblTicket3" class="ticket-secundario"></span>
+                                <br>
+                                <span id="lblEscritorio3"></span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <span id="lblTicket4" class="ticket-secundario"></span>
+                                <br>
+                                <span id="lblEscritorio4"></span>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+
+
+        <script src="./socket.io/socket.io.js"></script>
+        <script src="./js/publico.js"></script>
+
+    </body>
+
+    </html>
+
+
+./public/css/style.css
+
+    html,
+    body {
+        height: 100%;
+        width: 100%;
+        background-color: #6951F0;
+        color: white;
+    }
+
+    table {
+        width: 100%;
+        height: 100%;
+        text-align: center;
+    }
+
+    .ticket-actual {
+        background-color: #282828;
+    }
+
+    .ticket-actual-numero {
+        font-size: 80px;
+    }
+
+    .ticket-actual-escritorio {
+        font-size: 45px;
+    }
+
+    .ticket-secundario {
+        font-size: 25px;
+    }
+
+
+    /* Nuevo-ticket */
+
+    #lblNuevoTicket {
+        font-size: 70px;
+    }
+
+
+
+
+
+./public/js/publico.js
+
+    //Referencias
+
+    const lblTicket1 = document.querySelector("#lblTicket1");
+    const lblEscritorio1 = document.querySelector("#lblEscritorio1");
+    const lblTicket2 = document.querySelector("#lblTicket2");
+    const lblEscritorio2 = document.querySelector("#lblEscritorio2");
+    const lblTicket3 = document.querySelector("#lblTicket3");
+    const lblEscritorio3 = document.querySelector("#lblEscritorio3");
+    const lblTicket4 = document.querySelector("#lblTicket4");
+    const lblEscritorio4 = document.querySelector("#lblEscritorio4");
+
+    const socket = io();
+
+    socket.on("estado-actual", (payload) => {
+    const audio = new Audio("./audio/new-ticket.mp3");
+    audio.play();
+
+    const [ticket1, ticket2, ticket3, ticket4] = payload;
+
+    if (ticket1) {
+        lblTicket1.innerText = "Ticket " + ticket1.numero;
+        lblEscritorio1.innerText = ticket1.escritorio;
+    }
+
+    if (ticket2) {
+        lblTicket2.innerText = "Ticket " + ticket2.numero;
+        lblEscritorio2.innerText = ticket2.escritorio;
+    }
+
+    if (ticket3) {
+        lblTicket3.innerText = "Ticket " + ticket3.numero;
+        lblEscritorio3.innerText = ticket3.escritorio;
+    }
+
+    if (ticket4) {
+        lblTicket4.innerText = "Ticket " + ticket4.numero;
+        lblEscritorio4.innerText = ticket4.escritorio;
+    }
+    });
+
+./public/nuevo-ticket.html
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Nuevo Ticket</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+
+    <body>
+
+        <table>
+            <tr>
+                <td>
+                    <span id="lblNuevoTicket">
+                        Cargando...
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <button class="btn btn-secondary btn-lg">
+                        Generar nuevo ticket
+                    </button>
+                </td>
+            </tr>
+        </table>
+
+
+
+        <script src="./socket.io/socket.io.js"></script>
+        <script src="./js/nuevo-ticket.js"></script>
+
+    </body>
+
+    </html>
+
+
+./public/nuevo-ticket.js
+
+
+    const lblNuevoTicket = document.querySelector("#lblNuevoTicket");
+    const btnCrear = document.querySelector("button");
+
+    const socket = io();
+
+    socket.on("connect", () => {
+    // console.log('Conectado');
+
+    // lblOffline.style.display = 'none';
+    btnCrear.disabled = false;
+    });
+
+    socket.on("disconnect", () => {
+    // console.log('Desconectado del servidor');
+
+    // lblOnline.style.display  = 'none';
+    btnCrear.disabled = true;
+    });
+
+    socket.on("ultimo-ticket", (ultimo) => {
+    lblNuevoTicket.innerText = "Ticket" + ultimo;
+    });
+
+    btnCrear.addEventListener("click", () => {
+    socket.emit("siguiente-ticket", null, (ticket) => {
+        lblNuevoTicket.innerText = ticket;
+    });
+    });
+
+
+./public/escritorio.html
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Programa de Colas</title>
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    </head>
+
+        <body class="container">
+            <h1 class="mt-5">Escritorio</h1>
+            <hr>
+            <div class="row">
+                <div class="col-8">
+                    <h4>Atendiendo a <small class="text-primary">....</small></h4>
+
+                    <button class="btn btn-primary mt-5">
+                        Atender siguiente ticket
+                    </button>
+                </div>
+
+                <div class="col-4 text-center">
+                    <h4>En cola</h4>
+
+                    <div class="alert alert-info mt-2">
+                        <span>Ya no hay más tickets</span>
+                    </div>
+
+                    <h1 id="lblPendientes">10</h1>
+                </div>
+            </div>
+
+
+
+            <script src="./socket.io/socket.io.js"></script>
+            <script src="./js/escritorio.js"></script>
+
+    </body>
+
+
+./public/js/escritorio.js
+
+    //Referencias HTML
+
+    const lblEscritorio = document.querySelector("h1");
+    const btnAtender = document.querySelector("button");
+    const lblTicket = document.querySelector("small");
+    const divAlerta = document.querySelector(".alert");
+    const lblPendientes = document.querySelector("#lblPendientes");
+
+    const searchParams = new URLSearchParams(window.location.search);
+
+    if (!searchParams.has("escritorio")) {
+    window.location = "index.html";
+    throw new Error("El escitorio es obligatorio");
+    }
+
+    const escritorio = searchParams.get("escritorio");
+    lblEscritorio.innerText = escritorio;
+    // console.log(escritorio);
+
+    divAlerta.style.display = "none";
+
+
+
+
+//voy agregar de prueba ya vuelvo
+
+
+
+
+
+    const socket = io();
+
+    socket.on("connect", () => {
+    // console.log('Conectado');
+    btnAtender.disabled = false;
+
+    // lblOffline.style.display = 'none';
+    });
+
+    socket.on("disconnect", () => {
+    // console.log('Desconectado del servidor');
+
+    // lblOnline.style.display  = 'none';
+    btnAtender.disabled = true;
+    });
+
+    // socket.on("ultimo-ticket", (ultimo) => {
+    //   //   lblNuevoTicket.innerText = "Ticket" + ultimo;
+    // });
+
+    socket.on("tickets-pendientes", (pendientes) => {
+    // console.log(pendientes);
+    if (pendientes === 0) {
+        lblPendientes.style.display = "none";
+          divAlerta.style.display = "";
+    } else {
+        lblPendientes.style.display = "";
+        lblPendientes.innerText = pendientes;
+    }
+    });
+    btnAtender.addEventListener("click", () => {
+    //   socket.emit("siguiente-ticket", null, (ticket) => {
+    //     lblNuevoTicket.innerText = ticket;
+    //   });
+
+    socket.emit("atender -ticket", { escritorio }, ({ ok, ticket, msg }) => {
+        // console.log(payload);
+
+        if (!ok) {
+        lblTicket.innerText = "Nadie";
+        return (divAlerta.style.display = "");
+        }
+
+      if (!ticket) {
+      return true;
+    } else {
+      lblTicket.innerText = "Ticket " + ticket.numero;
+    }
+    });
+    });
+
+
+ 
+
+

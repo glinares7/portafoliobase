@@ -1,0 +1,83 @@
+
+DOCUMENTACIÓN
+    react -> https://es.react.dev/learn/start-a-new-react-project
+
+    typescript -> https://www.typescriptlang.org/docs/
+
+    nest.js -> https://docs.nestjs.com/first-steps
+            
+            express -> https://expressjs.com/es/
+
+    
+    next.js -> https://nextjs.org/docs/getting-started/
+    
+    project-structure
+        https://www.freecodecamp.org/espanol/news/aprende-next-js-desde-cero/
+        https://web.dev/i18n/es/route-prefetching-in-nextjs/
+
+
+BASE DE DATOS
+    mariadb -> https://mariadb.org/documentation/
+    mysql -> https://dev.mysql.com/doc/
+
+    diagrama -> https://dbdiagram.io
+        https://www.youtube.com/watch?v=R0XyuWg9Qz4
+
+
+ESTILOS
+    tailwind ->  https://tailwindcss.com/docs/installation
+
+HTML
+    https://html.spec.whatwg.org/multipage/
+    https://www.w3.org/blog/2019/w3c-and-whatwg-to-work-together-to-advance-the-open-web-platform/
+    https://www.w3.org/2019/04/WHATWG-W3C-MOU.html
+
+
+CSS
+    https://www.w3.org/Style/CSS/Overview.en.html
+
+
+
+mockup
+    vivanda
+        https://www.vivanda.com.pe/lacteos-y-huevos/yogurt?page=2
+    plaza vea
+        https://www.plazavea.com.pe/tecnologia/telefonia?page=2
+    faraella tottus
+        https://www.falabella.com.pe/falabella-pe/category/cat760702/Telefonia?page=2
+    metro
+        https://www.metro.pe/lacteos/yogures
+    wong
+        https://www.wong.pe/lacteos?page=2
+    infotec
+        https://www.infotec.com.pe/18-venta-impresoras?resultsPerPage=12&page=2
+    
+
+
+------------------------------------------------------
+ADICIONAR A LAS NOTAS DEL PROYECTO
+
+transform tailwindcss   
+    https://tw-elements.com/docs/standard/navigation/sidenav/
+
+rutas protegidas
+    https://www.freecodecamp.org/news/secure-routes-in-next-js/
+    https://dev.to/seven/how-to-implement-protected-routes-in-nextjs-1m50
+    https://medium.com/@zachshallbetter/protecting-routes-in-next-js-with-app-router-53c3409c0655#:~:text=Another%20way%20to%20protect%20routes,needed%20before%20rendering%20a%20page.
+    
+
+image whit next response
+    https://stackoverflow.com/questions/74795804/next-js-responsive-image-with-custom-size
+
+
+
+   
+zona horaria
+    https://www.postgresql.org/docs/9.6/datatype-datetime.html
+    https://github.com/typeorm/typeorm/issues/877
+
+
+
+
+modificar estados en react 
+    https://dartiles.dev/blog/como-funciona-el-hook-usestate-y-como-usarlos-con-arrays-y-objetos

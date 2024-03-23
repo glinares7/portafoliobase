@@ -1,0 +1,85 @@
+/* 
+
+
+body{
+    font-family: monospace;
+    background: tomato;
+}
+
+.container{
+    margin: auto;
+    display: table;
+}
+
+h1{
+    float: left;
+    color: #fff;
+    position: relative;
+}
+
+h1 span{
+    width: 0;
+    top: 0;
+   right: 0;
+    position: absolute;
+    background:tomato ;
+    border-left: 1px solid red;
+    animation: maquina 5s infinite alternate steps(100);
+
+
+}
+
+@keyframes maquina{
+    from{
+        width: 100%;
+       
+    }
+    to{
+        width: 0;
+    }
+}
+
+ 
+ */
+
+
+.container{
+    position: relative;
+    margin: 0 20px;
+    padding: 0 40px;
+
+
+}
+
+p{
+    font-family: 'monospace';
+    white-space: nowrap;
+    border-right: 4px solid;
+
+
+    animation: typing 8s steps(58) infinite alternate ,
+    blink .5s  infinite  step-end alternate;
+    overflow: hidden;
+
+}
+    
+
+
+    @keyframes  typing {
+        from { width: 0}
+      to{width: 58ch;}
+    }
+
+    @keyframes blink{
+        50%{
+            border-color: transparent;
+        }
+    }
+
+
+
+
+
+
+
+

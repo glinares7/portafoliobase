@@ -1,0 +1,340 @@
+
+    autenticación con google
+
+        google-auth-library     8.7.0   
+        uuid                    8.3.2   9.0.0
+
+
+        ../models/usuario
+
+
+                const {Schema,models}=require('mongoose)
+
+
+                const UsuarioSchema=Schema({
+                    rol: {
+                        type: String,
+                        required: true,
+                        default: "USER_ROLE",
+                        emun: ["ADMIN_ROLE", "USER_ROLE"],
+                    }
+
+
+                })
+
+                UsuarioSchema.methods.toJSON=function(){
+                    const {__v,password,_id,...usuario}=this.toObject()
+                    usuario.uid=_id
+                    return usuario
+                }
+                    
+                module.exports=model('Usuario',UsuarioSchema)
+
+
+
+        
+        ../public/index.html
+
+            <!Doctype HTML>
+            <html lang="en">
+            <head>
+                <meta charset="UTF-8">
+
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+                <title>Google sign in yu no sale</title>
+                
+            </head>
+
+            <body>
+                <h1>Google sign in</h1>
+
+                <div id="g_id_onload"
+                data-client_id="383927203094-atql7f9ma3p66uh96s08cggpagdt9fef.apps.googleusercontent.com"
+                    data-auto_prompt="false"
+                    data-callback="handleCredentialResponse"
+                >
+                </div>
+            
+                <div class="g_id_signin"
+                data-type="standard" data-size="large"
+                data-theme="outline"
+                data-text="sign_in_with"
+                    data-shape="rectangular"
+                    data-logo-alignment="left"
+                >
+                </div>
+
+                <button id="google_signout">Signout</button>
+
+
+                <script>
+                    function   handleCredentialResponse(response){
+
+                        
+                        const body = { id_token: response.credential }
+
+                        fetch("http://localhost:8090/api/auth/google",{
+                            method:"POST",
+                            headers:{
+                                "Content-Type":"application/json"
+                            },
+                            body:JSON.stringify(body)
+                        }).then(r=> r.json()
+                        ).then( resp=> {
+
+                            console.log(resp)
+                        localStorage.setItem('email',resp.usuario.correo)
+
+                        }
+                        ).catch(console.warn)
+
+                        
+                    }
+
+
+                    const button = document.getElementById('google_signout')
+
+                    button.onclick = () =>{
+                        console.log(google.accounts.id)
+
+                        google.accounts.id.disableAutoSelect()
+                        google.accounts.id.revoke(localStorage.getItem("email"), done =>{
+                            localStorage.clear()
+                            location.reload()
+                        })
+                    }
+
+                
+                </script>
+
+                <script src="https://accounts.google.com/gsi/client" async defer></script>
+
+
+            </body>
+            
+            </html>
+
+
+
+
+        .env
+            GOOGLE_CLIENT_ID=
+            GOOGLE_SECRET_ID=
+
+
+
+        ../routes/auth
+            const {Router}= require('express')
+            const {check} = require('express-validator')
+
+            const {validarCampos}=require(../middlewares/validar-Campos)
+
+            const {login,googleSignIn}=require(../constrollers/auth)
+
+
+            const router = Route()
+
+
+
+            router.post('/login',[],login)
+
+
+            router.post('/google',[
+                check('id_token','El ID  token es necesario').not().isEmpty(),
+                validarCampos
+            ],
+            googleSignIn
+            )
+
+
+
+        mdule.exports=router
+
+
+
+        ../helpers/google-verify
+            
+            const {OAuth2Client}=require("google-auth-library")
+
+
+            const client=new OAuth2Client(process.env.GOOGLE_CLIENT_ID)
+
+            async function googleVerify(token=""){
+            const ticket=await client.verifyIdToken({
+                 idToken:token,
+                audience:process.env.GOOGLE_CLIENT_ID
+            })
+
+            const {name,picture,email}= ticket.getPayload()
+
+            return{
+                nombre:name,
+                img:picture,
+                correo:email
+            }
+                
+            }
+
+            module.exports={
+                googleVerify
+            }
+
+
+
+
+
+
+
+        ../controllers/auth
+
+            const {req=request,res=response}= require('express')
+            const bcryptjs=require('bcryptjs')
+
+
+
+            const {generarJWT} = require('../helpers/generar-jwt')
+            const Usuario=require('../models/usuario')
+            const {googleVerify}=require('../helpers/google-verify')
+
+
+
+        const googleSignIn= async(req=request,res=response) =>{
+            const {id_token}=req.body
+
+
+   try{
+                 const {correo,nombre,img}= await googleVerify(id_token)
+
+
+            let usuario=await Usuario.findOne({correo})
+
+
+            if(!usuario){
+                const data={
+                    nombre,
+                    correo,
+                    password:":P",
+                    img,
+                    google:true
+                }
+
+                usuario = new Usuario(data)
+                await usuario.save()
+            }
+
+            if(!usuario.estado){
+                return res.status(401).json({
+                    msg:"Hable con el administrador - usuario bloqueado"
+                })
+            }
+
+            const token = await generarJWT(usuario.id)
+
+
+            res.json({
+                usuario,
+                token
+            })
+    }catch(error){
+        res.status(400).json({
+            msg:'Token de google no valido '
+        })
+    }
+
+
+        }
+
+        module.exports={
+            login
+            googleSignIn
+            }
+
+        conexion entre el fronend y el backend 
+        
+            
+            fetch 
+                el metodo post envia id_token que se obtiene del api de google para validar al servidor 
+    
+            postman
+                sirve para enviar datos al servidor y devolver una respuesta, manipulación de datos
+
+                postman actua como un fetching de datos
+            
+
+            const googleSignIn =(req=request,res=response) =>{
+                const {id_token}=req.body
+
+
+            }
+
+            module.exports={
+                googleSignIn
+            }
+
+
+
+
+
+
+
+        
+
+
+        frontend
+            interfaz sencilla
+
+        crear un popup
+            buscar en el findOne
+            
+                usuario.save()
+                    si no existe lo agrega al modelo para luego guardar
+                    si existe ,no realiza accion y solo guarda
+
+
+
+--------------------------------------------------------------------------
+        REGISTRO DE NUESTRO API EN GOOGLE
+--------------------------------------------------------------------------
+
+    para agregar cuenta sig in de google 
+    google identity
+        https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid?hl=es-419
+    google console
+        https://console.developers.google.com/apis?hl=es-419
+    pantalla de consentimiento de cauth
+        https://console.cloud.google.com/
+
+        pantalla de consentimiento 
+            origenes autorizados de javascript
+                http://localhot
+                http://localhost:8080
+        nos dirigimos a credenciales
+            ID de cliente Oauth
+            id cliente -> esta en .env
+            secret cliente  -> esta en .env
+        
+        configuración
+            murstra boton acceder con google
+                https://developers.google.com/identity/gsi/web/guides/display-button?hl=es-419
+            manejo de respuestas de credenciales con funciones de javascript
+                https://developers.google.com/identity/gsi/web/guides/handle-credential-responses-js-functions?hl=es-419
+            Verifica el token de ID de Google en tu servidor 
+                Using a Google API Client Library
+                https://developers.google.com/identity/gsi/web/guides/verify-google-id-token?hl=es-419
+            
+            
+    documentacion POSTMAN
+        registrarse en postman 
+        logearse con nuestro usuario
+            click derecho a la coleccion
+                view documentation
+                luego modificar deliberadamente
+                    publicar
+                si queremos editar los enviroments
+                    editamos la publicacion y cambiamos la opcion de publicar
+                    https://documenter.getpostman.com/view/25954358/2s93CKPE2w
+                    
+--------------------------------------------------------------------------------
+
+** como agregar datos directamente al mongoCompass **

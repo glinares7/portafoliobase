@@ -1,0 +1,11 @@
+$valor: red;
+$fondo: skyblue;
+
+.app__body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  padding-bottom: 54px;
+  min-height: calc(100vh - 54px);
+  background-color: yellow;
+}

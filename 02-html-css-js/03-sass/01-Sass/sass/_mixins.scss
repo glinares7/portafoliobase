@@ -1,0 +1,123 @@
+// @mixin crear-grid($rows, $columns, $gap){
+//     display: grid;
+//     grid-template-rows: repeat($rows,1fr);
+//     grid-template-columns: repeat($columns, 1fr);
+//     gap: $gap;
+// }
+
+// $filas: 5;
+// $columnas: 8;
+// $gutters: 30px;
+
+
+// .header{
+//     @include crear-grid(6, 5, 20px);
+// }
+
+// .footer{
+//     @include crear-grid($filas, $columnas , $gutters )
+// }
+
+
+// @mixin grid-generator($validar:true, $selector, $columna-i:1, $columna-t:2) {
+    
+//     @if($validar){
+//         display: grid;
+//     }
+
+//     &__#{$selector}{
+//         grid-column:#{$columna-i} / #{$columna-t};
+//     }
+
+// }
+
+// .hero{
+//     @include grid-generator($selector:grid);
+// }
+
+// @mixin addImage($img, $repeat, $size){
+//     position: fixed;
+//     top: 0;
+//     left: 0;
+  
+
+//     background: {
+//         image: url($img);
+//         repeat: $repeat;
+//         size: $size;
+//     }
+
+//     animation: {
+//         duration:1s;
+//         name:show;
+//         delay:.5s;
+//     }
+
+//     margin: {
+//         top: 0; 
+//         left: 0;
+//     }
+// }
+
+// .hero{
+//     @include addImage('uno.png', no-repeat, cover);
+// }
+
+// @mixin addTransition($propiedad, $valor, $selectores...){
+
+//     @each $selector in $selectores {
+
+//         #{$selector}{
+//             #{$propiedad}: $valor;
+
+//             &:hover{
+//                 #{$propiedad}: unset;
+//             }
+//         }
+//     }
+
+// }
+
+// @include addTransition(opacity,0,'.hero','.cta', h2, h3);
+
+
+// @use 'sass:meta';
+
+
+// @mixin crear-layout($lista...){
+    
+//     @each $propiedad, $valor in meta.keywords($lista){
+//         #{$propiedad}: $valor;
+//     }
+// }
+
+// .hero{
+//     @include crear-layout(
+//         $display: grid, $gap: 1em, $color: red);
+// }
+
+// @mixin crear-layout($rows, $columns) {
+//     $color: #fff;
+//     $background: crimson;
+//     display: grid;
+//     grid-template-rows: repeat($rows,1fr);
+//     grid-template-columns: repeat($columns, 1fr);
+
+//     @media (max-width: 500px) {
+//         @content($color, $background);
+//     }
+// }
+
+// .hero{
+//     @include crear-layout(5, 6) using ($color, $background){
+
+//         grid-template-rows: repeat(3, 1fr);
+//         color: $color;
+//         background-color: $background;
+
+//         &__title{
+//             background-color: #fff;
+//         }
+
+//     }
+// }

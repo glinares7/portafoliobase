@@ -1,0 +1,109 @@
+
+
+para usar python
+    tener instalado python3
+        sudo apt install python3
+
+
+
+---------------------------------------------------
+Si lo queremos instalar mediante pip
+        sudo pip3 install Django
+        
+
+    verificamos si esta instalado 
+            django-admin --version
+--------------------------------------------------
+
+instalar django (en SO debian) ~ usando entorno virtual 
+
+    sudo apt install python3 python3-pip python3-venv build-essential libssl-dev libffi-dev python3-dev -y
+
+    pip install Django==4.2
+
+
+    crea un entonno virtual para Django
+        sudo python3 -m venv myenv
+
+    activamos el entorno viirtual
+        source myenv/bin/activate
+
+
+    instalamos el entonno virtual de django
+        sudo pip3 install Django
+
+////////////////////////////////////////////////////////
+
+    **crear un proyecto en django**
+        django-admin startproject myproject
+
+
+    **crea una nueva aplicación django**
+        python3 manage.py startapp myapp
+
+    luego agregar en 
+        proyect
+            settings.py
+                INSTALLED_APPS = {
+                    'myapp'
+                }
+
+        myapp
+            views
+                from django.shortcuts import render
+                from django.http import HttpResponse
+
+                    def hello(request):
+                        return HttpResponse("Hello, World!")
+
+                    def index(request):
+                        return render(resquest,'index.html')
+                    
+
+            urls
+                from django.urls import path
+                from . import views
+                    urlpatterns=[
+                        path('endpoint',views.hello)
+                    ]
+
+        
+        myproyect
+            urls.py
+                    from django.contrib import admin
+                    from django.urls import include, path
+
+                    urlpatterns = [
+                        path('admin/', admin.site.urls),
+                        path('', include('myapp.urls')),
+                    ]
+
+
+luego de configurar los parametros
+    python3 manage.py runserver 9200
+
+
+        me pide migrar se debe aplicar  
+            python3 manage.py migrate
+
+    
+
+*********************************************************************
+    para desplegar tu proyecto en docker
+
+
+    se necesita requirements.txt
+        pip freeze > requirements.txt
+
+    luego creas tu Dockerfile
+        touch Dockerfile
+
+            sudo docker build -t docker-python .
+            sudo docker run -dit --name python3 -p 5600:8000 docker-python
+
+
+    
+    creando un entorno virtual 
+        pip install gunicorn
+
+        

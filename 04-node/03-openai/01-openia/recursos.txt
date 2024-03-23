@@ -1,0 +1,3 @@
+acceder a la plataforma 
+    https://platform.openai.com
+    

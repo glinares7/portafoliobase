@@ -1,0 +1,15 @@
+JSON placeholder
+unsplash
+
+
+    fetch 
+        peticion
+            get
+            post
+            delete
+            put
+    promise
+    axios *
+
+
+como crear mi propia api con sus keys - validacion

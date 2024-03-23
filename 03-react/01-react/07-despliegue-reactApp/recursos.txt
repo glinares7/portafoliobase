@@ -1,0 +1,30 @@
+empaquetar los archivos para produccion
+    se instala
+         webpack (libreria)
+
+
+    compilar acchivo react para produccion
+         yarn build
+               
+     si se quiere ejecutar los navegadores desde el json
+          npx browserslist@latest --update-db
+
+
+
+
+
+subir proyecto a github
+     de debe cambiar el nombre build por docs
+     se crea un nuevo repoositorio
+     dentro de la instalacion se debe poner en (upload file)
+
+     luego guarmos los cambios (commit)
+
+
+publicar el repositorio 
+     ir a setting
+          pages
+               cambiar en ./root por ./docs  
+          
+     recargar sitio hasta que se visualize
+

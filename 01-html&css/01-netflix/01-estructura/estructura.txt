@@ -1,0 +1,165 @@
+ejemplos de guia 
+
+    https://www.ovhcloud.com/es/?xtor=AD-98-[ws_int_2021_ovh_cloud_multi_undefinite_sale_acquisition]-[dimg_260x200_260x200_v0]
+
+    https://www.canva.com/q/pro/?irgwc=1&utm_medium=affiliate&utm_source=buysellads&clickId=Re4ze8w1KxyIUHawdmyLKXgrUkGx2F22-XYBwA0&v=1
+
+    https://dev.to/0shuvo0/i-made-squid-game-with-javascript-10j9
+
+    https://nextjs.org/blog/next-12
+
+    https://itsfoss.com/exa/
+
+    https://threatpost.com/robinhood-trading-platform-data-breach/176106/
+
+    https://brave.com/solana-partnership/
+    
+    https://auth0.com/blog/authorization-for-rails-api-with-tdd/
+
+
+
+
+    tecnologias
+        next.js
+            https://nextjs.org/blog/next-12
+
+    
+    soporte
+        cant i incude
+            https://caninclude.glitch.me/
+
+
+estatico
+menu
+menu desplegable(horizontal-vertical)
+scroll-menu-horizontal(dando click)
+ventana de imagenes(slider)
+paginación
+modal
+redirecciones
+galeria
+buscador
+footer
+    redes sociales(donde nos ubican)
+        facebook
+        twiter
+        youtube
+        whatsapp ->medio de pago ditecto
+        telegram->medio de pago ditecto
+
+    contacto
+        formulario
+boton de subir
+login
+local storange
+carrito de compra
+modo oscuro(intetactivo)
+
+
+dinamico
+base de datos
+    mysql,firevase,aws
+php 
+    ajax
+    login
+        crear cuenta
+        sesiones
+        perfil
+            foto
+            google-facebook
+        cerrar sesion
+        olvido de contraseña
+    politicas de privacidad
+    cookies
+    carrito de compra
+        inegrancion
+            validacion, toma de datos(compra exitosa,denegada)
+        medio de pago
+            paypal
+            bcp
+            interbank
+            yape
+        
+seguridad de la información
+    encriptacion de contraseñas
+    urls
+        spa
+        redirecciones
+ registro de indicencias
+    control de los productos
+        inicio de caja
+        cierre de caja
+gestion de costos
+laravel(reproalimentación)
+
+
+administrador
+    menu
+        usuarios
+            sesiones
+                activas
+                inactivas
+        pagos
+            usuario,correo,foto(mago directo) || id de compra(tarjeta),telefono ubicacion(gps-igrame) monto, despacho del producto(pendiente,por envio,realizado,) integracion con los medios de pago
+        
+        visitas
+        productos(CRUD)
+        secciones(CRUD)
+        REDES SOCIALES(RGB)
+
+
+
+Proyecto a futuro
+    creacion de un aplicativo android(react-native,fluter,etc)
+    inplemetar gps modo administrador
+        menu(app movil)
+            repartidores
+                login de repartidor
+                autenticacon
+                    tokens(primer inicio)
+                web socetks
+                    estado de reparticoin de productos(pendiente-por-enviar-realizado {en cola})
+                compras
+                    gps(iframe)
+                app hibrida(pc-movil-integración)
+                    creat app movil
+                        api rest 
+                            usuarios
+                            pago
+                                ubicacion(gps-ruta optima)
+                        pagos(anadir compra)->pago directo
+                        realizar pago(modo directo)
+                            integracion con la api rest(base de daros)
+                
+                
+                chat
+                    gestion de usuarios
+                    reporte de indicencias(notificar por correo-app(notify))
+                    atencion al cliente
+                
+
+aspectos legales  ***
+    legalidad de la empresa
+        razon social
+        ruc
+        sunat(registro)
+        impuestos(igv x año)
+        libro de reclamaciones
+        cotizaciones
+        pagos
+            empleado-empleador
+
+
+
+
+comandos git impresindibles
+    add
+        https://docs.gitlab.com/ee/gitlab-basics/add-file.html
+    branch
+        https://vabadus.es/blog/otros/trabajando-con-git-eliminar-ramas-locales-y-remotas
+    
+
+
+
+
+

@@ -1,0 +1,66 @@
+.corazon{
+     width: 500px;
+     height: 500px;
+     display: flex;
+     margin: 0 auto;
+}
+
+.corazon-plasta{
+    fill: #8100a7;
+    stroke: none;
+}
+
+.corazon-linear{
+    fill: none;
+    stroke: none;
+}
+
+.corazon .corazon-plasta:hover{
+    stroke: aquamarine;
+    stroke-width: 2;
+
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 500;
+    stroke-dashoffset:0;
+    animation:  palpitar1 2s  linear infinite alternate ;
+}
+
+.corazon-plasta:hover + .corazon-linear{
+    stroke: aquamarine;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+
+
+animation:  palpitar2 1s  ease-in infinite  ;
+
+}
+
+@keyframes palpitar1{
+
+    20%{
+        stroke-dashoffset: 390;
+    }
+    50%{
+        stroke-dashoffset: 390;
+    }
+
+    70%{
+        stroke-dashoffset: 500;
+    }
+    100%{
+        stroke-dashoffset: 500;
+    }
+
+
+}
+
+
+@keyframes palpitar2{
+    100%{
+        stroke-dashoffset: 0;
+    }
+}

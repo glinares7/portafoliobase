@@ -1,0 +1,268 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+body{
+    background: #e9e9e9;
+}
+
+.contenedor{
+    background: #ccc;
+    width: 80%;
+    margin: 0 auto;
+    height: 100%;
+}
+.contenedor .header__contenedor{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:0 20px;
+    height: 100px;
+    min-height: 100px;
+}
+.contenedor .logo__header{
+    display: flex;
+    width: 50%;
+    align-items: center;
+}
+
+.logo__header img {
+    margin-right: 20px;
+    width: 40px;
+}
+.logo__header a{
+    font-size: 30px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.contenedor .nav__header{
+    display: flex;
+    width: 50%;
+    height: 45px;
+    min-height: 45px;
+    flex-wrap: wrap;
+}
+.nav__header a{
+    background: chocolate;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    flex-grow: 1;
+    flex-basis: 0;
+    /* min-width: 120px; */
+    color: #fff;
+    text-decoration: none;
+    
+}
+
+
+
+header{
+    background: #2c2e50;
+}
+
+
+
+.contenedor .main__contenedor{
+    background: #fff;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main__contenedor .section__main{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 70%; 
+    /* width: 70%; */
+}
+.hr__section{
+    width: 95%;
+    margin: 0 auto;
+}
+.section__main .titulo{
+    font-weight: bold;
+}
+.section__main .article__section--text1,.article__section--text2{
+    margin: 15px 20px;
+}
+
+
+.main__contenedor .aside__main{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    min-width: 192px;
+    min-height: 250px;
+    flex-grow: 1;
+    flex-basis: 30%; 
+    /* width: 30%; */
+
+}
+
+aside {
+    background: #e67e22;
+}
+.aside__main .widget__aside--1,.aside__main .widget__aside--2{
+    width: 80%;
+    height: 40%;
+    margin: 10px 20px;
+    background: #d35400;
+    min-height: 100px;
+
+}
+
+/* aside .widget{
+    background: #d35400;
+} */
+
+/* footer{
+    background: #2c3e50;
+} */
+
+.contenedor .footer__contenedor{
+    display: flex;
+    background: #2c3e50;
+}
+
+.footer__contenedor .contenedor__footer{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 80px;
+    min-height: 80px;
+}
+
+.footer__contenedor .link__footer,
+.footer__contenedor .social__footer{
+    display: flex;
+    align-items: center;
+    height: 100%; 
+     margin: 0 20px;
+}
+
+/*? actua similar a space-between */
+
+/* .link__footer {
+    width: 70%;
+    justify-content: flex-start;
+    
+}
+
+.social__footer{
+    justify-content: flex-end;
+    width: 30%;
+} */
+
+
+
+.link__footer a, .social__footer a{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    padding: 2px 10px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.link__footer a {
+    background: #d35400;
+    
+}
+.social__footer a{
+    background: #e67e22;
+}
+
+
+
+ @media screen and (max-width:800px) {
+    body{
+        background: violet;
+
+    }
+    .contenedor .header__contenedor{
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        /* sumas sus elementos para hallar la altura total */
+        height: 145px;
+   
+    }
+    .header__contenedor .logo__header,
+    .header__contenedor .nav__header{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    
+  .header__contenedor .logo__header{
+      height: 100%;
+  }
+
+   .contenedor .footer__contenedor{
+       flex-direction: row;
+       justify-content:center;
+       align-items: center;
+        height: 120px;  
+   }
+
+   .footer__contenedor .contenedor__footer{
+       display: flex;
+       flex-direction: column;
+       width: 45%;
+       align-items: center;
+       /* background: chartreuse; */
+       /* height: 120px; */
+   }
+
+} 
+
+
+
+/** MODO PRUEBAS 
+    revisar el uso del 
+    justify-items,justify-contens,align-items,align-content
+    
+*/
+
+ /* @media screen and (max-width:1280px){
+
+   body{
+       background: turquoise;
+   }
+ya adicione este selector al css base
+ .header__contenedor .nav__header{
+       display: flex;
+        width: 50%;
+    }
+
+}
+
+@media screen and (max-width:875px){
+    .contenedor .header__contenedor{
+        display: flex;
+        flex-direction: column;
+        background: deeppink;
+    }
+    
+   .header__contenedor .nav__header{
+        display: flex;
+        flex-direction: row;
+        background:#e67e22;
+        flex-wrap: nowrap;
+        width: 100%;
+    }
+    .nav__header a{
+        min-width: 60px;
+        height: 45px;
+       background:#e67e22;
+   }
+}  */

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <head name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>redux example with react-redux-object</title>
+    </head>
+
+<body>
+    <p id="value">0</p>
+    <button id="increment">+</button>
+    <button id="decrement">-</button>
+    <button id="incrementIfOdd">incrementifodd</button>
+    <button id="async">async</button>
+
+
+
+
+</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.2.0/redux.min.js"></script>
+
+<script>
+
+
+
+    // redux
+    //* initial state
+    const initialState = {
+        count: 0,
+    };
+
+
+    var value = document.getElementById("value")
+
+    function counter(state = initialState, action) {
+
+        switch (action.type) {
+            case 'INCREMENT':
+                return { ...state, count: state.count + 1 }
+            case 'DECREMENT':
+                return { ...state, count: state.count - 1 }
+            case 'ODD':
+                return { ...state, count: state.count + 1 }
+            case 'ASYNC':
+                return { ...state, count: state.count + 1 }
+            default:
+                return state
+
+        }
+    }
+
+    var rootCounter = Redux.combineReducers({
+        outCounter: counter,
+    });
+
+
+    var store = Redux.createStore(rootCounter, {},
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+
+    function render() {
+        value.innerHTML = store.getState().outCounter.count
+
+        console.log("***subscribe watch***", store.getState());
+
+    }
+
+    render()
+
+    // subscribe to changes of state 
+
+    store.subscribe(render)
+
+    document.getElementById('increment').addEventListener('click', function () {
+        store.dispatch({ type: 'INCREMENT' })
+    })
+
+
+    document.getElementById('decrement').addEventListener('click', function () {
+        store.dispatch({ type: 'DECREMENT' })
+    })
+
+
+    document.getElementById('incrementIfOdd').addEventListener('click', function () {
+        if (store.getState().outCounter.count % 2 !== 0) {
+            store.dispatch({ type: 'ODD' })
+        }
+    })
+    document.getElementById('async').addEventListener('click', function () {
+        setTimeout(() => {
+            store.dispatch({ type: 'ASYNC' })
+        }, 1000);
+    })
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,282 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Roboto", sans-serif;
+}
+
+body{
+    background: #e9e9e9;
+}
+
+.contenedor{
+    background: #ccc;
+    width: 80%;
+    margin: 0 auto;
+    height: 100%;
+}
+ .header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:0 20px;
+    height: 100px;
+    min-height: 100px;
+}
+ .header__logo{
+    display: flex;
+    width: 50%;
+    align-items: center;
+}
+
+.header__img{
+    margin-right: 20px;
+    width: 40px;
+}
+.header__text{
+    font-size: 30px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.header__nav{
+    display: flex;
+    width: 50%;
+    height: 45px;
+    min-height: 45px;
+    flex-wrap: wrap;
+}
+.header__link{
+    background: chocolate;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100%;
+    flex-grow: 1;
+    flex-basis: 0;
+    /* min-width: 120px; */
+    color: #fff;
+    text-decoration: none;
+    
+}
+
+
+
+header{
+    background: #2c2e50;
+}
+
+
+
+ .main{
+    background: #fff;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.main__section{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 70%; 
+    /* width: 70%; */
+}
+.main__article{
+    margin: 15px 0 20px 20px;
+}
+
+.main__article--parrafo{
+    color: blue;
+}
+
+.main__titulo{
+    color: red;
+}
+
+.main__titulo--estilo{
+    font-style: italic;
+    text-decoration: underline fuchsia;
+ }  
+.main__hr{
+    width: 95%;
+    margin: 0 auto;
+}
+
+ .main__aside{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    min-width: 192px;
+    min-height: 250px;
+    flex-grow: 1;
+    flex-basis: 30%; 
+    /* width: 30%; */
+
+}
+
+aside {
+    background: #e67e22;
+}
+.main__box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    height: 40%;
+    margin: 10px 20px;
+    background: #d35400;
+    min-height: 100px;
+
+}
+.main__box--fondo{
+    background: blueviolet;
+}
+
+.main__contenido{
+    color: turquoise;
+}
+.main__contenido--estilo{
+    color: black;
+}
+
+
+.footer{
+    display: flex;
+    background: #2c3e50;
+}
+
+.footer__content{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 80px;
+    min-height: 80px;
+}
+
+ .footer__item{
+    display: flex;
+    align-items: center;
+    height: 100%; 
+     margin: 0 20px;
+}
+
+/*? actua similar a space-between */
+
+/* .section {
+    width: 70%;
+    justify-content: flex-start;
+    
+}
+
+.footer__content__social{
+    justify-content: flex-end;
+    width: 30%;
+} */
+
+
+
+.footer__link{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 45px;
+    padding: 2px 10px;
+    text-decoration: none;
+    color: #fff;
+}
+
+.footer__link--isquierdo {
+    background: #d35400;
+    
+}
+.footer__link--derecho{
+    background: #e67e22;
+}
+
+
+
+ @media screen and (max-width:800px) {
+    body{
+        background: violet;
+
+    }
+    .header{
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+        /* sumas sus elementos para hallar la altura total */
+        height: 145px;
+   
+    }
+   .header__logo,
+  .header__nav{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+    }
+    
+  .header__logo{
+      height: 100%;
+  }
+
+  .footer{
+       flex-direction: row;
+       justify-content:center;
+       align-items: center;
+        height: 120px;  
+   }
+
+ .footer__content{
+       display: flex;
+       flex-direction: column;
+       width: 45%;
+       align-items: center;
+       /* background: chartreuse; */
+       /* height: 120px; */
+   }
+
+} 
+
+
+
+/** MODO PRUEBAS 
+    revisar el uso del 
+    justify-items,justify-contens,align-items,align-content
+    
+*/
+
+ /* @media screen and (max-width:1280px){
+
+   body{
+       background: turquoise;
+   }
+ya adicione este selector al css base
+ .header .header__nav{
+       display: flex;
+        width: 50%;
+    }
+
+}
+
+@media screen and (max-width:875px){
+    .contenedor .header{
+        display: flex;
+        flex-direction: column;
+        background: deeppink;
+    }
+    
+   .header .header__nav{
+        display: flex;
+        flex-direction: row;
+        background:#e67e22;
+        flex-wrap: nowrap;
+        width: 100%;
+    }
+header__nav__el.header__link{
+        min-width: 60px;
+        height: 45px;
+       background:#e67e22;
+   }
+}  */

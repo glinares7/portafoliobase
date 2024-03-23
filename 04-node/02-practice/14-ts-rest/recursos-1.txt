@@ -1,0 +1,418 @@
+
+
+configuración inicial para el entorno de typescript
+
+    //inicializa el archivo de configuración de tslint
+            npm i tslint@6.1.3 --save-dev
+
+    // middleware cors    
+            npm i --save-dev @types/cors@2.8.13
+            
+
+    // firmas de las funciones y metodos ,etc
+            tipado en typescript
+                npm i --save-dev @types/express@4.17.17
+
+    //typescript
+        npm i typescript@4.9.5
+
+    //base de datos
+
+        USER root
+        pass null
+    ./package.json
+
+
+        dependencies
+            "cors": "^2.8.5",
+            "dotenv": "^16.0.3",
+            "express": "^4.18.2",
+            "mariadb": "^3.1.0",
+            "sequelize": "^6.29.3"
+
+
+
+        devDependencies
+
+            "@types/cors": "^2.8.13",
+            "@types/express": "^4.17.17",
+            "tslint": "^6.1.3",
+            "typescript": "^4.9.5"
+
+
+
+    sudo npm install -g typescript
+
+        tsc --init
+        
+
+    ./dist
+        creamos el directorio dist
+
+
+    ./tsconfig.json
+        {
+    "compilerOptions": {
+            "target": "es6",
+            "module": "commonjs",
+            "moduleResolution": "node", 
+            "sourceMap": true, 
+            "outDir": "./dist", 
+            "esModuleInterop": true,    
+            "forceConsistentCasingInFileNames": true,   
+            "strict": true, 
+            "skipLibCheck": true   
+
+        }
+    }
+
+
+PARA QUE TS SE COMPILE Y EN ESE INSTANTE SE EJECUTE EN EL SERVIDOR 
+
+
+        // ts a js nativo
+            tsc
+
+
+
+
+    //corre la aplicación desde el dist
+        node dist/app.js
+
+
+
+
+
+    //inicializar el archivo de configuración de tslint
+
+    #ejecutamos
+        ./node_modules/.bin/tslint --init
+
+        para que no me marque error en la consola dentro del tslint
+            "rules":{
+                "no-console":false
+            }
+
+
+    //compilar ts con express 
+        tsc 
+
+        tsc --watch
+
+        nodemon dist/app.js
+
+
+    //no necesariamente lleva tipado (en caso sea necesario)
+        noimplicitany : true  -> tsconfig.json
+
+
+        
+
+    ammps
+            https://ampps.com/downloads/
+
+        wampServer for windows
+            https://www.wampserver.com/en/
+
+        xampp
+            https://www.apachefriends.org/es/index.html
+        
+        tablePlus 
+            https://tableplus.com/download
+
+
+        sequelize
+            https://sequelize.org/docs/v6/getting-started/
+
+            npm install --save sequelize
+
+                dependiendo con que base de datos instalamos la dependencia necesaria
+                    # One of the following:
+                        $ npm install --save pg pg-hstore # Postgres
+                        $ npm install --save mysql2
+                        $ npm install --save mariadb
+                        $ npm install --save sqlite3
+                        $ npm install --save tedious # Microsoft SQL Server
+                        $ npm install --save oracledb # Oracle Database
+
+
+            conectar la base de datos
+                https://sequelize.org/docs/v6/getting-started/
+
+
+
+
+
+
+-----------------------------------------------------------------
+
+app.ts
+    import dotenv from 'dotenv'
+    import Server from './models/server';
+
+
+
+    //configurar dotenv
+    dotenv.config()
+
+
+    const server= new Server()
+
+    server.listen()
+
+
+
+
+../db/connection.ts
+
+        import { Sequelize} from 'sequelize'
+         const db = new Sequelize('nodeTest','root','',{
+        host:'localhost',
+        dialect:'mariadb',
+        //logging: false,
+
+    })
+
+    export default db;
+
+
+
+./env
+    PORT=8000
+
+../models/server.ts
+
+    import express,{Application} from 'express'
+    import  userRoutes from '../routes/usuario';
+
+    import cors from 'cors'
+    import db from '../db/connection';
+
+    class Server{
+
+        // private app:express.Application;
+        private app:Application;
+        private port:string
+        private apiPaths=({
+            usuarios: '/api/usuarios'
+        })
+
+
+        constructor(){
+            this.app= express()
+            this.port = process.env.PORT || '8000'
+
+
+            //metodos iniciales
+            this.dbConnection()
+            this.middlewares()
+
+            //definir mis rutas
+            this.routes()
+        }
+
+
+        //todo Conectar base de datos
+
+        async dbConnection(){
+            try {
+                
+                await db.authenticate()
+
+                console.log('Database online');
+                
+            } catch (error) {
+                console.error("Error",error);
+                
+            
+            }
+        }
+        
+        middlewares(){
+
+            //CORS
+            this.app.use(cors())
+
+            // lectura del body
+            this.app.use(express.json())
+            
+            //carpeta del public
+            this.app.use(express.static("public"))
+        }
+        
+        
+        routes(){
+            this.app.use(this.apiPaths.usuarios,userRoutes)
+        }
+        listen(){
+            this.app.listen(this.port,() =>{
+                console.log('servidor corriendo en puerto'+ this.port);
+                
+            })
+        }
+    }
+
+    export default Server
+
+
+../models/usuarios.ts
+
+    import {  DataTypes } from "sequelize";
+    import db from '../db/connection';
+
+
+    const Usuario = db.define('usuario',{
+        nombre:{
+            type:DataTypes.STRING
+        },
+        email:{
+            type:DataTypes.STRING
+        },
+        estado:{
+            type:DataTypes.BOOLEAN
+        },
+
+    });
+
+    export default Usuario;
+
+
+
+../routes/usuario.ts
+
+    import {Router}  from 'express'
+    import { getUsuarios, getUsuario, postUsuario, putUsuario, deleteUsuario } from '../controller/usuarios';
+
+
+    const router = Router()
+
+    router.get('/',     getUsuarios)
+    router.get('/:id',  getUsuario)
+    router.post('/',     postUsuario)
+    router.put('/:id',  putUsuario)
+    router.delete('/:id',  deleteUsuario)
+
+
+
+    export default router
+
+
+../controller/usuario.ts
+
+    import { Request, Response } from "express";
+    import Usuario from '../models/usuario';
+
+    export const getUsuarios =async (req:Request,res:Response) =>{
+
+        const usuarios = await Usuario.findAll()
+        res.json(usuarios);
+    }
+
+    export const getUsuario = async(req:Request,res:Response) =>{
+
+        const { id} = req.params
+        
+        const usuario = await Usuario.findByPk(id)
+        if(usuario){
+            res.json(usuario)
+        }else{
+            res.status(400).json({
+                msg:`No existe un usuario con el id ${id}` })
+    
+        }
+
+    }
+    export const postUsuario = async(req:Request,res:Response) =>{
+
+
+        const  {body} = req
+        
+        try {
+
+            const existeEmail = await Usuario.findOne({
+                where:{
+                    email:body.email
+                }
+            })
+
+            if(existeEmail){
+                return res.status(400).json({
+                    msg:'Ya existe un usuario con el email ' + body.email
+                })
+            }
+            const usuario =   new Usuario(body)
+            await usuario.save()
+
+            res.json(usuario)
+
+        } catch (error) {
+
+            console.log(error);
+            
+            res.status(500).json({
+                msg: 'Hable con el administrador',
+    
+            })
+        }
+        
+
+    }
+    export const putUsuario = async(req:Request,res:Response) =>{
+
+        const { id} = req.params
+        const { body} = req
+        
+
+
+        try {
+
+            const usuario= await Usuario.findByPk(id)
+            if(!usuario){
+                return res.status(404).json({
+                    msg: 'No existe un usuario con el id' + id
+                })
+            }
+        
+
+            await usuario.update(body)
+
+            res.json(usuario)
+        } catch (error) {
+
+            console.log(error);
+            
+            res.status(500).json({
+                msg: 'Hable con el administrador',
+    
+            })
+        }
+        
+    }
+    export const deleteUsuario = async(req:Request,res:Response) =>{
+
+        const { id} = req.params
+        
+        const usuario= await Usuario.findByPk(id)
+        if(!usuario){
+            return res.status(404).json({
+                msg: 'No existe un usuario con el id' + id
+            })
+        }
+
+
+        //eliminación logica
+            await usuario.update({estado:false})
+
+        //* Eliminación fisica
+        // await usuario.destroy()
+
+        res.json({
+            usuario,
+            msg:`Se elimino o se cambio el estado del usuario con el id ${id}`
+        })
+        
+    }
+
+
+
+

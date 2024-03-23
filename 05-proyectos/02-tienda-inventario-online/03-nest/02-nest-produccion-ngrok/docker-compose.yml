@@ -1,0 +1,29 @@
+version: '3'
+services:
+  nestjs-dev-1:
+    build:
+      context: .  # Ruta al directorio donde se encuentra tu proyecto con el Dockerfile
+    network_mode: "host"  # Usa el modo de red 'host'
+    ports:
+      - "3000:3000"  # Mapea el puerto 3000 del contenedor al puerto 3000 de la máquina anfitriona
+    depends_on:
+      - postgresgh  # Dependencia del servicio de la base de datos
+
+  postgresgh:
+    image: postgres:latest
+    container_name: mi_postgres_orm2
+    environment:
+      POSTGRES_USER: devgtp
+      POSTGRES_PASSWORD: family
+      POSTGRES_DB: nestbuild
+      POSTGRES_HOST: localhost
+      POSTGRES_URL: postgres://devgtp:family@localhost:5432/nestbuild
+    ports:
+      - "5432:5432"
+    #? persistencia de una BD
+    # volumes: 
+    #   - postgres_data:/var/lib/postgresql/data
+    restart: always
+
+# volumes:
+#   postgres_data:

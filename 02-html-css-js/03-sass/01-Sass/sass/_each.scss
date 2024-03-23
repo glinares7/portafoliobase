@@ -1,0 +1,38 @@
+// $margenes: 1 2 3 4 5 6;
+
+// // @each $variable in $lista{}
+
+// @each $margen in $margenes{
+//     .m-#{$margen}{
+//         margin: $margen*1em;
+//     }
+// } 
+
+// $estilos: (
+//     "primary": crimson, 
+//     "secondary": steelblue, 
+//     "shadow": 1px 1px solid #000
+// );
+
+// @each $clave, $valor in $estilos{
+//     .#{$clave}{
+//         @if($clave != 'shadow'){
+//             color: $valor;
+//         }@else{
+//             box-shadow: $valor;
+//         }
+//     }
+// }
+
+
+$lista: 
+    "card" color 3s,
+    "nav" clip-path 2s,
+    "footer" margin 1s;
+
+@each $selector, $propiedad, $duracion in $lista{
+    .#{$selector}{
+        transition-property: $propiedad;
+        transition-duration: $duracion;
+    }
+}

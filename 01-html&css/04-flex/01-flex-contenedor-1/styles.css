@@ -1,0 +1,110 @@
+*{
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
+.contenedor{
+    width: 80%;
+    margin: 20px auto;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;    
+}
+.contenedor .header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2% ;
+    height: 80px;
+    background-color: rgb(13, 37, 173);
+    color: #fff;
+}
+
+.contenedor .main-content{
+    
+    display: flex;
+    /* flex-wrap: wrap; */
+    gap: 20px;
+    
+}
+
+.main-content .main-elementos{
+    width: 70%;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-elementos .main{
+    background-color: chartreuse;
+    padding: 15px 20px;
+}
+ .main-elementos .main-elements-widget{
+    display: flex;
+    flex-direction: row;
+    height: 150px;
+    gap: 20px;
+}
+ .main-elements-widget .widget-1{
+     order: 2;
+    background-color: yellow;
+        flex-grow: 3;
+        /* flex-basis:50% ; */
+        /* width: 100%; */
+    }
+
+    .main-elements-widget .widget-2{
+        order: 1;
+        background-color: rgb(17, 0, 255);
+        flex-grow: 3;
+        /* flex-basis: 50%; */
+        /* width: 100%; */
+    }
+.widget-1, .widget-2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main-content .sidebar{
+    width: 30%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 150px;
+    background-color: tomato;
+    
+}
+
+
+
+.contenedor .footer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2% ;
+    height: 80px;
+    background-color: rgb(13, 37, 173);
+    color: #fff;
+}
+
+
+    @media screen and (max-width: 768px){
+            .contenedor .main-content{
+                display: flex;
+                flex-direction: column;
+            }
+
+            .main-content .main-elementos,
+            .main-content .sidebar
+            {
+                width: 100%;
+            }
+    }
+
+/*?leer teoria -flex
+https://developer.mozilla.org/es/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox
+*/
+

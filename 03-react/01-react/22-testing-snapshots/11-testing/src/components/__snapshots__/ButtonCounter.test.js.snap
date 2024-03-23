@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ButtonCounter/> crea un botton correctamente 1`] = `
+<button
+  aria-label="aumentar"
+>
+  3
+</button>
+`;

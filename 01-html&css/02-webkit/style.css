@@ -1,0 +1,137 @@
+/* body{
+    background-color: #333;
+    color: #fff;
+    
+    
+    
+}
+
+
+body::-webkit-scrollbar{
+    width: 8px;   
+}
+
+body::-webkit-scrollbar-thumb{
+    background: red;
+    height: 70px;
+}
+
+body::-webkit-scrollbar-track {
+    border-radius: 10px;  
+    background: rgb(56, 223, 5);
+
+} */
+
+.contenedor {
+    padding:0 1rem;
+    height: 40px;
+    
+    
+}
+
+.contenedor-1{
+    overflow:auto;
+    max-width: 400px;
+    margin: 2rem auto;
+    border: 1px solid #aaa;
+    height: 300px;
+    width:90%;
+    background: #f1f2f3;
+    color: #333;
+    box-sizing: border-box;
+}
+
+
+
+/* fuente
+https://www.campusmvp.es/recursos/post/como-personalizar-los-estilos-css-de-las-barras-de-scroll.aspx
+*/
+
+
+/* .contenedor::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 10px;
+}
+
+.contenedor::-webkit-scrollbar:vertical {
+    height: 100px;
+     height:50px;
+ }
+
+
+.contenedor::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button {
+    display: none;
+} 
+
+.contenedor::-webkit-scrollbar:horizontal {
+  width: 10px;
+}
+
+.contenedor::-webkit-scrollbar-thumb {
+    background-color: #797979;
+    border-radius: 20px;
+    border: 2px solid #f1f2f3;
+}
+
+.contenedor::-webkit-scrollbar-track {
+    border-radius: 10px;  
+   background: rgb(0, 102, 255);
+}
+
+.contenedor-2{
+    margin: 0px 50px;
+} */
+
+
+/* REFERENCIA
+    https://www.digitalocean.com/community/tutorials/css-scrollbars-es */
+
+    body{
+        background: #333;
+        color: #fff;
+
+      }
+      /** en firefox */
+      *{
+        scrollbar-width: auto;          /* "auto" or "thin" */
+        scrollbar-color: blue  orange;   /* scroll thumb and track */
+      }
+      body::-webkit-scrollbar {
+        width: 10px;               /* width of the entire scrollbar */
+      }
+      
+      body::-webkit-scrollbar-track {
+        background: orange;        /* color of the tracking area */
+        width: 12px;
+      }
+      
+      body::-webkit-scrollbar-thumb {
+        background-color: blue;    /* color of the scroll thumb */
+        border-radius: 20px;       /*roundness of the scroll thumb */
+        /* border: 3px solid orange; creates padding around scroll thumb */
+        height: 70px;
+      }
+
+
+      .contenedor {
+        scrollbar-width: auto;
+        scrollbar-color: blue orange;
+       
+      }
+      
+
+      .contenedor::-webkit-scrollbar {
+        width: 12px;
+      }
+      
+      .contenedor::-webkit-scrollbar-track {
+        background: rgb(0, 0, 0);
+        
+      }
+      
+      .contenedor::-webkit-scrollbar-thumb {
+        background-color: rgb(14, 98, 255);
+        border-radius: 20px;
+        border: 3px solid rgb(255, 255, 255);
+        height: 30px;
+      }

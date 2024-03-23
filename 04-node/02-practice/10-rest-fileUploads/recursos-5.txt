@@ -1,0 +1,497 @@
+
+./node_modules
+    cloudinary              1.34.0
+    express-fileupload      1.4.0
+
+
+
+./models/Server
+
+    const express = require("express");
+    const cors = require("cors");
+    const fileUpload = require("express-fileupload");
+
+    const { dbConnection } = require("../database/config");
+
+
+    class Server {
+  constructor() {
+
+     this.paths = {
+      auth: "/api/auth",
+      buscar: "/api/buscar",
+      categorias: "/api/categorias",
+      productos: "/api/productos",
+      usuarios: "/api/usuarios",
+      uploads: "/api/uploads",
+    };
+
+
+       this.middlewares();
+           this.routes();
+
+  }
+
+      middlewares() {
+
+
+      this.app.use(
+      fileUpload({
+        useTempFiles: true,
+        tempFileDir: "/tmp/",
+        //* si la carpeta no existe la crea
+        createParentPath: true,
+      })
+    );
+
+
+      }
+
+      routes() {
+         this.app.use(this.paths.auth, require("../routes/auth"));
+    this.app.use(this.paths.buscar, require("../routes/buscar"));
+    this.app.use(this.paths.categorias, require("../routes/categorias"));
+    this.app.use(this.paths.productos, require("../routes/productos"));
+    this.app.use(this.paths.usuarios, require("../routes/usuarios"));
+    this.app.use(this.paths.uploads, require("../routes/uploads"));
+
+      }
+
+
+    }
+
+
+**********
+/////////
+**********
+
+    .env
+        CLOUDINARY_URL=
+
+
+    ../models/productos
+
+        const { Schema, model } = require("mongoose");
+
+        const ProductoSchema = Schema({
+      
+        img: { type: String },
+        });
+
+        ProductoSchema.methods.toJSON = function () {
+        const { __v, estado, ...data } = this.toObject();
+        // data.uid=_id
+        return data;
+        };
+
+        module.exports = model("Producto", ProductoSchema);
+
+        
+
+
+    ../middlewares/index
+
+        const validarArchivoSubir = require("../middlewares/validar-archivo");
+
+        module.exports = {
+
+        ...validarArchivoSubir,
+        };
+
+    
+    ../middlewares/validar-archivo
+       
+        const { response } = require("express");
+
+
+
+        const validarArchivoSubir = (req, res = response, next) => {
+        if (!req.files || Object.keys(req.files).length === 0 || !req.files.archivo) {
+            return res
+            .status(400)
+            .json({ msg: "No hay archivos que subir - validarArchivoSubir" });
+        }
+        next();
+        };
+
+        module.exports = {
+        validarArchivoSubir,
+        };
+
+
+
+    ..helpers/db-validator
+
+        const Role = require("../models/role");
+        const { Usuario, Categoria, Producto } = require("../models");
+
+
+        const coleccionesPermitidas = (coleccion = "", colecciones = []) => {
+
+        const incluida = colecciones.includes(coleccion);
+
+        if (!incluida) {
+            throw new Error(
+            `La coleccion ${coleccion} no es permitida, ${colecciones} `
+            );
+        }
+
+        return true;
+        };
+                
+
+        module.exports = {
+        coleccionesPermitidas
+        };
+
+
+    ..helpers/subir-archivo
+        const path = require("path");
+        const { v4: uuidv4 } = require("uuid");
+
+        const subirArchivo = (
+        files,
+        extensionesValidas = ["png", "jpg", "jpeg", "gif"],
+        carpeta = ""
+        ) => {
+        return new Promise((resolve, reject) => {
+            const { archivo } = files;
+            const nombreCortado = archivo.name.split(".");
+            const extension = nombreCortado[nombreCortado.length - 1];
+
+            //* validar  la extension
+            // const extensionesValidas = ["png", "jpg", "jpeg", "gif"];
+
+            if (!extensionesValidas.includes(extension)) {
+            return reject(
+                `La extension ${extension} no es permitida, ${extensionesValidas}`
+            );
+            }
+
+            const nombreTemp = uuidv4() + "." + extension;
+            // const uploadPath = path.join(__dirname, "../uploads/", archivo.name);
+            //* nombre temporal
+            const uploadPath = path.join(__dirname, "../uploads/", carpeta, nombreTemp);
+
+            archivo.mv(uploadPath, (err) => {
+            if (err) {
+                reject(err);
+            }
+
+            resolve(nombreTemp);
+            });
+        });
+        };
+
+        module.exports = {
+        subirArchivo,
+        };
+
+
+    ../routes/uploads
+
+        const { Router } = require("express");
+        const { check } = require("express-validator");
+        const {
+        cargarArchivo,
+        actualizarImagen,
+        mostrarImagen,
+        actualizarImagenCloudinary,
+        } = require("../controllers/uploads");
+        const { coleccionesPermitidas } = require("../helpers");
+
+        const { validarCampos, validarArchivoSubir } = require("../middlewares");
+
+        const router = Router();
+
+        router.post("/", validarArchivoSubir, cargarArchivo);
+
+        router.put(
+        "/:coleccion/:id",
+        [
+            validarArchivoSubir,
+            check("id", "EL id debe de ser de mongo").isMongoId(),
+            check("coleccion").custom((c) =>
+            coleccionesPermitidas(c, ["usuarios", "productos"])
+            ),
+            validarCampos,
+            //   ],
+            //   // actualizarImagen
+            // );
+        ],
+        actualizarImagenCloudinary
+        );
+
+        router.get(
+        "/:coleccion/:id",
+        [
+            check("id", "EL id debe de ser de mongo").isMongoId(),
+            check("coleccion").custom((c) =>
+            coleccionesPermitidas(c, ["usuarios", "productos"])
+            ),
+            validarCampos,
+        ],
+        mostrarImagen
+        );
+
+        module.exports = router;
+
+
+
+    ../assets
+
+        crear folder y directorio
+
+
+    ../helpers/index
+
+        const dbValidator = require("./db-validators");
+        const generarJWT = require("./generar-jwt");
+        const googleVerify = require("./google-verify");
+        const subirArchivos = require("./subir-archivo");
+
+        module.exports = {
+        ...dbValidator,
+        ...generarJWT,
+        ...googleVerify,
+        ...subirArchivos,
+        };
+
+
+
+    ../uploads
+    ../uploads/imgs
+        crear-directorio
+
+
+    ../controllers/uploads
+
+
+        const path = require("path");
+        const fs = require("fs");
+
+        const cloudinary = require("cloudinary").v2;
+
+        cloudinary.config(process.env.CLOUDINARY_URL);
+
+        const { response } = require("express");
+        
+        const { subirArchivo } = require("../helpers");
+
+        const { Usuario, Producto } = require("../models");
+
+
+
+        const cargarArchivo = async (req, res = response) => {
+        // let sampleFile;
+        // let uploadPath;
+
+        //*enviado al middleware validar-archivo
+        // if (!req.files || Object.keys(req.files).length === 0 || !req.files.archivo) {
+        //   // res.status(400).send("No hay archivos que subir");
+        //   res.status(400).json({ msg: "No hay archivos que subir" });
+        //   return;
+        // }
+
+        //   console.log("req.files >>>", req.files); // eslint-disable-line
+
+        //txt md
+
+        //todo se agrega el try-catch ya que no controla la excepción - promise(reject) ~ el resolve pasa normal
+        try {
+            //Imagenes
+            // const nombre = await subirArchivo(req.files, ["txt", "md"], "textos");
+            const nombre = await subirArchivo(req.files, undefined, "imgs");
+
+            res.json({
+            nombre: nombre,
+            });
+        } catch (msg) {
+            res.status(400).json({ msg });
+        }
+        };
+
+
+
+        const actualizarImagen = async (req, res = response) => {
+        //*Ç enviado al middleware validar-archivo
+        // if (!req.files || Object.keys(req.files).length === 0 || !req.files.archivo) {
+        //   res.status(400).json({ msg: "No hay archivos que subir" });
+        //   return;
+        // }
+
+        const { id, coleccion } = req.params;
+
+        let modelo;
+
+        switch (coleccion) {
+            case "usuarios":
+            modelo = await Usuario.findById(id);
+            if (!modelo) {
+                return res.status(400).json({
+                msg: `No existe un usuario con el id ${id}`,
+                });
+            }
+            break;
+            case "productos":
+            modelo = await Producto.findById(id);
+            if (!modelo) {
+                return res.status(400).json({
+                msg: `No existe un producto con el id ${id}`,
+                });
+            }
+            break;
+            default:
+            return res.status(500).json({ msg: "Se me olvidó validar esto " });
+        }
+
+        //*limpiar imagenes previas
+        if (modelo.img) {
+            //* borrar la imagen del servidor
+
+            const pathImagen = path.join(
+            __dirname,
+            "../uploads",
+            coleccion,
+            modelo.img
+            );
+            if (fs.existsSync(pathImagen)) {
+            fs.unlinkSync(pathImagen);
+            }
+        }
+
+        const nombre = await subirArchivo(req.files, undefined, coleccion);
+        modelo.img = nombre;
+
+        await modelo.save();
+        res.json(modelo);
+    };
+
+
+
+        const mostrarImagen = async (req, res = response) => {
+        const { id, coleccion } = req.params;
+
+        let modelo;
+
+        switch (coleccion) {
+            case "usuarios":
+            modelo = await Usuario.findById(id);
+            //* poner un mensaje o una imagen como 404(no se encuentra)
+            if (!modelo) {
+                return res.status(400).json({
+                msg: `No existe un usuario con el id ${id}`,
+                });
+            }
+            break;
+            case "productos":
+            modelo = await Producto.findById(id);
+            if (!modelo) {
+                return res.status(400).json({
+                msg: `No existe un producto con el id ${id}`,
+                });
+            }
+            break;
+            default:
+            return res.status(500).json({ msg: "Se me olvidó validar esto " });
+        }
+
+        //*limpiar imagenes previas
+        if (modelo.img) {
+            //* borrar la imagen del servidor
+
+            const pathImagen = path.join(
+            __dirname,
+            "../uploads",
+            coleccion,
+            modelo.img
+            );
+
+            if (fs.existsSync(pathImagen)) {
+            return res.sendFile(pathImagen);
+            }
+        }
+
+        const archivo = path.join(__dirname, "../assets/", "no-image.jpg");
+
+        res.sendFile(archivo);
+        };
+
+        const actualizarImagenCloudinary = async (req, res = response) => {
+        //*Ç enviado al middleware validar-archivo
+        // if (!req.files || Object.keys(req.files).length === 0 || !req.files.archivo) {
+        //   res.status(400).json({ msg: "No hay archivos que subir" });
+        //   return;
+        // }
+
+        const { id, coleccion } = req.params;
+
+        let modelo;
+
+        switch (coleccion) {
+            case "usuarios":
+            modelo = await Usuario.findById(id);
+            if (!modelo) {
+                return res.status(400).json({
+                msg: `No existe un usuario con el id ${id}`,
+                });
+            }
+            break;
+            case "productos":
+            modelo = await Producto.findById(id);
+            if (!modelo) {
+                return res.status(400).json({
+                msg: `No existe un producto con el id ${id}`,
+                });
+            }
+            break;
+            default:
+            return res.status(500).json({ msg: "Se me olvidó validar esto " });
+        }
+
+        //*limpiar imagenes previas
+        if (modelo.img) {
+            const nombreArr = modelo.img.split("/");
+
+            const nombre = nombreArr[nombreArr.length - 1];
+
+            const [public_id] = nombre.split(".");
+
+            cloudinary.uploader.destroy(public_id);
+            //* borrar la imagen del servidor
+            //TODO limpieza pendiente
+            // const pathImagen = path.join(
+            //   __dirname,
+            //   "../uploads",
+            //   coleccion,
+            //   modelo.img
+            // );
+            // if (fs.existsSync(pathImagen)) {
+            //   fs.unlinkSync(pathImagen);
+            // }
+        }
+
+        const { tempFilePath } = req.files.archivo;
+
+        //* envio de img en la nube
+        const { secure_url } = await cloudinary.uploader.upload(tempFilePath);
+
+        //* envio de img de forma local al servidor
+        // const nombre = await subirArchivo(req.files, undefined, coleccion);
+        modelo.img = secure_url;
+
+        await modelo.save();
+        // res.json(modelo);
+
+        res.json(modelo);
+        };
+
+        module.exports = {
+        cargarArchivo,
+        actualizarImagen,
+        mostrarImagen,
+        actualizarImagenCloudinary,
+        };
+
+
+

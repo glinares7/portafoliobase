@@ -1,0 +1,49 @@
+
+para agregar cuenta sig in de google 
+    google identity
+        https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid?hl=es-419
+    google console
+        https://console.developers.google.com/apis?hl=es-419
+    pantalla de consentimiento de cauth
+        https://console.cloud.google.com/
+
+        pantalla de consentimiento 
+            origenes autorizados de javascript
+                http://localhot
+                http://localhost:8080
+        nos dirigimos a credenciales
+            ID de cliente Oauth
+            id cliente -> esta en .env
+            secret cliente  -> esta en .env
+        
+        configuración
+            murstra boton acceder con google
+                https://developers.google.com/identity/gsi/web/guides/display-button?hl=es-419
+            manejo de respuestas de credenciales con funciones de javascript
+                https://developers.google.com/identity/gsi/web/guides/handle-credential-responses-js-functions?hl=es-419
+            Verifica el token de ID de Google en tu servidor 
+                Using a Google API Client Library
+                https://developers.google.com/identity/gsi/web/guides/verify-google-id-token?hl=es-419
+            
+            
+    documentacion POSTMAN
+        registrarse en postman 
+        logearse con nuestro usuario
+            click derecho a la coleccion
+                view documentation
+                luego modificar deliberadamente
+                    publicar
+                si queremos editar los enviroments
+                    editamos la publicacion y cambiamos la opcion de publicar
+                    https://documenter.getpostman.com/view/25954358/2s93CKPE2w
+                    
+
+    mongoose populate 
+        https://www.geeksforgeeks.org/mongoose-populate-method/
+
+
+    para busquedas en mongo compas 
+        en el filter agregar el id
+            {categoria:ObjectId('63f808244fcd99a106679a36') }
+
+                se  mostrara todos los resultados que incluyen categoria GALLETAS(id)

@@ -1,0 +1,2169 @@
+socket-JWT
+
+package.json
+
+    "name":"13-socket-jwt"
+    "start": "node app.js"
+
+
+        "bcryptjs": "^2.4.3",
+        "cloudinary": "^1.24.0",
+        "cors": "^2.8.5",
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "express-fileupload": "^1.2.1",
+        "express-validator": "^6.9.2",
+        "google-auth-library": "^6.1.6",
+        "jsonwebtoken": "^8.5.1",fer.js
+        borrado:        13-socket-jwt/node_modules/smart-buffer/build/smartbuffer.js.map
+        borrado:        13-socket-jwt/node_modules/smart-buffer/build/utils.js
+        "mongoose": "^5.11.15",
+        "socket.io": "^4.6.1",
+        "uuid": "^8.3.2"
+
+    
+.env
+
+    PORT=
+    MONGODB_CNN=
+
+    SECRETORPRIVATEKEY=
+
+    GOOGLE_CLIENT_ID=
+    GOOGLE_SECRET_ID=
+
+    CLOUDINARY_URL=
+
+app.js
+    require('dotenv').config();
+    const Server = require('./models/server');
+
+    const server = new Server();
+    server.listen();
+
+
+../database/config
+    const mongoose = require('mongoose');
+    const dbConnection = async() => {
+
+        try {
+
+            await mongoose.connect( process.env.MONGODB_CNN, {
+                useNewUrlParser: true,
+                useUnifiedTopology: true,
+                useCreateIndex: true,
+                useFindAndModify: false
+            });
+        
+            console.log('Base de datos online');
+
+        } catch (error) {
+            console.log(error);
+            throw new Error('Error a la hora de iniciar la base de datos');
+        }
+
+
+    }
+
+
+
+    module.exports = {
+        dbConnection
+    }
+
+
+./models/server
+
+    const express = require("express");
+    const cors = require("cors");
+    const fileUpload = require("express-fileupload");
+
+    const { createServer } = require("http");
+
+    const { dbConnection } = require("../database/config");
+
+
+    const { socketController } = require("../sockets/controller");
+
+
+    class Server {
+    constructor() {
+        this.app = express();
+        this.port = process.env.PORT;
+
+        // this.server = requuire('http').createServer(this.app)
+        this.server = createServer(this.app);
+        this.io = require("socket.io")(this.server);
+
+        this.paths = {
+        auth: "/api/auth",
+        buscar: "/api/buscar",
+        categorias: "/api/categorias",
+        productos: "/api/productos",
+        usuarios: "/api/usuarios",
+        uploads: "/api/uploads",
+        };
+
+        // Conectar a base de datos
+        this.conectarDB();
+
+        // Middlewares
+        this.middlewares();
+
+        // Rutas de mi aplicación
+        this.routes();
+
+        //socket
+        this.sockets();
+    }
+
+    async conectarDB() {
+        await dbConnection();
+    }
+
+    middlewares() {
+        // CORS
+        this.app.use(cors());
+
+        // Lectura y parseo del body
+        this.app.use(express.json());
+
+        // Directorio Público
+        this.app.use(express.static("public"));
+
+        // Fileupload - Carga de archivos
+        this.app.use(
+        fileUpload({
+            useTempFiles: true,
+            tempFileDir: "/tmp/",
+            createParentPath: true,
+        })
+        );
+    }
+
+    routes() {
+        this.app.use(this.paths.auth, require("../routes/auth"));
+        this.app.use(this.paths.buscar, require("../routes/buscar"));
+        this.app.use(this.paths.categorias, require("../routes/categorias"));
+        this.app.use(this.paths.productos, require("../routes/productos"));
+        this.app.use(this.paths.usuarios, require("../routes/usuarios"));
+        this.app.use(this.paths.uploads, require("../routes/uploads"));
+    }
+
+    sockets() {
+        this.io.on("connection", (socket) => socketController(socket, this.io));
+    }
+
+    listen() {
+        this.server.listen(this.port, () => {
+        console.log("Servidor corriendo en puerto", this.port);
+        });
+    }
+    }
+
+    module.exports = Server;
+
+
+../models/index
+    const Categoria = require("./categoria");
+    const ChatMensajes = require("./chat-mensajes");
+    const Producto = require("./producto");
+    const Role = require("./role");
+    const Server = require("./server");
+    const Usuario = require("./usuario");
+
+    module.exports = {
+    Categoria,
+    ChatMensajes,
+    Producto,
+    Role,
+    Server,
+    Usuario,
+    };
+
+
+../models/usuario
+
+    const { Schema, model } = require('mongoose');
+
+    const UsuarioSchema = Schema({
+        nombre: {
+            type: String,
+            required: [true, 'El nombre es obligatorio']
+        },
+        correo: {
+            type: String,
+            required: [true, 'El correo es obligatorio'],
+            unique: true
+        },
+        password: {
+            type: String,
+            required: [true, 'La contraseña es obligatoria'],
+        },
+        img: {
+            type: String,
+        },
+        rol: {
+            type: String,
+            required: true,
+            default: 'USER_ROLE',
+            emun: ['ADMIN_ROLE', 'USER_ROLE']
+        },
+        estado: {
+            type: Boolean,
+            default: true
+        },
+        google: {
+            type: Boolean,
+            default: false
+        },
+    });
+
+
+
+    UsuarioSchema.methods.toJSON = function() {
+        const { __v, password, _id, ...usuario  } = this.toObject();
+        usuario.uid = _id;
+        return usuario;
+    }
+
+    module.exports = model( 'Usuario', UsuarioSchema );
+
+
+
+../models/categoria
+    const { Schema, model } = require('mongoose');
+
+    const CategoriaSchema = Schema({
+        nombre: {
+            type: String,
+            required: [true, 'El nombre es obligatorio'],
+            unique: true
+        },
+        estado: {
+            type: Boolean,
+            default: true,
+            required: true
+        },
+        usuario: {
+            type: Schema.Types.ObjectId,
+            ref: 'Usuario',
+            required: true
+        }
+    });
+
+
+    CategoriaSchema.methods.toJSON = function() {
+        const { __v, estado, ...data  } = this.toObject();
+        return data;
+    }
+
+
+    module.exports = model( 'Categoria', CategoriaSchema );
+
+
+
+../models/productos
+    const { Schema, model } = require('mongoose');
+
+    const ProductoSchema = Schema({
+        nombre: {
+            type: String,
+            required: [true, 'El nombre es obligatorio'],
+            unique: true
+        },
+        estado: {
+            type: Boolean,
+            default: true,
+            required: true
+        },
+        usuario: {
+            type: Schema.Types.ObjectId,
+            ref: 'Usuario',
+            required: true
+        },
+        precio: {
+            type: Number,
+            default: 0
+        },
+        categoria: {
+            type: Schema.Types.ObjectId,
+            ref: 'Categoria',
+            required: true
+        },
+        descripcion: { type: String },
+        disponible: { type: Boolean, defult: true },
+        img: { type: String },
+    });
+
+
+    ProductoSchema.methods.toJSON = function() {
+        const { __v, estado, ...data  } = this.toObject();
+        return data;
+    }
+
+
+    module.exports = model( 'Producto', ProductoSchema );
+
+
+
+
+../models/role
+    const { Schema, model } = require('mongoose');
+
+    const RoleSchema = Schema({
+        rol: {
+            type: String,
+            required: [true, 'El rol es obligatorio']
+        }
+    });
+
+
+    module.exports = model( 'Role', RoleSchema );
+
+
+../models/chat-mensajes
+    class Mensaje {
+    constructor(uid, nombre, mensaje) {
+        this.uid = uid;
+        this.nombre = nombre;
+        this.mensaje = mensaje;
+    }
+    }
+
+    class ChatMensajes {
+    constructor() {
+        this.mensajes = [];
+        this.usuarios = {};
+    }
+    get ultimos10() {
+        this.mensajes = this.mensajes.splice(0, 10);
+        return this.mensajes;
+    }
+    get usuariosArr() {
+        return Object.values(this.usuarios); // fadfadfadf [{},{},{}]
+    }
+
+    enviarMensaje(uid, nombre, mensaje) {
+        this.mensajes.unshift(new Mensaje(uid, nombre, mensaje));
+    }
+
+    conectarUsuario(usuario) {
+        this.usuarios[usuario.id] = usuario;
+    }
+
+    desconectarUsuario(id) {
+        delete this.usuarios[id];
+    }
+    }
+
+    module.exports = ChatMensajes;
+
+
+*
+../middlewares/index.js
+    const validaCampos = require('../middlewares/validar-campos');
+    const validarJWT   = require('../middlewares/validar-jwt');
+    const validaRoles  = require('../middlewares/validar-roles');
+    const validarArchivo = require('../middlewares/validar-archivo');
+
+    module.exports = {
+        ...validaCampos,
+        ...validarJWT,
+        ...validaRoles,
+        ...validarArchivo
+    }
+
+
+../middlewares/validar-campos
+    const { validationResult } = require('express-validator');
+
+    const validarCampos = ( req, res, next ) => {
+
+        const errors = validationResult(req);
+        if( !errors.isEmpty() ){
+            return res.status(400).json(errors);
+        }
+
+        next();
+    }
+
+    module.exports = {
+        validarCampos
+    }
+
+
+../middlewares/validar-jwt
+    const { response, request } = require('express');
+    const jwt = require('jsonwebtoken');
+
+    const Usuario = require('../models/usuario');
+
+
+    const validarJWT = async( req = request, res = response, next ) => {
+
+        const token = req.header('x-token');
+
+        if ( !token ) {
+            return res.status(401).json({
+                msg: 'No hay token en la petición'
+            });
+        }
+
+        try {
+            
+            const { uid } = jwt.verify( token, process.env.SECRETORPRIVATEKEY );
+
+            // leer el usuario que corresponde al uid
+            const usuario = await Usuario.findById( uid );
+
+            if( !usuario ) {
+                return res.status(401).json({
+                    msg: 'Token no válido - usuario no existe DB'
+                })
+            }
+
+            // Verificar si el uid tiene estado true
+            if ( !usuario.estado ) {
+                return res.status(401).json({
+                    msg: 'Token no válido - usuario con estado: false'
+                })
+            }
+            
+            
+            req.usuario = usuario;
+            next();
+
+        } catch (error) {
+
+            console.log(error);
+            res.status(401).json({
+                msg: 'Token no válido'
+            })
+        }
+
+    }
+
+    module.exports = {
+        validarJWT
+    }
+------------***-------------
+
+../middlewares/validar-roles
+    const { response } = require('express')
+
+    const esAdminRole = ( req, res = response, next ) => {
+
+        if ( !req.usuario ) {
+            return res.status(500).json({
+                msg: 'Se quiere verificar el role sin validar el token primero'
+            });
+        }
+
+        const { rol, nombre } = req.usuario;
+        
+        if ( rol !== 'ADMIN_ROLE' ) {
+            return res.status(401).json({
+                msg: `${ nombre } no es administrador - No puede hacer esto`
+            });
+        }
+
+        next();
+    }
+
+
+    const tieneRole = ( ...roles  ) => {
+        return (req, res = response, next) => {
+            
+            if ( !req.usuario ) {
+                return res.status(500).json({
+                    msg: 'Se quiere verificar el role sin validar el token primero'
+                });
+            }
+
+            if ( !roles.includes( req.usuario.rol ) ) {
+                return res.status(401).json({
+                    msg: `El servicio requiere uno de estos roles ${ roles }`
+                });
+            }
+
+
+            next();
+        }
+    }
+
+
+
+    module.exports = {
+        esAdminRole,
+        tieneRole
+    }
+
+
+    
+../middlewares/validar-archivo
+    const validarArchivoSubir = (req, res = response, next ) => {
+
+    if (!req.files || Object.keys(req.files).length === 0 || !req.files.archivo ) {
+        return res.status(400).json({
+            msg: 'No hay archivos que subir - validarArchivoSubir'
+        });
+    }
+
+    next();
+
+    }
+
+
+module.exports = {
+    validarArchivoSubir
+}
+
+    
+
+*
+../helpers/index
+
+    const dbValidators = require('./db-validators');
+    const generarJWT   = require('./generar-jwt');
+    const googleVerify = require('./google-verify');
+    const subirArchivo = require('./subir-archivo');
+
+
+    module.exports = {
+        ...dbValidators,
+        ...generarJWT,
+        ...googleVerify,
+        ...subirArchivo,
+    }
+
+
+../helpers/db-validators
+
+    const Role = require('../models/role');
+    const { Usuario, Categoria, Producto } = require('../models');
+
+    const esRoleValido = async(rol = '') => {
+
+        const existeRol = await Role.findOne({ rol });
+        if ( !existeRol ) {
+            throw new Error(`El rol ${ rol } no está registrado en la BD`);
+        }
+    }
+
+    const emailExiste = async( correo = '' ) => {
+
+        // Verificar si el correo existe
+        const existeEmail = await Usuario.findOne({ correo });
+        if ( existeEmail ) {
+            throw new Error(`El correo: ${ correo }, ya está registrado`);
+        }
+    }
+
+    const existeUsuarioPorId = async( id ) => {
+
+        // Verificar si el correo existe
+        const existeUsuario = await Usuario.findById(id);
+        if ( !existeUsuario ) {
+            throw new Error(`El id no existe ${ id }`);
+        }
+    }
+
+    /**
+    * Categorias
+    */
+    const existeCategoriaPorId = async( id ) => {
+
+        // Verificar si el correo existe
+        const existeCategoria = await Categoria.findById(id);
+        if ( !existeCategoria ) {
+            throw new Error(`El id no existe ${ id }`);
+        }
+    }
+
+    /**
+    * Productos
+    */
+    const existeProductoPorId = async( id ) => {
+
+        // Verificar si el correo existe
+        const existeProducto = await Producto.findById(id);
+        if ( !existeProducto ) {
+            throw new Error(`El id no existe ${ id }`);
+        }
+    }
+
+    /**
+    * Validar colecciones permitidas
+    */
+    const coleccionesPermitidas = ( coleccion = '', colecciones = []) => {
+
+        const incluida = colecciones.includes( coleccion );
+        if ( !incluida ) {
+            throw new Error(`La colección ${ coleccion } no es permitida, ${ colecciones }`);
+        }
+        return true;
+    }
+
+
+    module.exports = {
+        esRoleValido,
+        emailExiste,
+        existeUsuarioPorId,
+        existeCategoriaPorId,
+        existeProductoPorId,
+        coleccionesPermitidas
+    }
+
+
+../helpers/generar-jwt
+    const jwt = require('jsonwebtoken');
+    const { Usuario } = require('../models')
+
+
+    const generarJWT = (uid = '') => {
+
+        return new Promise((resolve, reject) => {
+
+            const payload = { uid };
+
+            jwt.sign(payload, process.env.SECRETORPRIVATEKEY, {
+                expiresIn: '4h'
+            }, (err, token) => {
+
+                if (err) {
+                    console.log(err);
+                    reject('No se pudo generar el token')
+                } else {
+                    resolve(token);
+                }
+            })
+
+        })
+    }
+
+
+
+    const comprobarJWT = async (token = '') => {
+        try {
+
+            if (token.length < 10) {
+                return null
+            }
+            const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY)
+            const usuario = await Usuario.findById(uid)
+
+            if (usuario) {
+                if (usuario.estado) {
+                    return usuario
+                } else {
+                    return null
+                }
+            } else {
+                return null
+            }
+
+
+
+        } catch (error) {
+            return null
+
+        }
+    }
+
+    module.exports = {
+        generarJWT,
+        comprobarJWT
+    }
+
+
+
+../helpers/google-verify
+    const { OAuth2Client } = require('google-auth-library');
+
+    const client = new OAuth2Client( process.env.GOOGLE_CLIENT_ID );
+
+    const googleVerify = async( idToken = '' ) => {
+
+    const ticket = await client.verifyIdToken({
+        idToken,
+        audience: process.env.GOOGLE_CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+        // Or, if multiple clients access the backend:
+        //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+    });
+
+    const { name: nombre, 
+            picture: img, 
+            email: correo
+            } = ticket.getPayload();
+    
+    return { nombre, img, correo };
+
+    }
+
+
+    module.exports = {
+        googleVerify
+    }
+
+
+
+../helpers/subir-archivo    
+    const path = require('path');
+    const { v4: uuidv4 } = require('uuid');
+
+    const subirArchivo = ( files, extensionesValidas = ['png','jpg','jpeg','gif'], carpeta = '' ) => {
+
+        return new Promise( (resolve, reject) => {
+
+            const { archivo } = files;
+            const nombreCortado = archivo.name.split('.');
+            const extension = nombreCortado[ nombreCortado.length - 1 ];
+
+            // Validar la extension
+            if ( !extensionesValidas.includes( extension ) ) {
+                return reject(`La extensión ${ extension } no es permitida - ${ extensionesValidas }`);
+            }
+            
+            const nombreTemp = uuidv4() + '.' + extension;
+            const uploadPath = path.join( __dirname, '../uploads/', carpeta, nombreTemp );
+
+            archivo.mv(uploadPath, (err) => {
+                if (err) {
+                    reject(err);
+                }
+
+                resolve( nombreTemp );
+            });
+
+        });
+
+    }
+
+
+const subirArchivoClient = (
+  files,
+  extensionesValidas = ["png", "jpg", "jpeg", "gif"],
+  carpeta = ""
+) => {
+  return new Promise((resolve, reject) => {
+    const { archivo } = files;
+    const nombreCortado = archivo.name.split(".");
+    const extension = nombreCortado[nombreCortado.length - 1];
+
+    //*validar Extension
+    //* const extensionesValidas = ["png", "jpg", "jpeg", "gif"];
+
+    if (!extensionesValidas.includes(extension)) {
+      return reject(
+        `La extension ${extension} no es permitida ,${extensionesValidas} `
+      );
+    }
+
+    const nombreTemp = uuidv4() + "." + extension;
+
+    //* const uploadPath=path.join(__dirname,"../uploads/",archivo.name)
+
+    //* nombre Temporal
+    // const uploadPath = path.join(
+    //   __dirname,
+    //   "../uploads/",
+    //   carpeta,
+    //   nombreTemp
+    // );
+
+    const uploadPath = path.join(
+      __dirname,
+      "../public/",
+      carpeta,
+      archivo.name
+    );
+
+    archivo.mv(uploadPath, (err) => {
+      if (err) {
+        reject(err);
+      }
+
+      resolve(archivo.name);
+      // resolve(nombreTemp);
+    });
+  });
+};
+
+
+    module.exports = {
+        subirArchivo,
+        subirArchivoCLient
+    }
+
+
+
+*
+../routes/auth
+
+    const { Router } = require("express");
+const { check } = require("express-validator");
+
+const { validarCampos, validarJWT } = require("../middlewares");
+
+const { login, googleSignin, renovarToken } = require("../controllers/auth");
+
+const router = Router();
+
+router.post(
+  "/login",
+  [
+    check("correo", "El correo es obligatorio").isEmail(),
+    check("password", "La contraseña es obligatoria").not().isEmpty(),
+    validarCampos,
+  ],
+  login
+);
+
+router.post(
+  "/google",
+  [
+    check("id_token", "El id_token es necesario").not().isEmpty(),
+    validarCampos,
+  ],
+  googleSignin
+);
+
+router.get("/", validarJWT, renovarToken);
+
+module.exports = router;
+
+    
+../controllers/auth
+    const { response } = require("express");
+const bcryptjs = require("bcryptjs");
+
+const Usuario = require("../models/usuario");
+
+const { generarJWT } = require("../helpers/generar-jwt");
+const { googleVerify } = require("../helpers/google-verify");
+
+const login = async (req, res = response) => {
+  const { correo, password } = req.body;
+
+  try {
+    // Verificar si el email existe
+    const usuario = await Usuario.findOne({ correo });
+    if (!usuario) {
+      return res.status(400).json({
+        msg: "Usuario / Password no son correctos - correo",
+      });
+    }
+
+    // SI el usuario está activo
+    if (!usuario.estado) {
+      return res.status(400).json({
+        msg: "Usuario / Password no son correctos - estado: false",
+      });
+    }
+
+    // Verificar la contraseña
+    const validPassword = bcryptjs.compareSync(password, usuario.password);
+    if (!validPassword) {
+      return res.status(400).json({
+        msg: "Usuario / Password no son correctos - password",
+      });
+    }
+
+    // Generar el JWT
+    const token = await generarJWT(usuario.id);
+
+    res.json({
+      usuario,
+      token,
+    });
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+        msg: "Hable con el administrador",
+        });
+    }
+    };
+
+    const googleSignin = async (req, res = response) => {
+    const { id_token } = req.body;
+
+    try {
+        const { correo, nombre, img } = await googleVerify(id_token);
+
+        let usuario = await Usuario.findOne({ correo });
+
+        if (!usuario) {
+        // Tengo que crearlo
+        const data = {
+            nombre,
+            correo,
+            password: ":P",
+            img,
+            google: true,
+        };
+
+        usuario = new Usuario(data);
+        await usuario.save();
+        }
+
+        // Si el usuario en DB
+        if (!usuario.estado) {
+        return res.status(401).json({
+            msg: "Hable con el administrador, usuario bloqueado",
+        });
+        }
+
+        // Generar el JWT
+        const token = await generarJWT(usuario.id);
+
+        res.json({
+        usuario,
+        token,
+        });
+    } catch (error) {
+        res.status(400).json({
+        msg: "Token de Google no es válido",
+        });
+    }
+    };
+
+    const renovarToken = async (req, res = response) => {
+    const { usuario } = req;
+    //Generar el JWT
+    const token = await generarJWT(usuario.id);
+    res.json({
+        usuario,
+        token,
+    });
+    };
+
+    module.exports = {
+    login,
+    googleSignin,
+    renovarToken,
+    };
+
+
+../routes/buscar
+    const { Router } = require('express');
+    const { buscar } = require('../controllers/buscar');
+
+    const router = Router();
+
+
+    router.get('/:coleccion/:termino', buscar )
+
+    module.exports = router;
+
+../controller/buscar
+    const { response } = require('express');
+    const { ObjectId } = require('mongoose').Types;
+
+    const { Usuario, Categoria, Producto } = require('../models');
+
+    const coleccionesPermitidas = [
+        'usuarios',
+        'categorias',
+        'productos',
+        'roles'
+    ];
+
+    const buscarUsuarios = async( termino = '', res = response ) => {
+
+        const esMongoID = ObjectId.isValid( termino ); // TRUE 
+
+        if ( esMongoID ) {
+            const usuario = await Usuario.findById(termino);
+            return res.json({
+                results: ( usuario ) ? [ usuario ] : []
+            });
+        }
+
+        const regex = new RegExp( termino, 'i' );
+        const usuarios = await Usuario.find({
+            $or: [{ nombre: regex }, { correo: regex }],
+            $and: [{ estado: true }]
+        });
+
+        res.json({
+            results: usuarios
+        });
+
+    }
+
+    const buscarCategorias = async( termino = '', res = response ) => {
+
+        const esMongoID = ObjectId.isValid( termino ); // TRUE 
+
+        if ( esMongoID ) {
+            const categoria = await Categoria.findById(termino);
+            return res.json({
+                results: ( categoria ) ? [ categoria ] : []
+            });
+        }
+
+        const regex = new RegExp( termino, 'i' );
+        const categorias = await Categoria.find({ nombre: regex, estado: true });
+
+        res.json({
+            results: categorias
+        });
+
+    }
+
+    const buscarProductos = async( termino = '', res = response ) => {
+
+        const esMongoID = ObjectId.isValid( termino ); // TRUE 
+
+        if ( esMongoID ) {
+            const producto = await Producto.findById(termino)
+                                .populate('categoria','nombre');
+            return res.json({
+                results: ( producto ) ? [ producto ] : []
+            });
+        }
+
+        const regex = new RegExp( termino, 'i' );
+        const productos = await Producto.find({ nombre: regex, estado: true })
+                                .populate('categoria','nombre')
+
+        res.json({
+            results: productos
+        });
+
+    }
+
+
+    const buscar = ( req, res = response ) => {
+        
+        const { coleccion, termino  } = req.params;
+
+        if ( !coleccionesPermitidas.includes( coleccion ) ) {
+            return res.status(400).json({
+                msg: `Las colecciones permitidas son: ${ coleccionesPermitidas }`
+            })
+        }
+
+        switch (coleccion) {
+            case 'usuarios':
+                buscarUsuarios(termino, res);
+            break;
+            case 'categorias':
+                buscarCategorias(termino, res);
+            break;
+            case 'productos':
+                buscarProductos(termino, res);
+            break;
+
+            default:
+                res.status(500).json({
+                    msg: 'Se le olvido hacer esta búsquda'
+                })
+        }
+
+    }
+
+
+
+    module.exports = {
+        buscar
+    }
+
+
+../routes/categorias
+
+    const { Router } = require('express');
+    const { check } = require('express-validator');
+
+    const { validarJWT, validarCampos, esAdminRole } = require('../middlewares');
+
+    const { crearCategoria,
+            obtenerCategorias,
+            obtenerCategoria,
+            actualizarCategoria, 
+            borrarCategoria } = require('../controllers/categorias');
+    const { existeCategoriaPorId } = require('../helpers/db-validators');
+
+    const router = Router();
+
+    /**
+    * {{url}}/api/categorias
+    */
+
+    //  Obtener todas las categorias - publico
+    router.get('/', obtenerCategorias );
+
+    // Obtener una categoria por id - publico
+    router.get('/:id',[
+        check('id', 'No es un id de Mongo válido').isMongoId(),
+        check('id').custom( existeCategoriaPorId ),
+        validarCampos,
+    ], obtenerCategoria );
+
+    // Crear categoria - privado - cualquier persona con un token válido
+    router.post('/', [ 
+        validarJWT,
+        check('nombre','El nombre es obligatorio').not().isEmpty(),
+        validarCampos
+    ], crearCategoria );
+
+    // Actualizar - privado - cualquiera con token válido
+    router.put('/:id',[
+        validarJWT,
+        check('nombre','El nombre es obligatorio').not().isEmpty(),
+        check('id').custom( existeCategoriaPorId ),
+        validarCampos
+    ],actualizarCategoria );
+
+    // Borrar una categoria - Admin
+    router.delete('/:id',[
+        validarJWT,
+        esAdminRole,
+        check('id', 'No es un id de Mongo válido').isMongoId(),
+        check('id').custom( existeCategoriaPorId ),
+        //tieneRole("ADMIN_ROLE","VENTAS_ROLE","OTRO_ROLE")
+        validarCampos,
+    ],borrarCategoria);
+
+
+
+    module.exports = router;
+
+
+../controller/categorias
+    const { response } = require('express');
+    const { Categoria } = require('../models');
+
+
+    const obtenerCategorias = async(req, res = response ) => {
+
+        const { limite = 5, desde = 0 } = req.query;
+        const query = { estado: true };
+
+        const [ total, categorias ] = await Promise.all([
+            Categoria.countDocuments(query),
+            Categoria.find(query)
+                .populate('usuario', 'nombre')
+                .skip( Number( desde ) )
+                .limit(Number( limite ))
+        ]);
+
+        res.json({
+            total,
+            categorias
+        });
+    }
+
+    const obtenerCategoria = async(req, res = response ) => {
+
+        const { id } = req.params;
+        const categoria = await Categoria.findById( id )
+                                .populate('usuario', 'nombre');
+
+        res.json( categoria );
+
+    }
+
+    const crearCategoria = async(req, res = response ) => {
+
+        const nombre = req.body.nombre.toUpperCase();
+
+        const categoriaDB = await Categoria.findOne({ nombre });
+
+        if ( categoriaDB ) {
+            return res.status(400).json({
+                msg: `La categoria ${ categoriaDB.nombre }, ya existe`
+            });
+        }
+
+        // Generar la data a guardar
+        const data = {
+            nombre,
+            usuario: req.usuario._id
+        }
+
+        const categoria = new Categoria( data );
+
+        // Guardar DB
+        await categoria.save();
+
+        res.status(201).json(categoria);
+
+    }
+
+    const actualizarCategoria = async( req, res = response ) => {
+
+        const { id } = req.params;
+        const { estado, usuario, ...data } = req.body;
+
+        data.nombre  = data.nombre.toUpperCase();
+        data.usuario = req.usuario._id;
+
+        const categoria = await Categoria.findByIdAndUpdate(id, data, { new: true });
+
+        res.json( categoria );
+
+    }
+
+    const borrarCategoria = async(req, res =response ) => {
+
+        const { id } = req.params;
+        const categoriaBorrada = await Categoria.findByIdAndUpdate( id, { estado: false }, {new: true });
+
+        res.json( categoriaBorrada );
+    }
+
+    module.exports = {
+    obtenerCategorias,
+    obtenerCategoria,
+    crearCategoria,
+    actualizarCategoria,
+    borrarCategoria,
+    };
+
+
+../routes/productos
+    const { Router } = require('express');
+    const { check } = require('express-validator');
+
+    const { validarJWT, validarCampos, esAdminRole } = require('../middlewares');
+
+    const { crearProducto,
+            obtenerProductos,
+            obtenerProducto,
+            actualizarProducto, 
+            borrarProducto } = require('../controllers/productos');
+
+    const { existeCategoriaPorId, existeProductoPorId } = require('../helpers/db-validators');
+
+    const router = Router();
+
+    /**
+    * {{url}}/api/categorias
+    */
+
+    //  Obtener todas las categorias - publico
+    router.get('/', obtenerProductos );
+
+    // Obtener una categoria por id - publico
+    router.get('/:id',[
+        check('id', 'No es un id de Mongo válido').isMongoId(),
+        check('id').custom( existeProductoPorId ),
+        validarCampos,
+    ], obtenerProducto );
+
+    // Crear categoria - privado - cualquier persona con un token válido
+    router.post('/', [ 
+        validarJWT,
+        check('nombre','El nombre es obligatorio').not().isEmpty(),
+        check('categoria','No es un id de Mongo').isMongoId(),
+        check('categoria').custom( existeCategoriaPorId ),
+        validarCampos
+    ], crearProducto );
+
+    // Actualizar - privado - cualquiera con token válido
+    router.put('/:id',[
+        validarJWT,
+        // check('categoria','No es un id de Mongo').isMongoId(),
+        check('id').custom( existeProductoPorId ),
+        validarCampos
+    ], actualizarProducto );
+
+    // Borrar una categoria - Admin
+    router.delete('/:id',[
+        validarJWT,
+        esAdminRole,
+        check('id', 'No es un id de Mongo válido').isMongoId(),
+        check('id').custom( existeProductoPorId ),
+        validarCampos,
+    ], borrarProducto);
+
+
+    module.exports = router;
+
+
+../controller/productos
+    const { response } = require('express');
+    const { Producto } = require('../models');
+
+
+    const obtenerProductos = async(req, res = response ) => {
+
+        const { limite = 5, desde = 0 } = req.query;
+        const query = { estado: true };
+
+        const [ total, productos ] = await Promise.all([
+            Producto.countDocuments(query),
+            Producto.find(query)
+                .populate('usuario', 'nombre')
+                .populate('categoria', 'nombre')
+                .skip( Number( desde ) )
+                .limit(Number( limite ))
+        ]);
+
+        res.json({
+            total,
+            productos
+        });
+    }
+
+    const obtenerProducto = async(req, res = response ) => {
+
+        const { id } = req.params;
+        const producto = await Producto.findById( id )
+                                .populate('usuario', 'nombre')
+                                .populate('categoria', 'nombre');
+
+        res.json( producto );
+
+    }
+
+    const crearProducto = async(req, res = response ) => {
+
+        const { estado, usuario, ...body } = req.body;
+
+        const productoDB = await Producto.findOne({ nombre: body.nombre });
+
+        if ( productoDB ) {
+            return res.status(400).json({
+                msg: `El producto ${ productoDB.nombre }, ya existe`
+            });
+        }
+
+        // Generar la data a guardar
+        const data = {
+            ...body,
+            nombre: body.nombre.toUpperCase(),
+            usuario: req.usuario._id
+        }
+
+        const producto = new Producto( data );
+
+        // Guardar DB
+        await producto.save();
+
+        res.status(201).json(producto);
+
+    }
+
+    const actualizarProducto = async( req, res = response ) => {
+
+        const { id } = req.params;
+        const { estado, usuario, ...data } = req.body;
+
+        if( data.nombre ) {
+            data.nombre  = data.nombre.toUpperCase();
+        }
+
+        data.usuario = req.usuario._id;
+
+        const producto = await Producto.findByIdAndUpdate(id, data, { new: true });
+
+        res.json( producto );
+
+    }
+
+    const borrarProducto = async(req, res = response ) => {
+
+        const { id } = req.params;
+        const productoBorrado = await Producto.findByIdAndUpdate( id, { estado: false }, {new: true });
+
+        res.json( productoBorrado );
+    }
+
+
+
+
+    module.exports = {
+        crearProducto,
+        obtenerProductos,
+        obtenerProducto,
+        actualizarProducto,
+        borrarProducto
+    }
+    
+
+
+../routes/usuarios
+
+    const { Router } = require('express');
+    const { check } = require('express-validator');
+
+    const {
+        validarCampos,
+        validarJWT,
+        esAdminRole,
+        tieneRole
+    } = require('../middlewares');
+
+
+    const { esRoleValido, emailExiste, existeUsuarioPorId } = require('../helpers/db-validators');
+
+    const { usuariosGet,
+            usuariosPut,
+            usuariosPost,
+            usuariosDelete,
+            usuariosPatch } = require('../controllers/usuarios');
+
+    const router = Router();
+
+
+    router.get('/', usuariosGet );
+
+    router.put('/:id',[
+        check('id', 'No es un ID válido').isMongoId(),
+        check('id').custom( existeUsuarioPorId ),
+        check('rol').custom( esRoleValido ), 
+        validarCampos
+    ],usuariosPut );
+
+    router.post('/',[
+        check('nombre', 'El nombre es obligatorio').not().isEmpty(),
+        check('password', 'El password debe de ser más de 6 letras').isLength({ min: 6 }),
+        check('correo', 'El correo no es válido').isEmail(),
+        check('correo').custom( emailExiste ),
+        // check('rol', 'No es un rol válido').isIn(['ADMIN_ROLE','USER_ROLE']),
+        check('rol').custom( esRoleValido ), 
+        validarCampos
+    ], usuariosPost );
+
+    router.delete('/:id',[
+        validarJWT,
+        // esAdminRole,
+        tieneRole('ADMIN_ROLE', 'VENTAR_ROLE','OTRO_ROLE'),
+        check('id', 'No es un ID válido').isMongoId(),
+        check('id').custom( existeUsuarioPorId ),
+        validarCampos
+    ],usuariosDelete );
+
+    router.patch('/', usuariosPatch );
+
+
+    module.exports = router;
+
+
+../controller/usuarios
+    const { response, request } = require('express');
+    const bcryptjs = require('bcryptjs');
+
+
+    const Usuario = require('../models/usuario');
+
+
+
+    const usuariosGet = async(req = request, res = response) => {
+
+        const { limite = 5, desde = 0 } = req.query;
+        const query = { estado: true };
+
+        const [ total, usuarios ] = await Promise.all([
+            Usuario.countDocuments(query),
+            Usuario.find(query)
+                .skip( Number( desde ) )
+                .limit(Number( limite ))
+        ]);
+
+        res.json({
+            total,
+            usuarios
+        });
+    }
+
+    const usuariosPost = async(req, res = response) => {
+        
+        const { nombre, correo, password, rol } = req.body;
+        const usuario = new Usuario({ nombre, correo, password, rol });
+
+        // Encriptar la contraseña
+        const salt = bcryptjs.genSaltSync();
+        usuario.password = bcryptjs.hashSync( password, salt );
+
+        // Guardar en BD
+        await usuario.save();
+
+        res.json({
+            usuario
+        });
+    }
+
+    const usuariosPut = async(req, res = response) => {
+
+        const { id } = req.params;
+        const { _id, password, google, correo, ...resto } = req.body;
+
+        if ( password ) {
+            // Encriptar la contraseña
+            const salt = bcryptjs.genSaltSync();
+            resto.password = bcryptjs.hashSync( password, salt );
+        }
+
+        const usuario = await Usuario.findByIdAndUpdate( id, resto );
+
+        res.json(usuario);
+    }
+
+    const usuariosPatch = (req, res = response) => {
+        res.json({
+            msg: 'patch API - usuariosPatch'
+        });
+    }
+
+    const usuariosDelete = async(req, res = response) => {
+
+        const { id } = req.params;
+        const usuario = await Usuario.findByIdAndUpdate( id, { estado: false } );
+
+        
+        res.json(usuario);
+    }
+
+
+
+
+    module.exports = {
+        usuariosGet,
+        usuariosPost,
+        usuariosPut,
+        usuariosPatch,
+        usuariosDelete,
+    }
+
+
+../routes/uploads
+    const { Router } = require('express');
+    const { check } = require('express-validator');
+
+    const { validarCampos, validarArchivoSubir } = require('../middlewares');
+    const { cargarArchivo, actualizarImagen, mostrarImagen, actualizarImagenCloudinary } = require('../controllers/uploads');
+    const { coleccionesPermitidas } = require('../helpers');
+
+
+    const router = Router();
+
+
+    router.post( '/', validarArchivoSubir, cargarArchivo );
+
+    router.put('/:coleccion/:id', [
+        validarArchivoSubir,
+        check('id','El id debe de ser de mongo').isMongoId(),
+        check('coleccion').custom( c => coleccionesPermitidas( c, ['usuarios','productos'] ) ),
+        validarCampos
+    ], actualizarImagenCloudinary )
+    // ], actualizarImagen )
+
+    router.get('/:coleccion/:id', [
+        check('id','El id debe de ser de mongo').isMongoId(),
+        check('coleccion').custom( c => coleccionesPermitidas( c, ['usuarios','productos'] ) ),
+        validarCampos
+    ], mostrarImagen  )
+
+
+
+    module.exports = router;
+
+
+
+../uploads
+    crear directorio
+
+../public/img
+    crear directorio
+    
+//*../uploads/imgs
+    crear directorio
+
+../assets
+    agregar file
+        no-image.jpg (una imagen alusiva a que no tiene imagen)
+
+
+../controller/uploads
+
+    const path = require('path');
+    const fs   = require('fs');
+
+    const cloudinary = require('cloudinary').v2
+    cloudinary.config( process.env.CLOUDINARY_URL );
+
+    const { response } = require('express');
+    const { subirArchivo,subirArchivoClient } = require('../helpers');
+
+    const { Usuario, Producto } = require('../models');
+
+
+    const cargarArchivo = async(req, res = response) => {
+
+
+        try {
+            
+            // txt, md
+            // const nombre = await subirArchivo( req.files, ['txt','md'], 'textos' );
+            const nombre = await subirArchivoClient( req.files, undefined, 'imgs' );
+            res.json({ nombre });
+
+        } catch (msg) {
+            res.status(400).json({ msg });
+        }
+
+    }
+
+
+    const actualizarImagen = async(req, res = response ) => {
+
+        const { id, coleccion } = req.params;
+
+        let modelo;
+
+        switch ( coleccion ) {
+            case 'usuarios':
+                modelo = await Usuario.findById(id);
+                if ( !modelo ) {
+                    return res.status(400).json({
+                        msg: `No existe un usuario con el id ${ id }`
+                    });
+                }
+            
+            break;
+
+            case 'productos':
+                modelo = await Producto.findById(id);
+                if ( !modelo ) {
+                    return res.status(400).json({
+                        msg: `No existe un producto con el id ${ id }`
+                    });
+                }
+            
+            break;
+        
+            default:
+                return res.status(500).json({ msg: 'Se me olvidó validar esto'});
+        }
+
+
+        // Limpiar imágenes previas
+        if ( modelo.img ) {
+            // Hay que borrar la imagen del servidor
+            const pathImagen = path.join( __dirname, '../uploads', coleccion, modelo.img );
+            if ( fs.existsSync( pathImagen ) ) {
+                fs.unlinkSync( pathImagen );
+            }
+        }
+
+
+        const nombre = await subirArchivo( req.files, undefined, coleccion );
+        modelo.img = nombre;
+
+        await modelo.save();
+
+
+        res.json( modelo );
+
+    }
+
+
+    const actualizarImagenCloudinary = async(req, res = response ) => {
+
+        const { id, coleccion } = req.params;
+
+        let modelo;
+
+        switch ( coleccion ) {
+            case 'usuarios':
+                modelo = await Usuario.findById(id);
+                if ( !modelo ) {
+                    return res.status(400).json({
+                        msg: `No existe un usuario con el id ${ id }`
+                    });
+                }
+            
+            break;
+
+            case 'productos':
+                modelo = await Producto.findById(id);
+                if ( !modelo ) {
+                    return res.status(400).json({
+                        msg: `No existe un producto con el id ${ id }`
+                    });
+                }
+            
+            break;
+        
+            default:
+                return res.status(500).json({ msg: 'Se me olvidó validar esto'});
+        }
+
+
+        // Limpiar imágenes previas
+        if ( modelo.img ) {
+            const nombreArr = modelo.img.split('/');
+            const nombre    = nombreArr[ nombreArr.length - 1 ];
+            const [ public_id ] = nombre.split('.');
+            cloudinary.uploader.destroy( public_id );
+        }
+
+
+        const { tempFilePath } = req.files.archivo
+        const { secure_url } = await cloudinary.uploader.upload( tempFilePath );
+        modelo.img = secure_url;
+
+        await modelo.save();
+
+
+        res.json( modelo );
+
+    }
+
+    const mostrarImagen = async(req, res = response ) => {
+
+        const { id, coleccion } = req.params;
+
+        let modelo;
+
+        switch ( coleccion ) {
+            case 'usuarios':
+                modelo = await Usuario.findById(id);
+                if ( !modelo ) {
+                    return res.status(400).json({
+                        msg: `No existe un usuario con el id ${ id }`
+                    });
+                }
+            
+            break;
+
+            case 'productos':
+                modelo = await Producto.findById(id);
+                if ( !modelo ) {
+                    return res.status(400).json({
+                        msg: `No existe un producto con el id ${ id }`
+                    });
+                }
+            
+            break;
+        
+            default:
+                return res.status(500).json({ msg: 'Se me olvidó validar esto'});
+        }
+
+
+        // Limpiar imágenes previas
+        if ( modelo.img ) {
+            // Hay que borrar la imagen del servidor
+            const pathImagen = path.join( __dirname, '../uploads', coleccion, modelo.img );
+            if ( fs.existsSync( pathImagen ) ) {
+                return res.sendFile( pathImagen )
+            }
+
+            //* aqui va para la imagen de la nube
+
+            return res.json(
+                img:modelo.img
+            )
+        }
+
+        const pathImagen = path.join( __dirname, '../assets/no-image.jpg');
+        res.sendFile( pathImagen );
+    }
+
+
+
+
+    module.exports = {
+        cargarArchivo,
+        actualizarImagen,
+        mostrarImagen,
+        actualizarImagenCloudinary
+    }
+
+
+*
+../socket/controller
+    const { Socket } = require("socket.io");
+    const { comprobarJWT } = require("../helpers");
+    const { ChatMensajes } = require("../models");
+
+    const chatMensajes = new ChatMensajes();
+
+    const socketController = async (socket = new Socket(), io) => {
+    //   console.log("cliente conectado", socket.id);
+
+    const usuario = await comprobarJWT(socket.handshake.headers["x-token"]);
+    if (!usuario) {
+        return socket.disconnect();
+    }
+
+    // console.log('Se conecto', usuario.nombre);
+
+    //Agregar el ususario conectado
+    chatMensajes.conectarUsuario(usuario);
+    chatMensajes.desconectarUsuario(usuario);
+    io.emit("usuarios-activos", chatMensajes.usuariosArr);
+    socket.emit("recibir-mensajes", chatMensajes.ultimos10);
+
+***************
+    //Conectar a una sala especial
+    socket.join(usuario.id); //global,socket.id,usuario.id
+
+    //Limpiar cuando alguien se desconecta
+
+    socket.on("disconnect", () => {
+        chatMensajes.desconectarUsuario(usuario.id);
+        io.emit("usuarios-activos", chatMensajes.usuariosArr);
+    });
+
+    socket.on("enviar-mensaje", ({ uid, mensaje }) => {
+        if (uid) {
+        //Mensaje Privado
+        socket.to(uid).emit("mensaje-privado", { de: usuario.nombre, mensaje });
+        } else {
+        chatMensajes.enviarMensaje(usuario.id, usuario.nombre, mensaje);
+        io.emit("recibir-mensajes", chatMensajes.ultimos10);
+        }
+    });
+    };
+
+    module.exports = {
+    socketController,
+    };
+
+
+*
+
+./public/index.html
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Google Signin</title>
+        <!-- 
+        <meta name="google-signin-client_id"
+            content="1023916028923-mnn067lcjn3itrr0lo8oj1s07kddgrcj.apps.googleusercontent.com"> -->
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+    </head>
+
+    <body class='container'>
+
+        <form class="row mt-5">
+
+            <div class="col-sm-6">
+
+
+                <h1>Google Signin</h1>
+                <hr>
+                <br>
+
+                <div id="g_id_onload"
+                    data-client_id="383927203094-atql7f9ma3p66uh96s08cggpagdt9fef.apps.googleusercontent.com"
+                    data-auto_prompt="false" data-callback="handleCredentialResponse">
+                </div>
+                <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"
+                    data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left">
+                </div>
+
+                <br>
+
+                <button id="google_signout">Signout</button>
+            </div>
+            <div class="col-sm-6">
+                <h1>Login Manual</h1>
+                <hr>
+
+                <form class="d-grid">
+                    <input type="text" name="correo" class="form-control mb-2 " placeholder="Correo">
+                    <input type="password" name="password" class="form-control mb-2 " placeholder="Password">
+
+                    <button type="submit" class="btn btn-primary">Ingresar</button>
+
+
+                </form>
+
+            </div>
+        </form>
+
+
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <script src="./js/auth.js"></script>
+
+
+        </body>
+
+    </html>
+
+
+
+./public/js/auth
+    const miFormulario = document.querySelector("form");
+
+    const url = window.location.hostname.includes("localhost")
+    ? "http://localhost:8080/api/auth/"
+    : "";
+    //   : "https://restserver-curso-fher.herokuapp.com/api/auth/google";
+
+    miFormulario.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+
+    const formData = {};
+
+    for (let el of miFormulario.elements) {
+        if (el.name.length > 0) {
+        formData[el.name] = el.value;
+        }
+    }
+    fetch(url + "login", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: { "Content-Type": "application/json" },
+    })
+        .then((resp) => resp.json())
+        .then(({ msg, token }) => {
+        //if (msg) {
+            return console.error(msg);
+        }
+        localStorage.setItem("token", token);
+        window.location = "chat.html";
+        })
+        .catch((err) => {
+        console.log(err);
+        });
+    });
+
+    function handleCredentialResponse(response) {
+    // decodeJwtResponse() is a custom function defined by you
+    // to decode the credential response.
+
+    //    google tooken  ID token
+    // console.log("id_token", response.credential);
+
+    const body = { id_token: response.credential };
+
+    fetch(url + "google", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+    })
+        .then((r) => r.json())
+        .then((resp) => {
+        console.log(resp.token);
+        localStorage.setItem("email", resp.usuario.correo);
+        localStorage.setItem("token", resp.token);
+        // location.reload()
+        window.location = "chat.html";
+        })
+        .catch(console.warn);
+
+    // const responsePayload = decodeJwtResponse(response.credential);
+
+    // console.log("ID: " + responsePayload.sub);
+    // console.log('Full Name: ' + responsePayload.name);
+    // console.log('Given Name: ' + responsePayload.given_name);
+    // console.log('Family Name: ' + responsePayload.family_name);
+    // console.log("Image URL: " + responsePayload.picture);
+    // console.log("Email: " + responsePayload.email);
+    }
+
+    const button = document.getElementById("google_signout");
+
+    button.onclick = () => {
+    console.log(google.accounts.id);
+    google.accounts.id.disableAutoSelect();
+    google.accounts.id.revoke(localStorage.getItem("email"), (done) => {
+        localStorage.clear();
+        location.reload();
+    });
+    };
+
+
+
+
+./public/chat.html
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <title>------</title>
+    </head>
+
+    <body class="container">
+
+        <div class="row mt-5">
+            <div class="col-sm-6">
+                <h3>Enviar mensaje</h3>
+                <hr>
+                <input type="text" id="txtUid" class="form-control mb-2" placeholder="uid" autocomplete="off">
+
+                <input type="text" id="txtMensaje" class="form-control mb-2" placeholder="Mensaje" autocomplete="off">
+
+                <h3>Usuarios</h3>
+                <hr>
+                <ul id="ulUsuarios"></ul>
+            </div>
+
+            <div class="col-sm-6">
+                <h3>Chat completo</h3>
+                <hr>
+                <ul id="ulMensajes">
+
+                </ul>
+            </div>
+
+        </div>
+
+
+        <button id="btnSalir" class="btn btn-outline-danger">
+            Logout
+        </button>
+        <script src="./socket.io/socket.io.js"></script>
+        <script src="./js/chat.js"></script>
+    </body>
+
+    </html>
+
+
+./public/js/chat.js
+
+    const url = window.location.hostname.includes("localhost")
+  ? "http://localhost:8080/api/auth/"
+  : "";
+
+    let usuario = null;
+    let socket = null;
+
+    //Refernencias HTML
+    const txtUid = document.querySelector("#txtUid");
+    const txtMensaje = document.querySelector("#txtMensaje");
+    const ulUsuarios = document.querySelector("#ulUsuarios");
+    const ulMensajes = document.querySelector("#ulMensajes");
+    const btnSalir = document.querySelector("#btnSalir");
+
+    const validarJWT = async () => {
+    const token = localStorage.getItem("token") || "";
+
+    if (token.length <= 10) {
+        window.location = "index.html";
+        throw new Error("No hay token en el servidor");
+    }
+
+    const resp = await fetch(url, {
+        headers: { "x-token": token },
+    });
+
+    const { usuario: userDB, token: tokenDB } = await resp.json();
+    //   console.log("Este es el usuario", userDB, "\n", "Este es el token ", tokenDB);
+
+    localStorage.setItem("token", tokenDB);
+    usuario = userDB;
+    document.title = usuario.nombre;
+
+    await conectarSocket();
+    };
+
+    const conectarSocket = async () => {
+    socket = io({
+        extraHeaders: {
+        "x-token": localStorage.getItem("token"),
+        },
+    });
+
+    socket.on("connect", () => {
+        console.log("Socket online");
+    });
+    socket.on("disconnect", () => {
+        console.log("Socket offline");
+    });
+
+    socket.on("recibir-mensajes", dibujarMensajes);
+    socket.on("usuarios-activos", dibujarUsuarios);
+    //todo
+    // console.log(payload);
+
+    socket.on("mensaje-privado", (payload) => {
+        //todo
+
+        console.log("payload", payload);
+    });
+    };
+
+    const dibujarMensajes = (mensajes = []) => {
+    //todo
+
+    let mensajesHtml = "";
+    mensajes.forEach(({ nombre, mensaje }) => {
+        mensajesHtml += `
+        <li>
+        <p>
+            <h5 class="text-primay">${nombre}</h5>
+            <span >${mensaje}</span>
+        </p>
+        </li>
+        
+
+        `;
+    });
+
+    ulMensajes.innerHTML = mensajesHtml;
+    };
+
+    const dibujarUsuarios = (usuarios = []) => {
+    //todo
+
+    let usersHtml = "";
+    usuarios.forEach(({ nombre, uid }) => {
+        usersHtml += `
+        <li>
+        <p>
+            <h5 class="text-success">${nombre}</h5>
+            <span class="fs-6 text-muted">${uid}</span>
+        </p>
+        </li>
+        
+
+        `;
+    });
+
+    ulUsuarios.innerHTML = usersHtml;
+    };
+
+    txtMensaje.addEventListener("keyup", ({ keyCode }) => {
+    const mensaje = txtMensaje.value;
+    const uid = txtUid.value;
+    if (keyCode !== 13) {
+        return;
+    }
+    if (mensaje.length === 0) {
+        return;
+    }
+
+    socket.emit("enviar-mensaje", { mensaje, uid });
+
+    txtMensaje.value = "";
+    });
+
+    btnSalir.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    window.location = "index.html";
+    });
+
+    const main = async () => {
+    //VALIDAR jwt
+    await validarJWT();
+    };
+
+    main();
+

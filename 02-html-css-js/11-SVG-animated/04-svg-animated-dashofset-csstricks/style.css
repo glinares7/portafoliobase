@@ -1,0 +1,29 @@
+.forma1{
+    width: 300px;
+    height: 300px;
+}
+
+.path {
+    stroke-dasharray: 900;
+    stroke-dashoffset: 200;
+    animation: dash 7s .5s linear infinite ;
+  }
+  
+  @keyframes dash {
+
+   0%{
+    stroke-dashoffset: 200;
+}
+   50%{
+    stroke-dashoffset: 500;
+}
+70%{
+    stroke-dashoffset: 200;
+}
+100%{
+    stroke-dashoffset: 900;
+
+   }
+
+
+  }

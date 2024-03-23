@@ -1,0 +1,50 @@
+
+
+para crear una imagen de apache de docker hub
+
+	sudo docker run -dit --name myapache  -p 8080:80 httpd
+	
+	para ver el contenedor conectado 
+		sudo docker ps
+		
+		
+	luego para ver nuestro contenedor
+		sudo docker exec -it myapache bash
+		
+			para ver donde nos ubicamos 
+				pwd
+			
+			para crear un archivo 
+				touch
+				
+			para car el contenido 
+				cat
+			para agregar contenido
+				echo '<h1> todo </h1>' index.html
+				
+	
+	para copiar el contenido de un contenedor en otro 
+	
+		primero debes dirigirte a la carpeta que vamos a copiar 
+			
+		sudo docker run -dit --name myapp  -p 3000:80 -v "$PWD":/usr/local/apache2/htdocs/   httpd
+		
+		
+		para parar los procesos
+			sudo docker stop $(docker ps -aq)
+			sudo docker rm $(docker ps -aq)
+			
+			
+		
+		crear un proyecto usando docker en tu equipo
+			tener las carpetas por separador seran nuestros contenedores 
+					Dockerfile
+						en la terminal 
+							sudo docker build -t my-apache-docker .
+		
+		
+							sudo docker run -p 3000:80 --name myapache3 -d my-apache-docker
+		
+		
+		
+		

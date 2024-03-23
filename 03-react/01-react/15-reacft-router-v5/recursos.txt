@@ -1,0 +1,80 @@
+
+el gif a usar en el home
+models + rutas
+
+
+link del proyecto
+    https://github.com/YirsisHertz/db-app-react
+
+
+eliminar
+limpiar 
+    app.css
+    index.css
+    logo.svg
+
+
+recurso react-router-dom
+    <redirect/>
+
+
+
+react router
+    link ~ navLink
+        resalta el color de los botones,etc
+    
+        https://reactrouter.com
+    v5
+        https://v5.reactrouter.com/
+
+    history
+        lo podemos desestructurar de router y también importando  el useHistory directamente.
+        
+        adelante
+        retrocede
+        refrescar
+        block
+        sustituir(replace)
+
+    EL router contiene al hisrory y se desestructura para tener los valores de redireccion(push)
+
+    useParams
+        el parametro que le asignamos como variable a la ruta
+            core de react-router
+
+    go back ~ retroceso
+        para ir a la busqueda anterior
+        ruta de donde vino / a donde viene a donde va
+
+    query param
+        envia valores dentro de las rutas
+            ?q=${inputValue}
+
+    query-string
+        https://www.npmjs.com/package/query-string
+
+        facilita la lectura y envio de tutas
+        yarn add query-strings
+
+    useLocation
+        importado del react-router
+
+    para la sesion
+        usamos
+            useContext
+            useReducer
+            localstorange -> 
+                        JSON.parse(localStorane.getItem("log))   ~ init
+                        localStorange.setItem("log",JSON.stringify(log)) ~ useEffect
+
+    privateRouter
+        enviamos por 2  router
+            public
+                spread -> ...rest , components(arrowFunction) , auth
+            private
+                components
+
+    redirect
+        si vamos a una ruta nos redigira a una ruta por defecto
+
+         

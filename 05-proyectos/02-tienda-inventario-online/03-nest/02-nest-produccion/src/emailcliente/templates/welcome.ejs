@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- <link rel="stylesheet" href="/src/globals.css" type="text/css"> -->
+  <title>Document</title>
+
+  <style>
+    .al {
+      display: table;
+      padding: 5px;
+      border: red solid 1px;
+    }
+
+    .al__x {
+      display: table-row;
+      border: blue solid 1px;
+      padding: 5px;
+    }
+
+    .al__y {
+      display: table-cell;
+      text-align: center;
+      vertical-align: middle;
+      padding: 5px;
+      width: 100px;
+      height: 40px;
+      border: #000000 solid 1px;
+      margin: 5px;
+    }
+
+    .texto__r1 {
+      display: table;
+      font-size: 15px;
+      width: 90%;
+      height: 35px;
+      color: red;
+      padding-left: 5%;
+      padding-right: 5%;
+
+    }
+
+    .texto__r1--base {
+      display: table-row;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .texto__r1--msg {
+      display: table-cell;
+      width: 65%;
+      text-align: center;
+      vertical-align: middle;
+      color: red;
+      border-top: 1px solid blue;
+      border-bottom: 1px solid blue;
+      border-left: 1px solid blue;
+    }
+
+    .texto__r1--color {
+      display: table-cell;
+      width: 35%;
+      font-size: 20px;
+      text-align: center;
+      vertical-align: middle;
+      background: skyblue;
+      color: black;
+      border-top: 1px solid blue;
+      border-bottom: 1px solid blue;
+      border-right: 1px solid blue;
+    }
+
+    .btncontenedor {
+      width: 100%;
+      height: 30px;
+      text-align: center;
+    }
+
+    .btncontenedor__confirm {
+      display: inline-table;
+
+    }
+
+    .btncontenedor__confirm--format {
+      display: table-cell;
+      width: 100px;
+      height: 30px;
+      text-align: center;
+      vertical-align: middle;
+      background-color: crimson;
+      color: white;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div>
+    <!-- <p>Hola, <%= locals.name %>
+</p> -->
+
+    <!-- <div class="al">
+      <div class="al__x">
+        <div class="al__y">
+          aula 1
+        </div>
+        <div class="al__y">
+          aula 2
+        </div>
+      </div>
+
+    </div> -->
+
+    <p>Por favor, agregue el codigo de verificación en la web para continuar con su registro</p>
+
+
+    <div class="texto__r1">
+
+      <div class="texto__r1--base">
+        <div class="texto__r1--msg">
+          Codigo de verificación
+        </div>
+        <div class="texto__r1--color">
+          <%= locals.numrandom %>
+        </div>
+      </div>
+    </div>
+    <hr>
+
+    <p>En todo caso, copie el codigo de verificación y complete su registro en este enlace</p>
+
+    <div class="btncontenedor">
+      <div class="btncontenedor__confirm">
+        <a class="btncontenedor__confirm--format" href="https://nest-vercel-master-cliente.vercel.app">REGISTRO</a>
+      </div>
+    </div>
+
+    <p>Si cree que fue un error, ignore ese mensaje</p>
+  </div>
+
+
+</body>
+
+</html>

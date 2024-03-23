@@ -1,0 +1,45 @@
+*{
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+
+}
+
+body{
+    background-color: #fff;
+    height: 100vh;
+    display: flex;
+}
+
+.adidas{
+    margin: auto;
+    width: 100%;
+    height: 120px;
+    display:  grid;
+    grid-template-columns: repeat(3,max-content);
+    gap: 1em;
+    justify-content: center;
+    overflow: hidden;
+
+}
+
+/*? van a heredar los 3 divs */
+.barras{
+    width: 30px;
+    height: 100%;
+    background-color: #000;
+    --transform1: rotate(-30deg) translateY(110px);
+    --transform2: rotate(-30deg) translateY(80px);
+    --transform3: rotate(-30deg) translateY(50px);
+}
+
+/*? conportamiento independiente */
+.b1{
+    transform: var(--transform1);
+}
+.b2{
+    transform: var(--transform2);
+}
+.b3{
+    transform: var(--transform3);
+}

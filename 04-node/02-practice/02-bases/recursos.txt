@@ -1,0 +1,49 @@
+
+importar colors
+importar yargs
+
+
+sintaxis en consola
+      node app   -b 7 -l 3   -h 12
+
+
+    INSTRUCCIONES
+        primero importar los paquetes al npm 
+        establecer las reglas de las variables de entorno
+        crear la tabla de multiplicar  en consola
+        llamar a la funcion dentro del app.js
+
+            para que se ejecute los comandos se debe establecer el archivo y sus comandos
+
+                node app   -b 7 -l 3   -h 12
+
+        si todo sale bien agregar los colores para que se vea más amigable
+
+
+    aspectos a considerar 
+        crear las carpetas
+            config -> yargs
+            helpers -> proceso de multiplicar
+            salida -> file.txt
+
+            app.js
+
+
+
+RECOMENDACIONES 
+    agregar el script en el package.json
+        "script":{
+            "base3":"node app --base=3"
+        } 
+
+
+
+
+Reforzamiento
+    slice
+        inmutativo
+            toma valores por su posicion
+
+    splice
+        mutativo
+            toma la primera posicion , la cantidad de elementos a quitar , lo que va agregar

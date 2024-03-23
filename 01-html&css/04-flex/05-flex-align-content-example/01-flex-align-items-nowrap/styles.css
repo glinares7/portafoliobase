@@ -1,0 +1,32 @@
+
+body{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+
+.box{
+    
+    margin: 50px  auto;
+    width: 70%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content:flex-end ;
+    align-items: center;
+    width: 650px;
+    height: 650px;
+    background: burlywood;
+}
+
+
+.box__contenido{
+    background: crimson;
+    /* margin:  10px 0 0  10px    ; */
+    color: #fff;
+    width: 150px;
+    height:150px;
+}
+
+

@@ -1,0 +1,12 @@
+{
+  "name": "11-xk-site",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "gh-pages -d  /home/linarespc/Documentos/portafolio/11-xk-site"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
+  }
+}

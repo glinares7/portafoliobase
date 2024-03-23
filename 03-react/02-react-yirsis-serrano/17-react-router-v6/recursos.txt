@@ -1,0 +1,73 @@
+
+react-router v6
+
+    https://reactrouter.com/
+
+    lehacy
+        https://v5.reactrouter.com/
+
+    yarn add react-router-dom
+
+
+    react-router-dom
+
+    yarn upgrade --latest
+        actuañozas todas las dependencias
+
+    yarn upgrade-interactive --latest
+        seleccionas que dependencias quieres actualizar
+
+
+    - - - - -   paquetes cambiados o movidos en react-router v6 - - - - -
+    Reemplazar por :
+            Se retira la desestructuración del history como parametro y se pone vacio
+        use History v5
+        useNavigate v6
+                histoy.replace("/login") v5
+                    navigate(+1) v6
+                history.goBack() v5
+                        navigate(-1) v6
+                history.push(`?q=${inputValue}`); v5   
+                        navigate(`?q=${inputValue}`); v6
+
+                
+
+        switch  v5
+            routes v6
+                component v5  -> {component}
+                    elements v6 -> <>component</>
+
+        redirect v5
+                 <Redirect to="/mans" />
+            navigate  v6
+                <Route path="*" element={  <Navigate to="/mans" />} />
+
+    Public Route, Provate Route
+        HOC -> HEAD ORDER COMPONENT -> CAPACIDAD DE TENER UN HIJO
+            Children
+
+
+    App Router
+        exact v5
+            end v6
+        
+        path="/" v5
+            path="*" v6
+
+
+    cambiar color de los enlaces  navbar.jsx
+        activeClassName="active text-white" v5
+        className="nav-link" v5
+
+               className={({ isActive }) => `nav-link ${isActive ? 'active text-white' : ''}`} v6
+        
+        
+
+
+
+
+
+
+            
+    
+

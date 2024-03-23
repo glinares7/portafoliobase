@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/styles.css">
+    <!--*- v-5-pro-->
+    <!--* v-5-->
+    <!--*- v-6-->
+    <!--*- v6_pro-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/hung1001/font-awesome-pro-v6@18657a9/css/all.min.css" crossorigin="anonymous">
+    <!--*- Referencia
+    //- https://fa-v6.hung1001.com/
+    
+    -->
+    <title>Document</title>
+  </head>
+  <body> 
+    <header class="header" id="header"><a class="logo" href="/"><img src="./assets/img/logo.png" alt="web logo"></a>
+      <div class="topbar" id="topbar">
+        <div class="topbar__icon" data-type="login"><i class="fa-thin fa-user"></i><span>Log in</span></div>
+        <div class="topbar__icon" data-type="register"><i class="fa-thin fa-user-plus"></i><span>Register</span></div>
+        <div class="toggle-menu">
+          <div class="toggle-menu__icon" id="toggle-menu">
+            <div class="first-bar"></div>
+            <div class="second-bar"></div>
+            <div class="third-bar"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+    <div class="sidebar" id="sidebar">
+      <nav class="main-nav" id="main-nav">
+        <ul class="main-menu" id="main-menu">
+          <li class="main-menu__item"><a class="main-menu__link main-menu__link--active" href="https://glinares6.github.io/portafolio/index.html">home</a>
+          </li>
+          <li class="main-menu__item"><a class="main-menu__link" href="https://glinares6.github.io/portafolio/about.html">about</a>
+          </li>
+          <li class="main-menu__item"><a class="main-menu__link" href="https://glinares6.github.io/portafolio/contact.html">contact</a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <main class="main">
+      <h1 class="title">Home</h1>
+      <div class="gallery" id="gallery">
+        <div class="gallery__item"><img src="assets/img/gallery/1.jpg" alt="imagen de galeria 1"></div>
+        <div class="gallery__item"><img src="assets/img/gallery/2.jpg" alt="imagen de galeria 2"></div>
+        <div class="gallery__item"><img src="assets/img/gallery/3.jpg" alt="imagen de galeria 3"></div>
+        <div class="gallery__item"><img src="assets/img/gallery/4.jpg" alt="imagen de galeria 4"></div>
+        <div class="gallery__item"><img src="assets/img/gallery/5.jpg" alt="imagen de galeria 5"></div>
+        <div class="gallery__item"><img src="assets/img/gallery/1.jpg" alt="imagen de galeria 1"></div>
+        <div class="gallery__item"><img src="assets/img/gallery/2.jpg" alt="imagen de galeria 2"></div>
+        <div class="gallery__item"><img src="assets/img/gallery/3.jpg" alt="imagen de galeria 3"></div>
+        <div class="gallery__item"><img src="assets/img/gallery/4.jpg" alt="imagen de galeria 4"></div>
+        <div class="gallery__item"><img src="assets/img/gallery/5.jpg" alt="imagen de galeria 5"></div>
+      </div>
+    </main>
+    <div class="lightbox" id="login-modal">
+      <form class="form" id="login-form">
+        <div class="form__field">
+          <label class="form__label" for="login-email">Email</label>
+          <input class="form__input" type="email" name="email" id="login-email">
+        </div>
+        <div class="form__field">
+          <label class="form__label" for="login-password">Password</label>
+          <input class="form__input" type="password" name="password" id="login-password">
+        </div>
+        <div class="form__field">
+          <input class="form__submit" type="submit" name="button" value="Send">
+        </div>
+      </form>
+    </div>
+    <div class="lightbox" id="register-modal">
+      <form class="form" id="register-form">
+        <div class="form__field">
+          <label class="form__label" for="register-email">Email</label>
+          <input class="form__input" type="email" name="email" id="register-email">
+        </div>
+        <div class="form__field">
+          <label class="form__label" for="register-password">Password</label>
+          <input class="form__input" type="password" name="password" id="register-password">
+        </div>
+        <div class="form__field">
+          <label class="form__label" for="register-password-2">Reset pasword</label>
+          <input class="form__input" type="password" name="password" id="register-password-2">
+        </div>
+        <div class="form__field form__buttons">
+          <input class="form__submit" type="submit" name="button" value="Send">
+        </div>
+      </form>
+    </div>
+    <script src="js/macy.js"></script>
+    <script src="js/scripts-min.js"></script>
+  </body>
+</html>

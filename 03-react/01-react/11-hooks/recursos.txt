@@ -1,0 +1,50 @@
+hooks -> 
+        funciones reutilizable,centraliza la logica
+useState -> 
+            Para iniciañizar y modificar valores
+            requiere un valor inicial (0)  ,  se ejecuta cada que hay un cambio en el estado 
+
+useEffect -> 
+            Para modificar a nivel de cliente(navegador) pero no ejecutar en el servidor
+            Toma control de useState
+            se ejecuta al crear el componente (simultaneo)
+
+            Cleanup -> 
+                        useEffect
+                        En caso que la condiciòn no se cumpla ~ (if -  return)
+
+uselayoutEffect -> 
+                    rederizar o ejecutar la logica después de crear el componente
+
+
+
+ref  -> 
+        Hace referencia al elemento 
+        manipula el DOM
+
+Memo -> 
+        recuerda/memoriza las instruccuiones de un functional components para que solo dicho cmponente pueda acceder a si mismo
+        
+        Recibe la versión memorizada del componente para que no se vuelva a ejecutar
+        Se vuelve a lanzar si el parametro cambia
+        
+useMemo ->
+        evita que se relancen los eventos(se ejecuta solo al inicio)
+        optimiza los recursos del navegador 
+
+useCallback ->
+        lo almacena y lo memoriza,siempre que no haya cambios(array de dependencias)
+        permite que no se renderize
+
+Si se usa boostrap 
+            convertir html a jsx
+
+preventDefault
+    evita que el navegador se recarge
+
+
+
+
+-------------------------------------
+- - - - -ACTIVAR ES-LINT - - - - -
+-------------------------------------

@@ -1,0 +1,250 @@
+
+iniciar proyecto
+    via cli
+        $ npm i -g @nestjs/cli
+        $ nest new project-name
+
+        forzar tipado
+            nest new proyect-name --strict
+
+        swc ~ fast-box
+            npm run start -- -b swc
+
+
+        create CRUD fast
+            nest g resource [name]
+
+            nest g module [name]
+            nest g controller [name]
+            nest g service [name]
+
+            
+    clene proyecto 
+        git clone https://github.com/nestjs/typescript-starter.git project
+
+        cd project
+        npm install
+        npm run start
+
+            si se quiere usar javascript 
+                git clone https://github.com/nestjs/javascript-starter.git project
+
+
+        
+    crear manualmente 
+        archivois base (configuración,etc por si mismo)
+            npm i --save @nestjs/core @nestjs/common rxjs reflect-metadata
+
+
+
+            cambiar-statuts
+                @HttpCode(...)
+
+            inyectar libreria
+                @Res()
+                findAll(@Res() response)
+                    para ambos enfoques
+                        @Res({ passthrough: true })
+
+            router propios
+                response.status(200).send()
+
+            importar todas las peticiones
+                @types/express
+
+            parametro 
+                @types/express
+                @Body()
+                @Query()
+            
+
+    SERVER STATIC
+        https://docs.nestjs.com/recipes/serve-static
+            all files
+                https://stackoverflow.com/questions/63429380/how-to-serve-static-images-in-nestjs
+
+        npm install --save @nestjs/serve-static
+        
+    Database
+        mysql or mariadb
+            npm install --save @nestjs/typeorm typeorm mysql2
+
+        implements help
+            https://medium.com/@moisescastro_15074/como-crear-un-crud-utilizando-nestjs-typeorm-y-postgressql-1ff604264e46
+      
+
+        typeORM
+            relations 
+                https://typeorm.io/many-to-one-one-to-many-relations
+
+            consultas sql
+                https://desarrolloweb.com/articulos/metodo-find-repositorios-typeorm
+
+        DW
+            https://desarrolloweb.com/articulos/relacion-uno-a-muchos-typeorm-nest
+
+
+    
+    props en next typescript
+        https://cinthialandia.com/es/blog/props/
+    
+    rutas paralelas
+        https://hackernoon.com/es/nextjs-13-parallel-routes-a-comprehensive-guide
+
+        import { getUser } from '@/lib/auth'
+ 
+                export default function Layout({
+                dashboard,
+                login,
+                }: {
+                dashboard: React.ReactNode
+                login: React.ReactNode
+                }) {
+                const isLoggedIn = getUser()
+                return isLoggedIn ? dashboard : login
+                }
+
+        multicondicional rutas paralelas
+            https://github.com/vercel/next.js/issues/50599
+
+    comveritr cadena a html 
+        https://www.delftstack.com/es/howto/javascript/javascript-string-to-html/
+
+
+    
+    contexts with nextjs
+        https://vercel.com/guides/react-context-state-management-nextjs
+
+
+
+    CORS
+        https://github.com/expressjs/cors#configuration-options
+
+        https://stackoverflow.com/questions/50949231/nestjs-enable-cors-in-production
+
+            CORS Asynchronously
+                https://github.com/expressjs/cors#configuring-cors-asynchronously  
+
+    FILE UPLOAD
+        npm i -D @types/multer  
+
+        upload local server
+            https://blog.bitsrc.io/upload-file-with-nestjs-d7dd74701b38
+
+            https://stackoverflow.com/questions/61573872/typescript-object-is-possibly-null-when-getting-files-from-event
+
+        CLIENT
+            https://bommidinaveen.medium.com/nestjs-file-upload-2d5c36d34dff
+
+        caracteres especiales file - multer
+            https://github.com/expressjs/multer/issues/836
+
+        
+        async await
+            node - update 
+                https://kamilmysliwiec.com/typescript-2-1-introduction-async-await
+
+                https://github.com/nestjs/nest/issues/2136
+
+                
+            useEfecct - nextjs
+                    https://ultimatecourses.com/blog/using-async-await-inside-react-use-effect-hook
+
+
+    CRON
+       https://docs.nestjs.com/techniques/task-scheduling 
+
+    DOCKER
+        IMAGE POSTGRES - .yml
+            docker compose up -d postgres
+
+     DOCKER
+        verificar docker    
+            sudo  docker build -f ./Dockerfile -t  nestpre .
+            sudo docker run -p 3000:3000 nestpre
+
+        usando la misma red anfitriona
+            sudo docker run --network="host" -p 3000:3000   nestfase
+
+        run directo
+          sudo   docker build -t glinarese/nest-api:v1.40 .
+
+        docker hub
+            sudo docker login
+            docker image
+            docker  ps
+            sudo docker push glinarese/nest-api:v1.40
+    
+
+    
+
+    JWT
+         npm install --save @nestjs/jwt
+    
+iniciamos el proyecto 
+    cd newProyect 
+    npm run start
+
+
+    SESSION
+        npm i express-session
+        npm i -D @types/express-session
+
+        https://medium.com/@alysachan830/cookie-and-session-ii-how-session-works-in-express-session-7e08d102deb8
+
+        https://github.com/expressjs/session
+
+        https://medium.com/@shkim04/how-to-use-session-in-next-js-3b7987fb42b4
+
+
+
+    EMAIL
+        https://github.com/nest-modules/mailer#readme
+
+        https://nest-modules.github.io/mailer/docs/mailer.html#async-configuration
+
+        MEDIUM
+            https://blog.stackademic.com/implementing-email-service-in-nestjs-a-step-by-step-guide-42e03ef1fb05
+
+        NOTIZ.DEV
+            https://notiz.dev/blog/send-emails-with-nestjs
+
+            fix email with ejs 
+                <%= local.emailname %>
+
+                https://stackoverflow.com/questions/62217160/nestjs-email-failed-to-send-with-ejs-template-dynamic-data
+
+
+        FIX SESSION
+            https://gist.github.com/samsch/3c2c98c415e1d5b15e37a272aa0b77f1
+            app.use( session({ secret: jwtConstants.secret, resave: false, saveUninitialized: true, store: store, cookie: { secure: 'auto', httpOnly: 'auto', // sameSite:'None' },
+
+
+    TYPEORM
+        UPLOAD DATABASE IMAGE TYPEORM
+            https://stackoverflow.com/questions/55498140/saving-buffer-on-postgres-bytea-with-typeorm-only-store-10-bytes
+
+            https://www.appsloveworld.com/postgresql/100/27/saving-buffer-on-postgres-bytea-with-typeorm-only-store-10-bytes
+
+            https://wanago.io/2021/11/01/api-nestjs-storing-files-postgresql-database/
+
+            https://github.com/typeorm/typeorm/issues/2878 
+
+        FIX FILTER FIELD RELATIONS USING TYPEORM
+            https://stackoverflow.com/questions/59645009/how-to-return-only-some-columns-of-a-relations-with-typeorm
+
+
+    FIX IMAGE BUFFER STREAM
+            https://stackoverflow.com/questions/66600991/how-to-fetch-and-display-blob-images
+            https://stackoverflow.com/questions/9267899/arraybuffer-to-base64-encoded-string
+            https://es.stackoverflow.com/questions/477377/mostrar-imagen-en-react-js-enviando-datos-de-node-js-y-mysql
+            https://stackoverflow.com/questions/65392241/how-convert-type-data-buffer-to-image-in-react-js
+
+   
+
+    tomar en cuenta 
+        npm notice 
+        npm notice New minor version of npm available! 9.6.1 -> 9.8.1
+        npm notice Changelog: https://github.com/npm/cli/releases/tag/v9.8.1
+        npm notice Run npm install -g npm@9.8.1 to update!
+        npm notice 

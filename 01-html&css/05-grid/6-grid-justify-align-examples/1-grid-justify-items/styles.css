@@ -1,0 +1,21 @@
+    body{
+        margin: 0;
+        padding: 0;
+    }
+
+    .contenedor{
+        display: grid;
+        grid-template: repeat(2,70px) / repeat(4, 1fr);
+       justify-items: end; 
+        gap: 10px;
+        margin: 50px auto;
+        width: 650px;
+        height: 650px;
+        background: lightcoral;
+    }
+
+    .contenedor__box{
+        display: flex;
+        border: 1px solid black;
+        background: lawngreen;
+    }

@@ -1,0 +1,49 @@
+compilar  .scss en vez de  .sass
+
+    El paquete genera comflictos en react en las ultimas versiones
+        node-sass 
+    usar el paquete 
+        Dart-sass
+
+         npx create-react-app my-app --template cra-template-pwa
+         yarn upgrade-interactive --latest  opcional(verifica las dependencias y sus versiones)
+        yarn add sass
+
+
+    cambiar archivos .css por .scss
+        importar
+            @import 'ruta'
+    
+    instalar extension sass
+
+        partials
+            _file.scss
+                archivos que no se ejecutan directamente
+                archivos externos
+        
+        anidación
+            pseudoelementos
+                &:pseudoelemento
+            join clases
+                .btn                 
+                    &.btn-primary  ->.btn .btn-primary  
+
+        darken -> background
+            color
+            amount (saturación)
+        lighten -> color
+            color
+            amount
+
+
+        estilos en los componentes
+            className
+                type
+
+            value
+                text
+        
+
+
+            
+        

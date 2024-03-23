@@ -1,0 +1,57 @@
+context
+    usa el state de forma global 
+    El cambio de variable de una pagina se vera reflejada en las demas(la misma variable en común)
+    userContext.Provider dentro del App.js
+
+
+
+
+react Router
+    sistema de rutas
+    https://reactrouter.com
+    v5
+        https://v5.reactrouter.com/
+
+
+react-Router ----> instala la ultima versión <----- 6.2.0
+        yarn add react-router-dom
+
+        rutas dinamicas/estaticas
+        manejar errores
+        parametros,peticones
+
+            instalamos version del curso 5.2.0
+                //usando YARN
+                    yarn add react-router-dom@5.2.0
+                //usando NPM
+                    npm install --save react-router-dom@5.2.0
+
+
+    Link -> react-router-dom
+        se reemplaza la etiquera a por link en el jsx
+        dentro de Link modificar el atributo href por to
+
+
+REQ | RES
+    api que manipula datos aleatorios
+    https://reqres.in/
+
+    https://reqres.in/api/users/5
+        // 20220807213849
+// https://reqres.in/api/users/2
+
+
+
+{
+  "data": {
+    "id": 2,
+    "email": "janet.weaver@reqres.in",
+    "first_name": "Janet",
+    "last_name": "Weaver",
+    "avatar": "https://reqres.in/img/faces/2-image.jpg"
+  },
+  "support": {
+    "url": "https://reqres.in/#support-heading",
+    "text": "To keep ReqRes free, contributions towards server costs are appreciated!"
+  }
+    

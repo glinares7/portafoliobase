@@ -1,0 +1,16 @@
+
+yarn init
+    yarn add gh-pages --dev
+    npx gh-pages -d  (en caso el directorio sea la raiz)
+
+    npx gh-pages -d /home/linarespc/Documentos/portafolio/2-html-css-js/7-firebase/02-gh-pages-site
+
+    hace referencia al node-modules
+
+    en el node modules se puede incluir un script
+          "scripts":{
+    "deploy": "gh-pages -d /home/linarespc/Documentos/portafolio/2-html-css-js/7-firebase/02-gh-pages-site"
+  },
+
+    luego para actualizar los cambios
+        yarn run deploy

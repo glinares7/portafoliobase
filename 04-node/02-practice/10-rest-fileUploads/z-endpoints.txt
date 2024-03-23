@@ -1,0 +1,258 @@
+variables usadas en el proyecto rest- jwt - google - uploads
+
+postman
+
+
+USUARIO
+    get
+        obtenerUsuarios
+            http://localhost:8080/api/usuarios?limite=15&desde=0
+
+                params
+                    key             value
+                    limite            15
+                    desde              0
+
+    get
+        obtenerUsuario
+            http://localhost:8080/api/usuarios/63ca052fc6973c73629586bc
+
+
+    post
+        crearUsuarios
+            http://localhost:8080/api/usuarios/
+
+                body 
+                    raw > JSON
+
+                {
+                    "nombre":"test1",
+                    "correo":"test1@test.com",
+                    "password":"123456",
+                    "rol":"USER_ROLE"
+                }
+
+
+    put
+        actualizarUsuarios
+            http://localhost:8080/api/usuarios/6442dd8d5686745767a12f96
+
+                body
+                    raw > JSON
+                    {
+                    "nombre":"vicnete",
+                    "rol":"ADMIN_ROLE"
+                }
+
+    delete
+        deleteUsuario
+            http://localhost:8080/api/usuarios/63ca052fc6973c73629586bc
+
+                Headers
+                    x-token
+                        value
+                            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2M2NhMDUyZmM2OTczYzczNjI5NTg2YmMiLCJpYXQiOjE2ODI0NDYxNTUsImV4cCI6MTY4MjQ2MDU1NX0.DYWHaEn1XebCFc5VusfXbkZBXU917FP87R02t7kmEnY
+
+
+
+
+    post
+        authUsuario
+
+            http://localhost:8080/api/auth/login
+
+            body
+                raw > JSON
+
+                {
+                    "correo":"test1@test.com",
+                    "password":"123456"
+                }
+
+    post    
+        googleUsuario
+
+            body
+                raw > JSON
+                    {
+                "id_token":"eyJhbGciOiJSUzI1NiIsImtpZCI6ImM5YWZkYTM2ODJlYmYwOWViMzA1NWMxYzRiZDM5Yjc1MWZiZjgxOTUiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJuYmYiOjE2ODMzMDM0NTgsImF1ZCI6IjM4MzkyNzIwMzA5NC1hdHFsN2Y5bWEzcDY2dWg5NnMwOGNnZ3BhZ2R0OWZlZi5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjExMjI0MTkwNjg0OTc0NzE2NzUxNCIsImVtYWlsIjoiZ2xpbmFyZXNlMUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiYXpwIjoiMzgzOTI3MjAzMDk0LWF0cWw3ZjltYTNwNjZ1aDk2czA4Y2dncGFnZHQ5ZmVmLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwibmFtZSI6IkdpYW5tYXJjbyBMaW5hcmVzIiwicGljdHVyZSI6Imh0dHBzOi8vbGgzLmdvb2dsZXVzZXJjb250ZW50LmNvbS9hL0FHTm15eFlrX1ZWeVNaTTllUXVRRXVyUnlYQzY3Z3c3VHVwaFdNd1NNclZOPXM5Ni1jIiwiZ2l2ZW5fbmFtZSI6IkdpYW5tYXJjbyIsImZhbWlseV9uYW1lIjoiTGluYXJlcyIsImlhdCI6MTY4MzMwMzc1OCwiZXhwIjoxNjgzMzA3MzU4LCJqdGkiOiI0ZjZlOTEzYzI1MThmYjhjMDhmNjg0YjFiYmE4YzNlZDk3NWVlYjEyIn0.D2kB9h3i-9NQWwQRaFCS2gKAdZ2W42Ff1oPisSs6alhxzrl4UTiHuAZu8ed6p5ySuH2gPOccmC4x7YgyukKD1Pv2MeIEOq9RP4xUeB4bPlaOKYe_rJXxTX7t77j3ChOTrkjjB6SIS04OS3SLETbvBoxvLGjyrKFoZOEJnYma_qXPlXDCk4vpNXXbUjwluj1t_6nHPVfTlhCKXNeb576uNM_xd5e4yMGqn3Uov3DUgK7sxvuBte86FPxr8UjdlqjB6SGyM8weogcCOGtAKYNzETDXeCZvMkxthFL0MKlSYLz0bRpnd9RNgsUrF2W0Jkd47YXNAH4Jq3h_Qy1Ar3xSlQ"
+            }
+            
+                        ***
+                        Para obtener el id_token se obtiene mediante las credenciales de google via  ~ index.html(
+                            handleCredentialResponse(response){
+                                const body =  { id_token: response.credential }
+
+                            }
+                            )
+                        ***
+
+CATEGORIA
+    
+    get
+        obtenerCategoria
+            http://localhost:8080/api/categorias?limite=100&desde=0
+
+                params
+                    key             value
+                    limite            15
+                    desde              0
+        
+
+    get
+        obtenerCategoria
+            http://localhost:8080/api/categorias/63f779b7b7eb3e861609b926
+
+    
+    
+   post
+        crearCategoria 
+            http://localhost:8080/api/categorias
+
+
+                    Headers
+                        x-token
+                            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2M2VjM2E5OGRiZWRmM2EzMjU2Y2U3MzQiLCJpYXQiOjE2ODMzMDUxOTMsImV4cCI6MTY4MzMxOTU5M30.dV_C8OyrXUOgHJGNH55Uh-RS-g1G3EwmFviUa4MyO6o
+
+
+                    body
+                        raw >JSON
+
+                        {
+                            "nombre":"fideos"
+                        }
+
+    put
+        actualizarCategoria
+            http://localhost:8080/api/categorias/645533654fcf6b67970dc39d
+
+                  Headers
+                    x-token
+                        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2M2VjM2E5OGRiZWRmM2EzMjU2Y2U3MzQiLCJpYXQiOjE2ODMzMDUxOTMsImV4cCI6MTY4MzMxOTU5M30.dV_C8OyrXUOgHJGNH55Uh-RS-g1G3EwmFviUa4MyO6o
+
+
+                body
+                    raw >JSON
+
+                    {
+                        "nombre":"helados"
+                    }
+
+
+
+    delete
+        borrarCategoria
+            http://localhost:8080/api/categorias/645533654fcf6b67970dc39d
+
+                Headers
+                    x-token
+                        eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2M2VjM2E5OGRiZWRmM2EzMjU2Y2U3MzQiLCJpYXQiOjE2ODMzMDUxOTMsImV4cCI6MTY4MzMxOTU5M30.dV_C8OyrXUOgHJGNH55Uh-RS-g1G3EwmFviUa4MyO6o
+
+
+
+PRODUCTO
+
+    get
+        obtenerProductos
+
+
+            http://localhost:8080/api/categorias?limite=15&desde=0
+
+                params
+                    key             value
+                    limite            15
+                    desde              0
+
+
+    get 
+        obtenerProducto
+            http://localhost:8080/api/productos/63f8e8ffeb343536c8519f5a
+
+        
+
+
+    post
+        crearProducto
+            http://localhost:8080/api/productos
+
+                Headers
+                        x-token
+                            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2M2VjM2E5OGRiZWRmM2EzMjU2Y2U3MzQiLCJpYXQiOjE2ODMzMDUxOTMsImV4cCI6MTY4MzMxOTU5M30.dV_C8OyrXUOgHJGNH55Uh-RS-g1G3EwmFviUa4MyO6o
+
+
+                    body
+                        raw >JSON
+
+                    {
+                        "nombre":"sayon",
+                        "categoria":"645533654fcf6b67970dc39d"
+
+                    }
+                     
+    put
+        actualizarProducto
+            http://localhost:8080/api/productos/645553cab90cbfb0053406c3
+
+
+                Headers
+                        x-token
+                            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2M2VjM2E5OGRiZWRmM2EzMjU2Y2U3MzQiLCJpYXQiOjE2ODMzMDUxOTMsImV4cCI6MTY4MzMxOTU5M30.dV_C8OyrXUOgHJGNH55Uh-RS-g1G3EwmFviUa4MyO6o
+
+
+                body
+                        raw >JSON
+
+                    
+                        {
+                            "nombre":"don vitorio",
+                            "categoria":"63f990082c292c3996fec5c4"
+
+                        }
+
+    delete
+        borrarProducto
+            http://localhost:8080/api/productos/645553cab90cbfb0053406c3
+
+                Headers
+                        x-token
+                            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2M2VjM2E5OGRiZWRmM2EzMjU2Y2U3MzQiLCJpYXQiOjE2ODMzMDUxOTMsImV4cCI6MTY4MzMxOTU5M30.dV_C8OyrXUOgHJGNH55Uh-RS-g1G3EwmFviUa4MyO6o
+
+
+    get
+        buscar
+            http://localhost:8080/api/buscar/productos/re
+            http://localhost:8080/api/buscar/productos/63f8e8ffeb343536c8519f5a
+
+
+
+UPLOADS
+
+    post    
+        cargarImagen
+            http://localhost:8080/api/uploads
+
+                body
+                    form-data
+
+                        key                         value
+                        archivo         file        wallpaper.jpg
+
+
+
+    put
+        actualizarImagen/carga
+
+                body
+                    form-data
+
+                        key                         value
+                        archivo         file        wallpaper-1.jpg
+
+
+    get
+        mostrarImagen
+            http://localhost:8080/api/uploads/productos/64555333062f2eaf6f5db82f
+            http://localhost:8080/api/uploads/categorias/63f779b7b7eb3e861609b926
+
+
+

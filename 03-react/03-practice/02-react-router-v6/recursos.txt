@@ -1,0 +1,28 @@
+apuntes 14/11/2022
+    react-router-dom
+    sass
+    react-transition-group
+
+
+
+
+cambios
+    useRouterMath
+        useMath
+    
+    Switch
+        Routes
+
+    usehistory
+        useNavigate("/abc")
+        useNavigate(to,{replace(true)})
+
+    navigate.boBack()
+        navigate(-1)
+    navigate.forward()
+        navigate(1)
+
+El route se escribe de esta forma en la v6
+    <Route path="from" element={<Login/>}
+    <Route  path="anidación" element={<Home/>}/>
+         />

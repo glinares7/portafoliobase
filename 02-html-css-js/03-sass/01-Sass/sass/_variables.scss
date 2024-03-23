@@ -1,0 +1,14 @@
+$selector: '.hero';
+$propiedad: 'font-size';
+$color: 'red';
+$rem: 16;
+
+:root{
+    --color: #{$color};
+}
+
+// #{ $variable }
+
+#{$selector}{
+    #{$propiedad}: $rem * 1rem;
+}

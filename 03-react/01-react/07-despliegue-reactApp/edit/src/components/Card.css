@@ -1,0 +1,27 @@
+/* .card{
+  display: flex;
+  width: 300px;
+  margin: 10px 70px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, .5);
+}
+
+img{
+  width: 6rem;
+  padding: 5px;
+} */
+
+.card{
+  display: flex;
+  width: 300px;
+  margin: 10px   70px;
+  text-align: center;
+  /* border: 3px solid #000 ; */
+  border-radius: 30px;
+  box-shadow: 1px 1px 1px 1px  rgba(0,0,0,.5);
+}
+
+img{
+  width: 6rem;
+  filter: drop-shadow( 0 0 0.1rem rgba(255, 255, 255,.9));
+}

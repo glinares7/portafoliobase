@@ -1,0 +1,34 @@
+
+socket - JWT
+    socket client
+        frondtend
+    socket.io
+        backend
+    instalar socket.io
+        npm i socket.io
+        instalar socket-io desde el server 
+            model/server.js
+
+            luego de configurar el socket para express
+                    const app = require('express')();
+                    const server = require('http').createServer(app);
+                    const io = require('socket.io')(server);
+                    io.on('connection', () => { /* … */ });
+                    server.listen(3000);
+
+
+            debemos cambiar el escuchador de app a server 
+            dentro del constructor agregar los sockets
+    
+    conexion del cliente con el servidor 
+        crar un js dentro den index.html con el script de socket.io
+        para la comunicación del froend y backend
+
+
+
+    ************  MODIFICAR LA RUTA DEL PRODUCCION  DE LAS URL DE LOS PATHS **********
+        public/js/chat.js
+        public/js/auth.js
+
+
+    

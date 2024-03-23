@@ -1,0 +1,65 @@
+
+web server
+
+    librerias
+        express
+        dotenv
+        hbs
+
+    "start":"node app.js"
+
+
+    ./
+
+    desde node 
+        http - createServer(req,res)
+
+            res.writeHead(200,{'Content-Type','text-plain'})
+
+            res.setHeader("Content-Disposition","attachment; filename=lista.csv")
+            res.writeHead({"Content-Type":"application/csv"})
+
+            
+
+            res.write("lo que se te ocurra")
+            res.end()
+
+            .listen(8080)
+    
+    escuchando en el puerto 8080
+
+    
+    express
+        inicia las librerias
+           app express()
+            process.env
+
+
+        hbs
+            registerPartials
+                __dirname , /views/partials
+
+            set('viewEngine',"hbs")
+
+        app.use(express.static('puclic'))
+
+    router
+        app.get('/',(reqres => {
+            res.render('path',{nombre:'tu-nombre,etc',titulo:'se la vamos a  fuen'})
+        })
+
+
+    listen
+        app.listen(port,() =>{console.log('la app se sirve del puerto 430)})
+
+
+
+directorios a considerar
+
+public
+    react
+views  hbs
+    partials
+
+        {{>header}}
+            invocamos este codigo para traer toda la información que pedimos especificamente:

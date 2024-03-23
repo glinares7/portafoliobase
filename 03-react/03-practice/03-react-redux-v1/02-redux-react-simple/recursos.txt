@@ -1,0 +1,64 @@
+
+ 
+ yarn init o yarn
+ yarn i  react-redux redux react-dom
+
+pasos para crear nuestro archivo react-redux
+    npx create-react-app 01-redux-simple
+
+    creamos nuestro reducer
+        le asignamos un initialState( el de nuestra preferencia 0, 10 , etc)
+
+        reducer 
+            (state,action){switch (action.type) case "INCREMENT": return state.count +1 default
+                return state}
+    
+    rootReducer
+        el que va administar los state en el redux
+            combinaReducers({myobjredux:reducer })
+    
+    store
+        createStore(rootReducer,{},  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())
+
+
+    render()
+        por fuera de nuestro componente rederizamos con Provider
+            <Provider store={store}><App/></Provider>
+
+    
+        <App/>
+            useSelector()
+                leer el state useSelector((state) => state.myobjredux.count)
+                
+            useDispatch()
+                modifica los cambios del state
+   
+                    () => dispatch({type:"INCREMENT"})
+                
+                si agregamos un payload
+
+                    action
+                         {type:"RESET , payload:{count:10}}
+
+                            () => dispatch(action)
+
+
+
+
+errors debian/GNU-linux
+    Error: ENOSPC: System limit for number of file watchers reached, watch
+    https://es.linkedin.com/pulse/linux-debian-error-enospc-system-limit-number-file-watchers
+
+        echo 524288 | sudo tee -a /proc/sys/fs/inotify/max_user_watches
+
+
+
+    props
+    optimizar 
+        redux con decoradores (state,dispatch)
+         redux (state,dispatch)
+    async await
+    promise
+    middelware
+
+            

@@ -1,0 +1,66 @@
+body{
+    background-color: #333;
+    color: red  ;
+}
+
+
+/* ejemplo-2 */
+.cuadrado{
+    position: relative;
+    width: 100%;
+    height: 98vh;
+}
+
+.elemento{
+    position: relative;
+    top: 50%;
+    left: 50%;
+    /* background-color: deepskyblue; */
+    border: 3px solid #f21;
+    /* transform: translate(-50%,-50%); */
+    width: 100px;
+    height: 50px;
+    /* z-index: 15; */
+
+}
+.elemento1{
+    position: absolute;
+    top: 56%;
+    left: 55%;
+    background-color: violet;
+    border: 3px solid springgreen ;
+    /* transform: translate(-50%,-50%); */
+    width: 100px;
+    height: 50px;
+    z-index:-5;
+}
+
+
+h3{
+    text-align: center;
+    position: absolute;
+    display: block;
+    z-index: -20;
+}
+.elemento::before,
+.elemento::after{
+    content: '';
+    width: 100px;
+    height: 50px;
+}
+
+.elemento::after{
+   position: absolute;
+    background-color: gold;
+    left: 60%;
+    top:20%;
+    
+    z-index: -10;
+}
+.elemento::before{
+    position: absolute;
+    background-color: rgb(47, 0, 255);
+    top: -20%;
+    left: -60%;
+    z-index: -30;
+}

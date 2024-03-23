@@ -1,0 +1,770 @@
+[
+    {
+        "picture": "/img/01-smartphone/01-moto-e22.webp",
+        "title": "Smartphone  MOTOROLA Motorola  E22 6.5''   4GB 128GB <br/>   16MP + 2MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": 599,
+        "offer2": 499,
+        "current": 469
+    },
+    {
+        "picture": "/img/01-smartphone/03-xiaomi-poco-m5s.webp",
+        "title": "Smartphone XIAOMI POCO M5S 6.43'' 6GB 128GB<br/> 64MP+8MP+2M+2MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": 1099,
+        "offer2": 799,
+        "current": 749
+    },
+    {
+        "picture": "/img/01-smartphone/04-samsung-s21-fe.webp",
+        "title": "Smartphone SAMSUNG S21 FE 5G 6.2'' 6GB 128GB<br/> 12MP + 12MP + 8MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 1999,
+        "current": false
+    },
+    {
+        "picture": "/img/01-smartphone/05-zte-a51.webp",
+        "title": "Smartphone ZTE BLADE A51 Lite 6.09'' 2GB 32GB<br/> 13MP+2MP Azul",
+        "from": "Por Plaza Vea",
+        "offer1": 269,
+        "offer2": 229,
+        "current": false
+    },
+    {
+        "picture": "/img/01-smartphone/07-xiaomi-redmi-12.webp",
+        "title": "Smartphone REDMI Note 12 6.67'' 4GB 128GB<br/> 50MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": 949,
+        "offer2": 749,
+        "current": 699
+    },
+    {
+        "picture": "/img/01-smartphone/02-moto-g13.webp",
+        "title": "Smartphone MOTOROLA Motorola G13 6.5'' 4GB 128GB <br/>50MP+2MP+2MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 599,
+        "current": 559
+    },
+    {
+        "picture": "/img/01-smartphone/06-samsung-galaxy-a34.webp",
+        "title": "Smartphone SAMSUNG Galaxy A34 6.6'' 6GB 128GB<br/> 48MP + 8MP + 5MP Grafito",
+        "from": "Por Plaza Vea",
+        "offer1": 1199,
+        "offer2": 1149,
+        "current": 1049
+    },
+    {
+        "picture": "/img/01-smartphone/08-samsung-galaxy-a24.webp",
+        "title": "Smartphone SAMSUNG Galaxy A24 6.5'' 4GB 128GB<br/> 50MP + 5MP + 2MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 999,
+        "offer2": 749,
+        "current": 679
+    },
+    {
+        "picture": "/img/01-smartphone/10-xiaomi-redmi-a2.webp",
+        "title": "Smartphone XIAOMI Redmi A2 6.5'' 2GB 32GB<br/> 8MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 409,
+        "offer2": 299,
+        "current": 279
+    },
+    {
+        "picture": "/img/01-smartphone/11-honor-x7a.webp",
+        "title": "Smartphone HONOR X7A 6.7'' 6GB 128GB 50MP + 5MP<br/> + 2MP + 2MP Silver",
+        "from": "Por Plaza Vea",
+        "offer1": 899,
+        "offer2": 729,
+        "current": 689
+    },
+    {
+        "picture": "/img/01-smartphone/09-samsung-galaxy-a54.webp",
+        "title": "Smartphone SAMSUNG Galaxy A54 6.4'' 6GB 128GB<br/> 50MP + 12MP + 5MP Grafito",
+        "from": "Por Plaza Vea",
+        "offer1": 1699,
+        "offer2": 1499,
+        "current": 1349
+    },
+    {
+        "picture": "/img/01-smartphone/12-samsung-galaxy-a14.webp",
+        "title": "Smartphone SAMSUNG Galaxy A14 6.6'' 4GB 128GB<br/> 50MP + 5MP + 2MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 799,
+        "offer2": 649,
+        "current": 589
+    },
+    {
+        "picture": "/img/02-tv/01-oppo-a57.webp",
+        "title": "Smartphone OPPO A57 6.55'' 4GB 128GB 13MP<br/> + 2MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 999,
+        "offer2": 649,
+        "current": 599
+    },
+    {
+        "picture": "/img/02-tv/02-xiaomi-redmi-12s.webp",
+        "title": "Smartphone XIAOMI Redmi Note 12S 6.43'' 8GB<br/> 256GB 108MP Ice Blue",
+        "from": "Por Plaza Vea",
+        "offer1": 1199,
+        "offer2": 949,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/03-honor-x6s.webp",
+        "title": "Smartphone HONOR X6S 6.5'' 4GB 128GB 50MP + 2MP<br/> + 2MP Silver",
+        "from": "Por Plaza Vea",
+        "offer1": 799,
+        "offer2": 599,
+        "current": 559
+    },
+    {
+        "picture": "/img/02-tv/04-motorola-g52.webp",
+        "title": "Smartphone MOTOROLA G52 6.6'' 6GB 128GB 50MP<br/>+8MP+2MP Negro",
+        "from": "tottus",
+        "offer1": 1299,
+        "offer2": 749,
+        "current": 679
+    },
+    {
+        "picture": "/img/02-tv/05-realme-91.webp",
+        "title": "Smartphone REALME 9i 6.5'' 6GB 128GB Triple Negro<br/> Prisma",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 1159,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/06-oppo-reno7.webp",
+        "title": "Smartphone OPPO RENO 7 6.43'' 8GB 256GB 64MP<br/> + 2MP + 2MP Dorado",
+        "from": "Por Plaza Vea",
+        "offer1": 1999,
+        "offer2": 1549,
+        "current": 1429
+    },
+    {
+        "picture": "/img/02-tv/07-realme-c21y.webp",
+        "title": "Smartphone REALME C21Y 6.5'' 64GB 256GB <br/>Triple 13+2+2 MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 699,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/08-zte-blade-a37.webp",
+        "title": "Smartphone ZTE BLADE A31+ 5.97'' 1GB 32GB 5MP<br/> Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 299,
+        "offer2": 249,
+        "current": 229
+    },
+    {
+        "picture": "/img/02-tv/09-samsung-glaxy-s23.webp",
+        "title": "Smartphone SAMSUNG Galaxy S23 Ultra 6.8'' 8GB 256GB<br/> 200MP + 10MP + 12MP + 10MP Lavender",
+        "from": "Por Plaza Vea",
+        "offer1": 5599,
+        "offer2": 4199,
+        "current": 3799
+    },
+    {
+        "picture": "/img/02-tv/10-vivo-y35.webp",
+        "title": "Smartphone SAMSUNG Galaxy S23 Ultra 6.8'' 8GB 256GB<br/> 200MP + 10MP + 12MP + 10MP Lavender",
+        "from": "Por Plaza Vea",
+        "offer1": 899,
+        "offer2": 729,
+        "current": 689
+    },
+    {
+        "picture": "/img/02-tv/11-nokia-g20.webp",
+        "title": "Smartphone NOKIA G20 6.5'' 4GB 128GB 48MP<br/>+5MP+2MP+2MP Azul",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 799,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/12-apple-14-pro.webp",
+        "title": "Apple iPhone 14 Pro Max 6.7'' 256GB<br/> Plata",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 6099,
+        "current": 5999
+    },
+    {
+        "picture": "/img/01-smartphone/01-moto-e22.webp",
+        "title": "Smartphone  MOTOROLA Motorola  E22 6.5''   4GB 128GB <br/>   16MP + 2MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": 599,
+        "offer2": 499,
+        "current": 469
+    },
+    {
+        "picture": "/img/01-smartphone/03-xiaomi-poco-m5s.webp",
+        "title": "Smartphone XIAOMI POCO M5S 6.43'' 6GB 128GB<br/> 64MP+8MP+2M+2MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": 1099,
+        "offer2": 799,
+        "current": 749
+    },
+    {
+        "picture": "/img/01-smartphone/04-samsung-s21-fe.webp",
+        "title": "Smartphone SAMSUNG S21 FE 5G 6.2'' 6GB 128GB<br/> 12MP + 12MP + 8MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 1999,
+        "current": false
+    },
+    {
+        "picture": "/img/01-smartphone/05-zte-a51.webp",
+        "title": "Smartphone ZTE \nBLADE A51 Lite 6.09'' 2GB 32GB<br/> 13MP+2MP Azul",
+        "from": "Por Plaza Vea",
+        "offer1": 269,
+        "offer2": 229,
+        "current": false
+    },
+    {
+        "picture": "/img/01-smartphone/07-xiaomi-redmi-12.webp",
+        "title": "Smartphone REDMI Note 12 6.67'' 4GB 128GB<br/> 50MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": 949,
+        "offer2": 749,
+        "current": 699
+    },
+    {
+        "picture": "/img/01-smartphone/02-moto-g13.webp",
+        "title": "Smartphone MOTOROLA Motorola G13 6.5'' 4GB 128GB <br/>50MP+2MP+2MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 599,
+        "current": 559
+    },
+    {
+        "picture": "/img/01-smartphone/06-samsung-galaxy-a34.webp",
+        "title": "Smartphone SAMSUNG Galaxy A34 6.6'' 6GB 128GB<br/> 48MP + 8MP + 5MP Grafito",
+        "from": "Por Plaza Vea",
+        "offer1": 1199,
+        "offer2": 1149,
+        "current": 1049
+    },
+    {
+        "picture": "/img/01-smartphone/08-samsung-galaxy-a24.webp",
+        "title": "Smartphone SAMSUNG Galaxy A24 6.5'' 4GB 128GB<br/> 50MP + 5MP + 2MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 999,
+        "offer2": 749,
+        "current": 679
+    },
+    {
+        "picture": "/img/01-smartphone/10-xiaomi-redmi-a2.webp",
+        "title": "Smartphone XIAOMI Redmi A2 6.5'' 2GB 32GB<br/> 8MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 409,
+        "offer2": 299,
+        "current": 279
+    },
+    {
+        "picture": "/img/01-smartphone/11-honor-x7a.webp",
+        "title": "Smartphone HONOR X7A 6.7'' 6GB 128GB 50MP + 5MP<br/> + 2MP + 2MP Silver",
+        "from": "Por Plaza Vea",
+        "offer1": 899,
+        "offer2": 729,
+        "current": 689
+    },
+    {
+        "picture": "/img/01-smartphone/09-samsung-galaxy-a54.webp",
+        "title": "Smartphone SAMSUNG Galaxy A54 6.4'' 6GB 128GB<br/> 50MP + 12MP + 5MP Grafito",
+        "from": "Por Plaza Vea",
+        "offer1": 1699,
+        "offer2": 1499,
+        "current": 1349
+    },
+    {
+        "picture": "/img/01-smartphone/12-samsung-galaxy-a14.webp",
+        "title": "Smartphone SAMSUNG Galaxy A14 6.6'' 4GB 128GB<br/> 50MP + 5MP + 2MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 799,
+        "offer2": 649,
+        "current": 589
+    },
+    {
+        "picture": "/img/02-tv/01-oppo-a57.webp",
+        "title": "Smartphone OPPO A57 6.55'' 4GB 128GB 13MP<br/> + 2MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 999,
+        "offer2": 649,
+        "current": 599
+    },
+    {
+        "picture": "/img/02-tv/02-xiaomi-redmi-12s.webp",
+        "title": "Smartphone XIAOMI Redmi Note 12S 6.43'' 8GB<br/> 256GB 108MP Ice Blue",
+        "from": "Por Plaza Vea",
+        "offer1": 1199,
+        "offer2": 949,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/03-honor-x6s.webp",
+        "title": "Smartphone HONOR X6S 6.5'' 4GB 128GB 50MP + 2MP<br/> + 2MP Silver",
+        "from": "Por Plaza Vea",
+        "offer1": 799,
+        "offer2": 599,
+        "current": 559
+    },
+    {
+        "picture": "/img/02-tv/04-motorola-g52.webp",
+        "title": "Smartphone MOTOROLA G52 6.6'' 6GB 128GB 50MP<br/>+8MP+2MP Negro",
+        "from": "tottus",
+        "offer1": 1299,
+        "offer2": 749,
+        "current": 679
+    },
+    {
+        "picture": "/img/02-tv/05-realme-91.webp",
+        "title": "Smartphone REALME 9i 6.5'' 6GB 128GB Triple Negro<br/> Prisma",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 1159,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/06-oppo-reno7.webp",
+        "title": "Smartphone OPPO RENO 7 6.43'' 8GB 256GB 64MP<br/> + 2MP + 2MP Dorado",
+        "from": "Por Plaza Vea",
+        "offer1": 1999,
+        "offer2": 1549,
+        "current": 1429
+    },
+    {
+        "picture": "/img/02-tv/07-realme-c21y.webp",
+        "title": "Smartphone REALME C21Y 6.5'' 64GB 256GB <br/>Triple 13+2+2 MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 699,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/08-zte-blade-a37.webp",
+        "title": "Smartphone ZTE BLADE A31+ 5.97'' 1GB 32GB 5MP<br/> Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 299,
+        "offer2": 249,
+        "current": 229
+    },
+    {
+        "picture": "/img/02-tv/09-samsung-glaxy-s23.webp",
+        "title": "Smartphone SAMSUNG Galaxy S23 Ultra 6.8'' 8GB 256GB<br/> 200MP + 10MP + 12MP + 10MP Lavender",
+        "from": "Por Plaza Vea",
+        "offer1": 5599,
+        "offer2": 4199,
+        "current": 3799
+    },
+    {
+        "picture": "/img/02-tv/10-vivo-y35.webp",
+        "title": "Smartphone SAMSUNG Galaxy S23 Ultra 6.8'' 8GB 256GB<br/> 200MP + 10MP + 12MP + 10MP Lavender",
+        "from": "Por Plaza Vea",
+        "offer1": 899,
+        "offer2": 729,
+        "current": 689
+    },
+    {
+        "picture": "/img/02-tv/11-nokia-g20.webp",
+        "title": "Smartphone NOKIA G20 6.5'' 4GB 128GB 48MP<br/>+5MP+2MP+2MP Azul",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 799,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/12-apple-14-pro.webp",
+        "title": "Apple iPhone 14 Pro Max 6.7'' 256GB<br/> Plata",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 6099,
+        "current": 5999
+    },
+    {
+        "picture": "/img/01-smartphone/01-moto-e22.webp",
+        "title": "Smartphone  MOTOROLA Motorola  E22 6.5''   4GB 128GB <br/>   16MP + 2MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": 599,
+        "offer2": 499,
+        "current": 469
+    },
+    {
+        "picture": "/img/01-smartphone/03-xiaomi-poco-m5s.webp",
+        "title": "Smartphone XIAOMI POCO M5S 6.43'' 6GB 128GB<br/> 64MP+8MP+2M+2MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": 1099,
+        "offer2": 799,
+        "current": 749
+    },
+    {
+        "picture": "/img/01-smartphone/04-samsung-s21-fe.webp",
+        "title": "Smartphone SAMSUNG S21 FE 5G 6.2'' 6GB 128GB<br/> 12MP + 12MP + 8MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 1999,
+        "current": false
+    },
+    {
+        "picture": "/img/01-smartphone/05-zte-a51.webp",
+        "title": "Smartphone ZTE \nBLADE A51 Lite 6.09'' 2GB 32GB<br/> 13MP+2MP Azul",
+        "from": "Por Plaza Vea",
+        "offer1": 269,
+        "offer2": 229,
+        "current": false
+    },
+    {
+        "picture": "/img/01-smartphone/07-xiaomi-redmi-12.webp",
+        "title": "Smartphone REDMI Note 12 6.67'' 4GB 128GB<br/> 50MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": 949,
+        "offer2": 749,
+        "current": 699
+    },
+    {
+        "picture": "/img/01-smartphone/02-moto-g13.webp",
+        "title": "Smartphone MOTOROLA Motorola G13 6.5'' 4GB 128GB <br/>50MP+2MP+2MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 599,
+        "current": 559
+    },
+    {
+        "picture": "/img/01-smartphone/06-samsung-galaxy-a34.webp",
+        "title": "Smartphone SAMSUNG Galaxy A34 6.6'' 6GB 128GB<br/> 48MP + 8MP + 5MP Grafito",
+        "from": "Por Plaza Vea",
+        "offer1": 1199,
+        "offer2": 1149,
+        "current": 1049
+    },
+    {
+        "picture": "/img/01-smartphone/08-samsung-galaxy-a24.webp",
+        "title": "Smartphone SAMSUNG Galaxy A24 6.5'' 4GB 128GB<br/> 50MP + 5MP + 2MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 999,
+        "offer2": 749,
+        "current": 679
+    },
+    {
+        "picture": "/img/01-smartphone/10-xiaomi-redmi-a2.webp",
+        "title": "Smartphone XIAOMI Redmi A2 6.5'' 2GB 32GB<br/> 8MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 409,
+        "offer2": 299,
+        "current": 279
+    },
+    {
+        "picture": "/img/01-smartphone/11-honor-x7a.webp",
+        "title": "Smartphone HONOR X7A 6.7'' 6GB 128GB 50MP + 5MP<br/> + 2MP + 2MP Silver",
+        "from": "Por Plaza Vea",
+        "offer1": 899,
+        "offer2": 729,
+        "current": 689
+    },
+    {
+        "picture": "/img/01-smartphone/09-samsung-galaxy-a54.webp",
+        "title": "Smartphone SAMSUNG Galaxy A54 6.4'' 6GB 128GB<br/> 50MP + 12MP + 5MP Grafito",
+        "from": "Por Plaza Vea",
+        "offer1": 1699,
+        "offer2": 1499,
+        "current": 1349
+    },
+    {
+        "picture": "/img/01-smartphone/12-samsung-galaxy-a14.webp",
+        "title": "Smartphone SAMSUNG Galaxy A14 6.6'' 4GB 128GB<br/> 50MP + 5MP + 2MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 799,
+        "offer2": 649,
+        "current": 589
+    },
+    {
+        "picture": "/img/02-tv/01-oppo-a57.webp",
+        "title": "Smartphone OPPO A57 6.55'' 4GB 128GB 13MP<br/> + 2MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 999,
+        "offer2": 649,
+        "current": 599
+    },
+    {
+        "picture": "/img/02-tv/02-xiaomi-redmi-12s.webp",
+        "title": "Smartphone XIAOMI Redmi Note 12S 6.43'' 8GB<br/> 256GB 108MP Ice Blue",
+        "from": "Por Plaza Vea",
+        "offer1": 1199,
+        "offer2": 949,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/03-honor-x6s.webp",
+        "title": "Smartphone HONOR X6S 6.5'' 4GB 128GB 50MP + 2MP<br/> + 2MP Silver",
+        "from": "Por Plaza Vea",
+        "offer1": 799,
+        "offer2": 599,
+        "current": 559
+    },
+    {
+        "picture": "/img/02-tv/04-motorola-g52.webp",
+        "title": "Smartphone MOTOROLA G52 6.6'' 6GB 128GB 50MP<br/>+8MP+2MP Negro",
+        "from": "tottus",
+        "offer1": 1299,
+        "offer2": 749,
+        "current": 679
+    },
+    {
+        "picture": "/img/02-tv/05-realme-91.webp",
+        "title": "Smartphone REALME 9i 6.5'' 6GB 128GB Triple Negro<br/> Prisma",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 1159,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/06-oppo-reno7.webp",
+        "title": "Smartphone OPPO RENO 7 6.43'' 8GB 256GB 64MP<br/> + 2MP + 2MP Dorado",
+        "from": "Por Plaza Vea",
+        "offer1": 1999,
+        "offer2": 1549,
+        "current": 1429
+    },
+    {
+        "picture": "/img/02-tv/07-realme-c21y.webp",
+        "title": "Smartphone REALME C21Y 6.5'' 64GB 256GB <br/>Triple 13+2+2 MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 699,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/08-zte-blade-a37.webp",
+        "title": "Smartphone ZTE BLADE A31+ 5.97'' 1GB 32GB 5MP<br/> Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 299,
+        "offer2": 249,
+        "current": 229
+    },
+    {
+        "picture": "/img/02-tv/09-samsung-glaxy-s23.webp",
+        "title": "Smartphone SAMSUNG Galaxy S23 Ultra 6.8'' 8GB 256GB<br/> 200MP + 10MP + 12MP + 10MP Lavender",
+        "from": "Por Plaza Vea",
+        "offer1": 5599,
+        "offer2": 4199,
+        "current": 3799
+    },
+    {
+        "picture": "/img/02-tv/10-vivo-y35.webp",
+        "title": "Smartphone SAMSUNG Galaxy S23 Ultra 6.8'' 8GB 256GB<br/> 200MP + 10MP + 12MP + 10MP Lavender",
+        "from": "Por Plaza Vea",
+        "offer1": 899,
+        "offer2": 729,
+        "current": 689
+    },
+    {
+        "picture": "/img/02-tv/11-nokia-g20.webp",
+        "title": "Smartphone NOKIA G20 6.5'' 4GB 128GB 48MP<br/>+5MP+2MP+2MP Azul",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 799,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/12-apple-14-pro.webp",
+        "title": "Apple iPhone 14 Pro Max 6.7'' 256GB<br/> Plata",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 6099,
+        "current": 5999
+    },
+    {
+        "picture": "/img/01-smartphone/01-moto-e22.webp",
+        "title": "Smartphone  MOTOROLA Motorola  E22 6.5''   4GB 128GB <br/>   16MP + 2MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": 599,
+        "offer2": 499,
+        "current": 469
+    },
+    {
+        "picture": "/img/01-smartphone/03-xiaomi-poco-m5s.webp",
+        "title": "Smartphone XIAOMI POCO M5S 6.43'' 6GB 128GB<br/> 64MP+8MP+2M+2MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": 1099,
+        "offer2": 799,
+        "current": 749
+    },
+    {
+        "picture": "/img/01-smartphone/04-samsung-s21-fe.webp",
+        "title": "Smartphone SAMSUNG S21 FE 5G 6.2'' 6GB 128GB<br/> 12MP + 12MP + 8MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 1999,
+        "current": false
+    },
+    {
+        "picture": "/img/01-smartphone/05-zte-a51.webp",
+        "title": "Smartphone ZTE \nBLADE A51 Lite 6.09'' 2GB 32GB<br/> 13MP+2MP Azul",
+        "from": "Por Plaza Vea",
+        "offer1": 269,
+        "offer2": 229,
+        "current": false
+    },
+    {
+        "picture": "/img/01-smartphone/07-xiaomi-redmi-12.webp",
+        "title": "Smartphone REDMI Note 12 6.67'' 4GB 128GB<br/> 50MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": 949,
+        "offer2": 749,
+        "current": 699
+    },
+    {
+        "picture": "/img/01-smartphone/02-moto-g13.webp",
+        "title": "Smartphone MOTOROLA Motorola G13 6.5'' 4GB 128GB <br/>50MP+2MP+2MP Gris",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 599,
+        "current": 559
+    },
+    {
+        "picture": "/img/01-smartphone/06-samsung-galaxy-a34.webp",
+        "title": "Smartphone SAMSUNG Galaxy A34 6.6'' 6GB 128GB<br/> 48MP + 8MP + 5MP Grafito",
+        "from": "Por Plaza Vea",
+        "offer1": 1199,
+        "offer2": 1149,
+        "current": 1049
+    },
+    {
+        "picture": "/img/01-smartphone/08-samsung-galaxy-a24.webp",
+        "title": "Smartphone SAMSUNG Galaxy A24 6.5'' 4GB 128GB<br/> 50MP + 5MP + 2MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 999,
+        "offer2": 749,
+        "current": 679
+    },
+    {
+        "picture": "/img/01-smartphone/10-xiaomi-redmi-a2.webp",
+        "title": "Smartphone XIAOMI Redmi A2 6.5'' 2GB 32GB<br/> 8MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 409,
+        "offer2": 299,
+        "current": 279
+    },
+    {
+        "picture": "/img/01-smartphone/11-honor-x7a.webp",
+        "title": "Smartphone HONOR X7A 6.7'' 6GB 128GB 50MP + 5MP<br/> + 2MP + 2MP Silver",
+        "from": "Por Plaza Vea",
+        "offer1": 899,
+        "offer2": 729,
+        "current": 689
+    },
+    {
+        "picture": "/img/01-smartphone/09-samsung-galaxy-a54.webp",
+        "title": "Smartphone SAMSUNG Galaxy A54 6.4'' 6GB 128GB<br/> 50MP + 12MP + 5MP Grafito",
+        "from": "Por Plaza Vea",
+        "offer1": 1699,
+        "offer2": 1499,
+        "current": 1349
+    },
+    {
+        "picture": "/img/01-smartphone/12-samsung-galaxy-a14.webp",
+        "title": "Smartphone SAMSUNG Galaxy A14 6.6'' 4GB 128GB<br/> 50MP + 5MP + 2MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 799,
+        "offer2": 649,
+        "current": 589
+    },
+    {
+        "picture": "/img/02-tv/01-oppo-a57.webp",
+        "title": "Smartphone OPPO A57 6.55'' 4GB 128GB 13MP<br/> + 2MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 999,
+        "offer2": 649,
+        "current": 599
+    },
+    {
+        "picture": "/img/02-tv/02-xiaomi-redmi-12s.webp",
+        "title": "Smartphone XIAOMI Redmi Note 12S 6.43'' 8GB<br/> 256GB 108MP Ice Blue",
+        "from": "Por Plaza Vea",
+        "offer1": 1199,
+        "offer2": 949,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/03-honor-x6s.webp",
+        "title": "Smartphone HONOR X6S 6.5'' 4GB 128GB 50MP + 2MP<br/> + 2MP Silver",
+        "from": "Por Plaza Vea",
+        "offer1": 799,
+        "offer2": 599,
+        "current": 559
+    },
+    {
+        "picture": "/img/02-tv/04-motorola-g52.webp",
+        "title": "Smartphone MOTOROLA G52 6.6'' 6GB 128GB 50MP<br/>+8MP+2MP Negro",
+        "from": "tottus",
+        "offer1": 1299,
+        "offer2": 749,
+        "current": 679
+    },
+    {
+        "picture": "/img/02-tv/05-realme-91.webp",
+        "title": "Smartphone REALME 9i 6.5'' 6GB 128GB Triple Negro<br/> Prisma",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 1159,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/06-oppo-reno7.webp",
+        "title": "Smartphone OPPO RENO 7 6.43'' 8GB 256GB 64MP<br/> + 2MP + 2MP Dorado",
+        "from": "Por Plaza Vea",
+        "offer1": 1999,
+        "offer2": 1549,
+        "current": 1429
+    },
+    {
+        "picture": "/img/02-tv/07-realme-c21y.webp",
+        "title": "Smartphone REALME C21Y 6.5'' 64GB 256GB <br/>Triple 13+2+2 MP Negro",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 699,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/08-zte-blade-a37.webp",
+        "title": "Smartphone ZTE BLADE A31+ 5.97'' 1GB 32GB 5MP<br/> Negro",
+        "from": "Por Plaza Vea",
+        "offer1": 299,
+        "offer2": 249,
+        "current": 229
+    },
+    {
+        "picture": "/img/02-tv/09-samsung-glaxy-s23.webp",
+        "title": "Smartphone SAMSUNG Galaxy S23 Ultra 6.8'' 8GB 256GB<br/> 200MP + 10MP + 12MP + 10MP Lavender",
+        "from": "Por Plaza Vea",
+        "offer1": 5599,
+        "offer2": 4199,
+        "current": 3799
+    },
+    {
+        "picture": "/img/02-tv/10-vivo-y35.webp",
+        "title": "Smartphone SAMSUNG Galaxy S23 Ultra 6.8'' 8GB 256GB<br/> 200MP + 10MP + 12MP + 10MP Lavender",
+        "from": "Por Plaza Vea",
+        "offer1": 899,
+        "offer2": 729,
+        "current": 689
+    },
+    {
+        "picture": "/img/02-tv/11-nokia-g20.webp",
+        "title": "Smartphone NOKIA G20 6.5'' 4GB 128GB 48MP<br/>+5MP+2MP+2MP Azul",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 799,
+        "current": false
+    },
+    {
+        "picture": "/img/02-tv/12-apple-14-pro.webp",
+        "title": "Apple iPhone 14 Pro Max 6.7'' 256GB<br/> Plata",
+        "from": "Por Plaza Vea",
+        "offer1": false,
+        "offer2": 6099,
+        "current": 5999
+    }
+]

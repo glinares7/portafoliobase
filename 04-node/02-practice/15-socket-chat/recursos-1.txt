@@ -1,0 +1,735 @@
+ 
+ <!--------------------------------------------------------------
+ nota: las rutas que contentas ../* son  pre construidas
+ --------------------------------------------------------------!>
+
+package.json
+
+  "scripts": {
+    "start": "node server/server.js"
+  },  
+ 
+  "express": "^4.16.3",
+    "socket.io": "^4.6.1"
+
+    
+
+./public/
+    crear directorio
+
+server/server.js
+
+    const express = require('express');
+    const socketIO = require('socket.io');
+
+    const http = require('http');
+    const path = require('path');
+
+    const app = express();
+    let server = http.createServer(app);
+
+    const publicPath = path.resolve(__dirname, '../public');
+    const port = process.env.PORT || 3000;
+
+    app.use(express.static(publicPath));
+
+    // IO = esta es la comunicacion del backend
+    module.exports.io = socketIO(server);
+    require('./sockets/socket');
+
+
+    server.listen(port, (err) => {
+
+        if (err) throw new Error(err);
+
+        console.log(`Servidor corriendo en puerto ${ port }`);
+
+    });
+    
+
+..classes/usuarios
+
+    // {
+    //     id:'ALkjdaklsdj-asdkj',
+    //     nombre:"Fernando",
+    //     sala:'Video Juegos'
+    // }
+
+    class Usuarios {
+    constructor() {
+        this.personas = [];
+    }
+    agregarPersona(id, nombre, sala) {
+        let persona = { id, nombre, sala };
+
+        this.personas.push(persona);
+
+        return this.personas;
+    }
+
+    getPersona(id) {
+        let persona = this.personas.filter((persona) => persona.id === id)[0];
+
+        return persona;
+    }
+    getPersonas() {
+        return this.personas;
+    }
+
+    getPersonasPorSala(sala) {
+        //...
+        let personasEnSala = this.personas.filter(
+        (persona) => persona.sala === sala
+        );
+        return personasEnSala;
+    }
+
+    borrarPersona(id) {
+        // this.personas.filter(persona => {
+        //     return persona.id != id
+        // })
+        let personaBorrada = this.getPersona(id);
+
+        this.personas = this.personas.filter((persona) => persona.id != id);
+
+        return personaBorrada;
+    }
+    }
+
+    module.exports = {
+    Usuarios,
+    };
+
+
+
+../utilidades/utilidades
+
+    const crearMensaje = (nombre, mensaje) => {
+    return {
+        nombre,
+        mensaje,
+        fecha: new Date().getTime(),
+    };
+    };
+
+    module.exports = {
+    crearMensaje,
+    };
+
+
+./socket/socket
+
+    const { io } = require("../server");
+
+    const { Usuarios } = require("../classes/usuarios");
+    const { crearMensaje } = require("../utilidades/utilidades");
+
+    const usuarios = new Usuarios();
+
+    io.on("connection", (client) => {
+    // console.log('Usuario conectado');
+
+    client.on("entrarChat", (data, callback) => {
+        // console.log(data);
+
+        if (!data.nombre || !data.sala) {
+        return callback({
+            error: true,
+            mensaje: "El nombre/sala es necesario",
+        });
+        }
+
+        client.join(data.sala);
+        usuarios.agregarPersona(client.id, data.nombre, data.sala);
+
+        client.broadcast
+        .to(data.sala)
+        .emit("listaPersona", usuarios.getPersonasPorSala(data.sala));
+
+        callback(usuarios.getPersonasPorSala(data.sala));
+    });
+
+    client.on("crearMensaje", (data, callback) => {
+        let persona = usuarios.getPersona(client.id);
+
+        let mensaje = crearMensaje(persona.nombre, data.mensaje);
+
+        client.broadcast.to(persona.sala).emit("crearMensaje", mensaje);
+
+        client.broadcast
+        .to(data.sala)
+        .emit(
+            "crearMensaje",
+            crearMensaje("Administrador", `${data.nombre} se unio`)
+        );
+
+        callback(mensaje);
+    });
+
+    client.on("disconnect", () => {
+        let personaBorrada = usuarios.borrarPersona(client.id);
+
+        client.broadcast
+        .to(personaBorrada.sala)
+        .emit(
+            "crearMensaje",
+            crearMensaje("Administrador", `${personaBorrada.nombre} salio`)
+        );
+
+        client.broadcast
+        .to(personaBorrada.sala)
+        .emit("listaPersona", usuarios.getPersonasPorSala(personaBorrada.sala));
+    });
+
+    // todo  cuando alguien quiere mandar un mensaje privado a alguien
+    //*Mensajes privados
+
+    client.on("mensajePrivado", (data) => {
+        //*TAREA validar el mensaje que viene en la data
+
+        let persona = usuarios.getPersona(client.id);
+
+        client.broadcast
+        .to(data.para)
+        .emit("mensajePrivado", crearMensaje(persona.nombre, data.mensaje));
+    });
+    });
+
+
+
+
+./assets/*
+
+./css/*
+
+./scss/*
+
+../public/index.html
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <!-- Tell the browser to be responsive to screen width -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <!-- Favicon icon -->
+        <link rel="icon" type="image/png" sizes="16x16" href="../assets/images/favicon.png">
+        <title>Sala de Chat</title>
+        <!-- Bootstrap Core CSS -->
+        <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!-- page css -->
+        <link href="css/pages/login-register-lock.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="css/style.css" rel="stylesheet">
+
+        <!-- You can change the theme colors from here -->
+        <link href="css/colors/default-dark.css" id="theme" rel="stylesheet">
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    </head>
+
+    <body class="card-no-border">
+        <!-- ============================================================== -->
+        <!-- Preloader - style you can find in spinners.css -->
+        <!-- ============================================================== -->
+        <div class="preloader">
+            <div class="loader">
+                <div class="loader__figure"></div>
+                <p class="loader__label">Cargando Chat...</p>
+            </div>
+        </div>
+        <!-- ============================================================== -->
+        <!-- Main wrapper - style you can find in pages.scss -->
+        <!-- ============================================================== -->
+        <section id="wrapper">
+            <div class="login-register" style="background-image:url(../assets/images/background/login-register.jpg);">
+                <div class="login-box card">
+                    <div class="card-body">
+                        <form class="form-horizontal form-material" id="loginform" action="chat.html">
+                            <h3 class="box-title m-b-20">Ingresar al Chat</h3>
+                            <div class="form-group ">
+                                <div class="col-xs-12">
+                                    <input class="form-control" type="text" required="" placeholder="Nombre de usuario" name="nombre"> </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <input class="form-control" type="text" required="" placeholder="Sala de chat" name="sala"> </div>
+                            </div>
+
+                            <div class="form-group text-center">
+                                <div class="col-xs-12 p-b-20">
+                                    <button class="btn btn-block btn-lg btn-info btn-rounded" type="submit">Ingresar al chat</button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============================================================== -->
+        <!-- End Wrapper -->
+        <!-- ============================================================== -->
+        <!-- ============================================================== -->
+        <!-- All Jquery -->
+        <!-- ============================================================== -->
+        <script src="../assets/plugins/jquery/jquery.min.js"></script>
+        <!-- Bootstrap tether Core JavaScript -->
+        <script src="../assets/plugins/bootstrap/js/popper.min.js"></script>
+        <script src="../assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+        <!--Custom JavaScript -->
+        <script type="text/javascript">
+            $(function() {
+                $(".preloader").fadeOut();
+            });
+            $(function() {
+                $('[data-toggle="tooltip"]').tooltip()
+            });
+        </script>
+
+    </body>
+
+    </html>
+
+
+./assets/plugins/jquery/jquery.min.js
+../assets/plugins/bootstrap/js/popper.min.js
+../assets/plugins/bootstrap/js/bootstrap.min.js
+
+
+
+../public/chat.html
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Chat</title>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+            integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <!-- Page CSS -->
+        <link href="css/pages/chat-app-page.css" rel="stylesheet">
+        <!-- Custom CSS -->
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/chat.css" rel="stylesheet">
+        <link href="css/animate.css" rel="stylesheet">
+
+        <!-- You can change the theme colors from here -->
+        <link href="css/colors/default-dark.css" id="theme" rel="stylesheet">
+    </head>
+
+    <body class="fix-header single-column card-no-border fix-sidebar">
+
+        <!-- ============================================================== -->
+        <!-- Main wrapper -->
+        <!-- ============================================================== -->
+        <div id="main-wrapper">
+
+            <!-- ============================================================== -->
+            <!-- Page wrapper  -->
+            <!-- ============================================================== -->
+            <div class="page-wrapper">
+
+                <!-- ============================================================== -->
+                <!-- Container fluid  -->
+                <!-- ============================================================== -->
+                <div class="container-fluid">
+
+
+                    <!-- ============================================================== -->
+                    <!-- Start Page Content -->
+                    <!-- ============================================================== -->
+                    <div class="row animated fadeIn">
+                        <div class="col-12">
+                            <div class="card m-b-0">
+                                <!-- .chat-row -->
+                                <div class="chat-main-box">
+                                    <!-- .chat-left-panel -->
+                                    <div class="chat-left-aside">
+                                        <div class="open-panel"><i class="ti-angle-right"></i></div>
+                                        <div class="chat-left-inner">
+                                            <div class="form-material">
+                                                <input class="form-control p-20" type="text" placeholder="Buscar Contacto">
+                                            </div>
+                                            <ul class="chatonline style-none" id="divUsuarios">
+                                                <!-- <li>
+                                                    <a href="javascript:void(0)" class="active"> Chat de <span>
+                                                            Juegos</span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)"><img src="assets/images/users/1.jpg"
+                                                            alt="user-img" class="img-circle"> <span>Varun Dhavan <small
+                                                                class="text-success">online</small></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)"><img src="assets/images/users/2.jpg"
+                                                            alt="user-img" class="img-circle"> <span>Genelia Deshmukh <small
+                                                                class="text-warning">Away</small></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)"><img src="assets/images/users/3.jpg"
+                                                            alt="user-img" class="img-circle"> <span>Ritesh Deshmukh <small
+                                                                class="text-danger">Busy</small></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)"><img src="assets/images/users/4.jpg"
+                                                            alt="user-img" class="img-circle"> <span>Arijit Sinh <small
+                                                                class="text-muted">Offline</small></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)"><img src="assets/images/users/5.jpg"
+                                                            alt="user-img" class="img-circle"> <span>Govinda Star <small
+                                                                class="text-success">online</small></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)"><img src="assets/images/users/6.jpg"
+                                                            alt="user-img" class="img-circle"> <span>John Abraham<small
+                                                                class="text-success">online</small></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)"><img src="assets/images/users/7.jpg"
+                                                            alt="user-img" class="img-circle"> <span>Hritik Roshan<small
+                                                                class="text-success">online</small></span></a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)"><img src="assets/images/users/8.jpg"
+                                                            alt="user-img" class="img-circle"> <span>Pwandeep rajan <small
+                                                                class="text-success">online</small></span></a>
+                                                </li>
+                                                <li class="p-20"></li> -->
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <!-- .chat-left-panel -->
+                                    <!-- .chat-right-panel -->
+                                    <div class="chat-right-aside">
+                                        <div class="chat-main-header">
+                                            <div class="p-20 b-b">
+                                                <h3 class="box-title">Sala de chat <small>Video Juegos</small></h3>
+                                            </div>
+                                        </div>
+
+                                        <div class="chat-rbox">
+                                            <ul class="chat-list p-20" id="divChatbox">
+                                                <!--chat Row -->
+                                                <!-- <li>
+                                                    <div class="chat-img"><img src="assets/images/users/1.jpg" alt="user" />
+                                                    </div>
+                                                    <div class="chat-content">
+                                                        <h5>James Anderson</h5>
+                                                        <div class="box bg-light-info">Lorem Ipsum is simply dummy text of
+                                                            the printing & type setting industry.</div>
+                                                    </div>
+                                                    <div class="chat-time">10:56 am</div>
+                                                </li> -->
+                                                <!--*chat Row -->
+                                                <!--chat Row -->
+                                                <!-- <li class="reverse">
+                                                    <div class="chat-content">
+                                                        <h5>Steave Doe</h5>
+                                                        <div class="box bg-light-inverse">It’s Great opportunity to work.
+                                                        </div>
+                                                    </div>
+                                                    <div class="chat-img"><img src="assets/images/users/5.jpg" alt="user" />
+                                                    </div>
+                                                    <div class="chat-time">10:57 am</div>
+                                                </li> -->
+
+
+                                            </ul>
+                                        </div>
+                                        <div class="card-body b-t">
+
+                                            <form id="formEnviar">
+                                                <div class="row">
+                                                    <div class="col-8">
+                                                        <input autocomplete="off" id="txtMensaje"
+                                                            placeholder="Escribe tu mensaje aquí" class="form-control b-0"
+                                                            autofocus>
+                                                        </input>
+                                                    </div>
+                                                    <div class="col-4 text-right">
+                                                        <button type="submit" class="btn btn-info btn-circle btn-lg"><i
+                                                                class="fa fa-paper-plane-o"></i> </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+
+
+                                        </div>
+                                    </div>
+                                    <!-- .chat-right-panel -->
+                                </div>
+                                <!-- /.chat-row -->
+                            </div>
+                        </div>
+                    </div>
+                    <!-- ============================================================== -->
+                    <!-- End PAge Content -->
+                    <!-- ============================================================== -->
+
+                </div>
+                <!-- ============================================================== -->
+                <!-- End Container fluid  -->
+                <!-- ============================================================== -->
+                <!-- ============================================================== -->
+                <!-- footer -->
+                <!-- ============================================================== -->
+                <footer class="footer">
+                    Super Chat - Fernando Herrera
+                </footer>
+                <!-- ============================================================== -->
+                <!-- End footer -->
+                <!-- ============================================================== -->
+            </div>
+            <!-- ============================================================== -->
+            <!-- End Page wrapper  -->
+            <!-- ============================================================== -->
+        </div>
+        <!-- ============================================================== -->
+        <!-- End Wrapper -->
+        <!-- ============================================================== -->
+
+
+
+
+
+        <script src="js/libs/jquery.min.js"></script>
+        <script src="socket.io/socket.io.js"></script>
+
+        <script src="js/socket-chat-jquery.js"></script>
+        <script src="js/socket-chat.js"></script>
+
+    </body>
+
+    </html>
+
+
+
+
+./js/libs/jquery.min.js
+
+    agregar libreria
+
+
+
+./js/socket-chat-jquery.js
+
+        // Funciones para renderizar usuarios
+
+    var params = new URLSearchParams(window.location.search);
+
+    var nombre = params.get("nombre");
+    var sala = params.get("sala");
+
+    //referencias de jQuery
+
+    var divUsuarios = $("#divUsuarios");
+    var formEnviar = $("#formEnviar");
+    var txtMensaje = $("#txtMensaje");
+    var divChatbox = $("#divChatbox");
+
+    function renderizarUsuarios(personas) {
+    //[{},{},{}]
+    console.log(personas);
+
+    var html = "";
+
+    html += "<li>";
+    html +=
+        '<a href="javascript:void(0)" class="active">Chat de <span>' +
+        params.get("sala") +
+        "</span></a>";
+    html += " </li>;";
+
+    for (var i = 0; i < personas.length; i++) {
+        html += "<li>";
+        html +=
+        '<a data-id="' +
+        personas[i].id +
+        '" href="javascript:void(0)"><img src="assets/images/users/1.jpg" alt="user-img" class="img-circle"> <span>' +
+        personas[i].nombre +
+        ' <small class="text-success">online</small></span></a>';
+        html += "</li>";
+    }
+
+    divUsuarios.html(html);
+    }
+
+
+
+    function renderizarMensajes(mensaje, yo) {
+    var html = "";
+
+    var fecha = new Date(mensaje.fecha);
+    var hora = fecha.getHours() + ":" + fecha.getMinutes();
+
+    var adminClass = "info";
+
+    if (mensaje.nombre === "Administrador") {
+        adminClass = "danger";
+    }
+
+    if (yo) {
+        html += '<li class="reverse">';
+        html += '  <div class="chat-content">';
+        html += "      <h5>" + mensaje.nombre + "</h5>";
+        html +=
+        '      <div class="box bg-light-inverse">' + mensaje.mensaje + "</div>";
+        html += "  </div>";
+        html +=
+        '  <div class="chat-img"><img src="assets/images/users/5.jpg" alt="user" /></div>';
+        html += '  <div class="chat-time">' + hora + "</div>";
+        html += "</li>";
+    } else {
+        html += "<li class='fadeIn'>";
+
+        if (mensaje.nombre !== "Administrador") {
+        html +=
+            ' <div class="chat-img"><img src="assets/images/users/1.jpg" alt="user" /></div>';
+        }
+
+        html += ' <div class="chat-content">';
+        html += "    <h5>" + mensaje.nombre + "</h5>";
+        html +=
+        '    <div class="box bg-light-' +
+        adminClass +
+        '">' +
+        mensaje.mensaje +
+        "</div>";
+        html += "  </div>";
+        html += '  <div class="chat-time">' + hora + "</div>";
+        html += "</li>";
+    }
+
+    divChatbox.append(html);
+    }
+
+    function scrollBottom() {
+    // selectors
+    var newMessage = divChatbox.children("li:last-child");
+
+    // heights
+    var clientHeight = divChatbox.prop("clientHeight");
+    var scrollTop = divChatbox.prop("scrollTop");
+    var scrollHeight = divChatbox.prop("scrollHeight");
+    var newMessageHeight = newMessage.innerHeight();
+    var lastMessageHeight = newMessage.prev().innerHeight() || 0;
+
+    if (
+        clientHeight + scrollTop + newMessageHeight + lastMessageHeight >=
+        scrollHeight
+    ) {
+        divChatbox.scrollTop(scrollHeight);
+    }
+    }
+    // listener
+
+    divUsuarios.on("click", "a", function () {
+    var id = $(this).data("id");
+
+    if (id) {
+        console.log(id);
+    }
+    });
+
+    formEnviar.on("submit", function (e) {
+    e.preventDefault();
+    if (txtMensaje.val().trim().length === 0) {
+        return;
+    }
+
+    // Enviar información
+    socket.emit(
+        "crearMensaje",
+        {
+        nombre: nombre,
+        mensaje: txtMensaje.val(),
+        },
+        function (mensaje) {
+        // console.log("respuesta server: ", mensaje);
+        txtMensaje.val("").focus();
+        renderizarMensajes(mensaje, true);
+        scrollBottom();
+        }
+    );
+    });
+
+
+./js/socket-chat.js
+
+
+    var socket = io();
+
+    var params = new URLSearchParams(window.location.search);
+
+    if (!params.has("nombre") || !params.has("sala")) {
+    window.location = "index.html";
+    throw new Error("El nombre y sala son necesarios");
+    }
+
+    var usuario = {
+    nombre: params.get("nombre"),
+    sala: params.get("sala"),
+    };
+
+    socket.on("connect", function () {
+    console.log("Conectado al servidor");
+
+    socket.emit("entrarChat", usuario, function (resp) {
+        // console.log('Usuarios conectados', resp);
+
+        //todo renderizar los usuarios ~ socket-chat-jquery.js
+        renderizarUsuarios(resp);
+    });
+    });
+
+    // escuchar
+    socket.on("disconnect", function () {
+    console.log("Perdimos conexión con el servidor");
+    });
+
+    // Enviar información
+    // socket.emit('crearMensaje', {
+    //     nombre: 'Fernando',
+    //     mensaje: 'Hola Mundo'
+    // }, function(resp) {
+    //     console.log('respuesta server: ', resp);
+    // });
+
+    // Escuchar información
+    socket.on("crearMensaje", function (mensaje) {
+    // console.log("Servidor:", mensaje);
+    renderizarMensajes(mensaje, false);
+    scrollBottom();
+    });
+
+    // Escuchar cambios de usuarios
+    // cuando un usuario entra o sale del chat
+    socket.on("listaPersona", function (personas) {
+    console.log(personas);
+    renderizarUsuarios(personas);
+    });
+
+    // Mensajes privados
+    socket.on("mensajePrivado", function (mensaje) {
+    console.log("Mensaje Privado:", mensaje);
+    });
+
+
+        
+

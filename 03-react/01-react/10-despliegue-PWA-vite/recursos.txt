@@ -1,0 +1,90 @@
+
+crear proyecto  pwa con react
+
+                instalar VITE
+                    node > 12.xx version LTS
+
+                    sudo npm i --location=global npm yarn  
+                dentro  del folder
+                        yarn create vite
+                template
+                        arn create vite proy-reac --template  react
+
+
+                inicializamos 
+                    yarn
+
+                ejecutamos el desarrollo
+                    yarn dev
+
+    
+
+soporte PWA
+    https://vite-plugin-pwa.netlify.app/
+
+instalo  via yarn
+    https://github.com/antfu/vite-plugin-pwa
+        yarn add vite-plugin-pwa -D
+
+    
+    luego nos dirigimos a guide
+
+                            guide
+                                -> get started
+
+                            framework
+                                -> react
+
+        
+
+para configurar el sw
+    nos dirigimos a la configuracion de vite
+        importamos dentro de la funcion
+                plugins: [react(), VitePWA()]
+
+
+        
+
+    construimos nuestro build de produccion
+        yarn build
+
+    subimos el dist al servidor 
+        y notaremos que de forma automatica ya se carga el sw 
+
+    
+    registro del manifest
+    registro del sw
+        guide -> framework -> get Started react
+
+         dentro src creamos y agregamos (documentacion)
+                -> ReloadPrompt.jsx
+                pegamos el contenido de Prompt for      update .tsx .jsx
+
+                agregamos ReloadPrompt.css 
+                          de la documentacion
+
+    
+
+    Primero creamos importamos en Plugin PWA luego lo agregamos en el vite config, añadimos el manifest ,y por ultimo el sw
+
+
+    para agregar nuestro iconos 
+            en el html buscamos donde vamos adejar el icono
+            debemos agregar la ruta del icono en produccion de  vite.config.js
+                        en assets
+                            ponemos los iconos
+                    
+                        se realiza un build
+
+
+                            finalmente el en manifest.webmanifest de produccion agregar el iconos + su hash
+
+                        
+                PARA QUE CARGE ADECUADAMENTE LOS ICONOS 
+                    DEBEMOS CONVERTIR EL ICONO EN DIFERENTES RESOLUCIONES
+                    CIPIAMOS LAS CARPETAS DE WINDOWS IOS MAC  EN LA CARPETA /PUBLIC Y EL EL VITE.CONFIG 
+                    AGREGAMOS EL JSON DE LOS ICONOS. 
+
+*************************************************
+NO OLVIDAR ACTUALIZAR CACHA SI NO SE VEN CAMBIOS
+*************************************************

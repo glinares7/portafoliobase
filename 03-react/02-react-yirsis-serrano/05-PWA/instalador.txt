@@ -1,0 +1,29 @@
+para habilitar el service worker
+    crear manifiest.json
+    debe estar el protocolo https
+    crear el service worker
+
+
+    se debe tener sin datos el almacenamiento
+        navigator.serviceWorker
+
+    se crea el servicesWorker (.sw.js)
+
+    generator de icons
+        https://www.pwabuilder.com/imagegenerator
+
+    
+actualización icons pwa
+    generator de pwa npm
+        pwa asset generator
+            https://www.npmjs.com/package/pwa-asset-generator
+        npx pwa-asset-generator favicon.png  ./assets -m  manifest.json -i index.html 
+
+--------------------------------------------------------------------------------------
+archivos necesarios para el uso del PWA
+    agragar un registro  que acceda los datos del service worker   (register.js)
+    anadir el service worker al sitio ->  (sw.js)
+    dentro del index agregar el   ->   (manifiest.json)
+          <link rel="manifest" href="./manifest.json" />
+
+--------------------------------------------------------------------------------------

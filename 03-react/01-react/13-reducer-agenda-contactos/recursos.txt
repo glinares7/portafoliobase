@@ -1,0 +1,42 @@
+
+reducer
+    state, action(info,name)
+
+
+Reducer 
+    file.js
+
+enf -> snippets
+    export de una funcion
+
+payload
+    informacion que contiene
+    el nuevgo elemento que se va agregar
+
+useReducer
+    reducer ,initialState(objeto a ser dinamico)
+
+    reducer,state,init
+                    grabar el local storange
+                    leer el local storange
+            JSON.stringify()
+                combierte cualquier elemento a string
+            JSON.parse()
+                convertir string a js
+
+
+uuid
+https://www.npmjs.com/package/uuid
+    coloca de forma aleatoria el id
+    instalación
+        yarn add uuid
+        npm i --dev uuid
+
+
+tareas
+    validar que los campos(input) no esten en blanco
+    al enviar la información los datos se reseteen
+    
+
+        
+    

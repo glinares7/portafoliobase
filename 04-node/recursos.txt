@@ -1,0 +1,513 @@
+pasos generales
+
+    install react
+        npx create-react-app 01-file
+        PWA
+            npx create-react-app 01-file-pwa --template cra-template-pwa
+        
+        vite
+            yarn create vite 
+            yarn create vite my-app --template react
+
+    yarn 
+        yarn install
+
+    para usar sass 
+        npm install <paquete>
+        yarn add sass
+
+
+    server
+        yarn start
+
+
+    components
+    pages
+    
+    sass
+
+    landing page
+        header
+            menu
+        main
+            articulos
+            contenido
+            section
+                img
+        footer
+            nav
+                link
+            
+
+    usecallback , usememo memo
+            https://coffeebytes.dev/react-usecallback-usememo-y-memo-diferencias-y-usos/
+
+    5 librerias react
+        https://coffeebytes.dev/5-librerias-geniales-de-react-que-debes-conocer/
+
+    hooks documentacion react
+        https://es.reactjs.org/docs/hooks-reference.html
+
+            HOC hight order components
+
+
+
+custon hook
+    usefetch
+
+helper
+    operaciones  ,objeto de objetos
+    userData.js   info(datos) (propiedades que varian)
+
+models
+    datos ciclicos, array de objetos
+    caracteres (propiedades repetidas)  valor variante
+
+constext
+https://reactjs.org/docs/hooks-reference.html#usecontext
+    AuthContext.js
+
+routes
+    yarn add react-router-dom
+
+        AppRouter.jsx
+
+    https://v5.reactrouter.com/web/guides/quick-start
+
+    BrowserRouter
+        routes
+        switch
+        route
+    UseRouteMatch
+        useparams
+    redirect
+        public
+        protected
+
+    useHistory
+    useLocation    
+
+reducers
+    https://reactjs.org/docs/hooks-reference.html#usereducer
+    store, AuthReducers.js
+
+    types
+        AuthTypes.js
+
+
+
+examples0
+e.
+    custon link **
+    recursive path
+    sidebar
+    animated-transitions 
+    router config 
+    modal gallery 
+    query parameters 
+
+
+    
+useHistory
+    go back **
+    push
+    rename
+useLocation
+    pathname
+    search
+        queryparams
+            react.useMemo
+                URLSearchParams
+                name={query.get("name")}
+        npx react-codemod rename-unsafe-lifecycles
+    state
+        Thank you for using react-codemods!
+
+
+But before we continue, please stash or commit your git changes.
+
+You may use the --force flag to override this safety check.
+
+useRef
+uselayouteffect
+useId
+
+
+----------------------------------------------------------------------
+React Redux
+    https://react-redux.js.org/introduction/getting-started
+        https://handsonreact.com/docs/react-redux
+    https://programmerclick.com/article/45807023/
+
+    https://redux.js.org/faq/react-redux
+    https://react-redux.js.org/introduction/why-use-react-redux
+        https://es.redux.js.org/
+    
+
+
+    http://developinginspanish.com/2020/09/15/react-redux-tutorial-para-principiantes/
+    https://ichi.pro/es/una-guia-para-principiantes-de-redux-con-react-88169687063060
+
+
+
+        https://es.redux.js.org/ **
+        https://handsonreact.com/docs/react-redux
+        https://redux.js.org/usage/
+        https://tutoriales.edu.lat/pub/redux/redux-quick-guide/redux-guia-rapida
+        https://www.thecodingwalrus.com/react/08guia-rapida-de-redux/#gu%C3%ADa-r%C3%A1pida-de-redux
+
+
+30 videos del creador ~ Chris Dhanaraj  / @dan_abramov
+    https://app.egghead.io/playlists/fundamentals-of-redux-course-from-dan-abramov-bd5cc867
+
+    https://www.npmjs.com/package/react-redux
+    librerias
+        npx create-react-app my-app --template redux
+        npx create-react-app my-app --template redux-typescript
+
+    si existe el proyecto instalar las dependencias
+            npm install react-redux
+            yarn add react-redux
+
+
+        Contador vanilla js 
+            https://blog.revathskumar.com/2016/02/redux-using-with-vanilla-js.html
+
+
+
+
+**********************************************************************
+
+
+https://reqres.in/api/users?page=2
+
+
+
+
+{
+    "type": "FeatureCollection",
+    "query": [
+        "chorrillos",
+        "lima"
+    ],
+    "features": [
+        {
+            "id": "address.7794011284039826",
+            "type": "Feature",
+            "place_type": [
+                "address"
+            ],
+            "relevance": 0.97,
+            "properties": {
+                "accuracy": "street"
+            },
+            "text_es": "Limache",
+            "place_name_es": "Limache, Viña del Mar, Región de Valparaíso 2520000, Chile",
+            "text": "Limache",
+            "place_name": "Limache, Viña del Mar, Región de Valparaíso 2520000, Chile",
+            "center": [
+                -71.521225,
+                -33.040867
+            ],
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -71.521225,
+                    -33.040867
+                ]
+            },
+            "context": [
+                {
+                    "id": "postcode.609839",
+                    "text_es": "2520000",
+                    "text": "2520000"
+                },
+                {
+                    "id": "locality.3844655",
+                    "text_es": "Chorrillos",
+                    "text": "Chorrillos"
+                },
+                {
+                    "id": "place.2787375",
+                    "wikidata": "Q184345",
+                    "text_es": "Viña del Mar",
+                    "language_es": "es",
+                    "text": "Viña del Mar",
+                    "language": "es"
+                },
+                {
+                    "id": "region.123951",
+                    "short_code": "CL-VS",
+                    "wikidata": "Q219458",
+                    "text_es": "Región de Valparaíso",
+                    "language_es": "es",
+                    "text": "Región de Valparaíso",
+                    "language": "es"
+                },
+                {
+                    "id": "country.8751",
+                    "short_code": "cl",
+                    "wikidata": "Q298",
+                    "text_es": "Chile",
+                    "language_es": "es",
+                    "text": "Chile",
+                    "language": "es"
+                }
+            ]
+        },
+        {
+            "id": "address.4793127517465376",
+            "type": "Feature",
+            "place_type": [
+                "address"
+            ],
+            "relevance": 0.894,
+            "properties": {
+                "accuracy": "street",
+                "override:postcode": ""
+            },
+            "text_es": "Avenida Chorrillos",
+            "place_name_es": "Avenida Chorrillos, Lima, Provincia de Lima, Perú",
+            "text": "Avenida Chorrillos",
+            "place_name": "Avenida Chorrillos, Lima, Provincia de Lima, Perú",
+            "center": [
+                -77.0236083559102,
+                -12.16001455
+            ],
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.0236083559102,
+                    -12.16001455
+                ]
+            },
+            "context": [
+                {
+                    "id": "postcode.14331568",
+                    "text_es": "15063",
+                    "text": "15063"
+                },
+                {
+                    "id": "locality.109232",
+                    "text_es": "Chorrillos",
+                    "text": "Chorrillos"
+                },
+                {
+                    "id": "place.6801584",
+                    "wikidata": "Q2868",
+                    "text_es": "Lima",
+                    "language_es": "es",
+                    "text": "Lima",
+                    "language": "es"
+                },
+                {
+                    "id": "region.214192",
+                    "short_code": "PE-LMA",
+                    "wikidata": "Q579240",
+                    "text_es": "Provincia de Lima",
+                    "language_es": "es",
+                    "text": "Provincia de Lima",
+                    "language": "es"
+                },
+                {
+                    "id": "country.8880",
+                    "short_code": "pe",
+                    "wikidata": "Q419",
+                    "text_es": "Perú",
+                    "language_es": "es",
+                    "text": "Perú",
+                    "language": "es"
+                }
+            ]
+        },
+        {
+            "id": "address.1612095656462010",
+            "type": "Feature",
+            "place_type": [
+                "address"
+            ],
+            "relevance": 0.864,
+            "properties": {
+                "accuracy": "street"
+            },
+            "text_es": "Avenida Chorrillos",
+            "place_name_es": "Avenida Chorrillos, Distrito de Barranca, Departamento de Lima, Perú",
+            "text": "Avenida Chorrillos",
+            "place_name": "Avenida Chorrillos, Distrito de Barranca, Departamento de Lima, Perú",
+            "matching_place_name": "Avenida Chorrillos, Distrito de Barranca, Lima megye, Perú",
+            "center": [
+                -77.7628469,
+                -10.7622293
+            ],
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -77.7628469,
+                    -10.7622293
+                ]
+            },
+            "context": [
+                {
+                    "id": "postcode.14708400",
+                    "text_es": "15169",
+                    "text": "15169"
+                },
+                {
+                    "id": "place.1140912",
+                    "wikidata": "Q3313189",
+                    "text_es": "Distrito de Barranca",
+                    "language_es": "es",
+                    "text": "Distrito de Barranca",
+                    "language": "es"
+                },
+                {
+                    "id": "region.189616",
+                    "short_code": "PE-LIM",
+                    "wikidata": "Q211795",
+                    "text_es": "Departamento de Lima",
+                    "language_es": "es",
+                    "text": "Departamento de Lima",
+                    "language": "es"
+                },
+                {
+                    "id": "country.8880",
+                    "short_code": "pe",
+                    "wikidata": "Q419",
+                    "text_es": "Perú",
+                    "language_es": "es",
+                    "text": "Perú",
+                    "language": "es"
+                }
+            ]
+        },
+        {
+            "id": "address.4326892237876560",
+            "type": "Feature",
+            "place_type": [
+                "address"
+            ],
+            "relevance": 0.75,
+            "properties": {
+                "accuracy": "street"
+            },
+            "text_es": "Chorrillos",
+            "place_name_es": "Chorrillos, Quilpué, Región de Valparaíso 2430000, Chile",
+            "text": "Chorrillos",
+            "place_name": "Chorrillos, Quilpué, Región de Valparaíso 2430000, Chile",
+            "center": [
+                -71.436798,
+                -33.045723
+            ],
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -71.436798,
+                    -33.045723
+                ]
+            },
+            "context": [
+                {
+                    "id": "postcode.560687",
+                    "text_es": "2430000",
+                    "text": "2430000"
+                },
+                {
+                    "id": "locality.477743",
+                    "text_es": "Alto Quilpué",
+                    "text": "Alto Quilpué"
+                },
+                {
+                    "id": "place.2082863",
+                    "wikidata": "Q56110",
+                    "text_es": "Quilpué",
+                    "language_es": "es",
+                    "text": "Quilpué",
+                    "language": "es"
+                },
+                {
+                    "id": "region.123951",
+                    "short_code": "CL-VS",
+                    "wikidata": "Q219458",
+                    "text_es": "Región de Valparaíso",
+                    "language_es": "es",
+                    "text": "Región de Valparaíso",
+                    "language": "es"
+                },
+                {
+                    "id": "country.8751",
+                    "short_code": "cl",
+                    "wikidata": "Q298",
+                    "text_es": "Chile",
+                    "language_es": "es",
+                    "text": "Chile",
+                    "language": "es"
+                }
+            ]
+        },
+        {
+            "id": "address.7229652611197376",
+            "type": "Feature",
+            "place_type": [
+                "address"
+            ],
+            "relevance": 0.74,
+            "properties": {
+                "accuracy": "street"
+            },
+            "text_es": "Chorrillos",
+            "place_name_es": "Chorrillos, Rengo, Región de O'Higgins 2940000, Chile",
+            "text": "Chorrillos",
+            "place_name": "Chorrillos, Rengo, Región de O'Higgins 2940000, Chile",
+            "center": [
+                -70.848236,
+                -34.384315
+            ],
+            "geometry": {
+                "type": "Point",
+                "coordinates": [
+                    -70.848236,
+                    -34.384315
+                ]
+            },
+            "context": [
+                {
+                    "id": "postcode.740911",
+                    "text_es": "2940000",
+                    "text": "2940000"
+                },
+                {
+                    "id": "locality.3050031",
+                    "text_es": "Césares",
+                    "text": "Césares"
+                },
+                {
+                    "id": "place.2181167",
+                    "wikidata": "Q56120",
+                    "text_es": "Rengo",
+                    "language_es": "es",
+                    "text": "Rengo",
+                    "language": "es"
+                },
+                {
+                    "id": "region.58415",
+                    "short_code": "CL-LI",
+                    "wikidata": "Q2133",
+                    "text_es": "Región de O'Higgins",
+                    "language_es": "es",
+                    "text": "Región de O'Higgins",
+                    "language": "es"
+                },
+                {
+                    "id": "country.8751",
+                    "short_code": "cl",
+                    "wikidata": "Q298",
+                    "text_es": "Chile",
+                    "language_es": "es",
+                    "text": "Chile",
+                    "language": "es"
+                }
+            ]
+        }
+    ],
+    "attribution": "NOTICE: © 2023 Mapbox and its suppliers. All rights reserved. Use of this data is subject to the Mapbox Terms of Service (https://www.mapbox.com/about/maps/). This response and the information it contains may not be retained. POI(s) provided by Foursquare."
+}

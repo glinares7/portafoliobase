@@ -1,0 +1,12 @@
+@use 'sass:list';
+
+$margen: 10px 20px 40px 30px;
+// @debug meta.type-of($boxshadow);
+
+.grid{
+    margin-top:list.nth($margen, 1);
+    margin-bottom: list.nth($margen, 3);
+    margin-left: list.nth($margen, 4);
+    margin-right: list.nth($margen, 2);
+}
+

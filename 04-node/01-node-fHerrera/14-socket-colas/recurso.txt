@@ -1,0 +1,39 @@
+
+
+instalación de socket io
+    https://www.npmjs.com/package/socket.io
+        npm i socket.io
+        npm i express dotenv  cors
+    
+    verificar que el paquete este instalado en el servidor de express 
+        http://localhost:8080/socket.io/socket.io.js
+        
+    documentación oficial de socket io
+        https://socket.io/docs/v4/
+
+
+    *** recordar ***
+
+        dentro del controller
+             se esta obviando el this.io en su lugar se coloca al socket(cliente) , en este caso realiza la misma funcion de envio de datos a los demas usuarios 
+
+        this.io del server 
+            se considera cuando sea un servicio- rest  ya que se encuentra en la propiedad del server 
+
+        para comunicación sincrona de envio de datos a n usuarios basta con el socket (cliente)
+
+        broadcast
+            envio de datos a todos los usuarios excepto al mismo emisor
+
+
+        
+
+        **** activar bing chat **** solo va funcionar si tienes una cuenta activa en edge
+            luego del acceso sigure a esta ruta para activar bing chat 
+                introduccion al nuevo bing 
+                    https://www.bing.com/new?form=MD1A0D&OCID=MD1A0D&bep_ref=1&bep_csid=91042
+                luego en chat now 
+                    https://www.bing.com/ck/a?!&&p=c1e3d1821237df7dJmltdHM9MTY3ODE0NzIwMCZpZ3VpZD0xMjIwMmJmMC0yNDQ5LTY1NGYtMmE5Ni0zOTM2MjVmMDY0YTAmaW5zaWQ9NTEwMQ&ptn=3&hsh=3&fclid=12202bf0-2449-654f-2a96-393625f064a0&u=a1L2NoYXQ_Zm9ybT1NWTAyOTEmT0NJRD1NWTAyOTE&ntb=1
+
+                    o usa esta opcion 
+                        https://www.bing.com/search?form=MY0291&OCID=MY0291&q=Bing+AI&showconv=1

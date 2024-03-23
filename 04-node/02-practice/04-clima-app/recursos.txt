@@ -1,0 +1,85 @@
+
+recursos a tener en cuenta
+
+package.json
+    "start":"node app.js"
+
+    "axios":"^1.2.2",
+    "colors":"^1.4.0",
+    "dotenv":"^16.0.3",
+    "inquirer":"^7.3.3",
+
+        considerar que el inquirer esta en la version 9 (version del momento), ya no soporta require asi que usaremos la notación import
+            package.json
+                "type":"module"
+
+app.js
+    dotenv
+        import * as dotenv from 'dotenv'
+        dotenv.config()
+
+    creamos la f() main asincrona luego la invocamos
+        hacemos el llamado del modelo Busqueda
+            historial =[]
+            dbPath= 'urlJson'
+                constructor
+                    leerDB()
+        creamos un inquire de tipo list
+        do -while
+            asignamos en inquirer 
+                inquirerMenu()
+                switch
+                    1 -Mostrar lugar
+                        mostrar mensaje *inquirer*
+                          termino = leerInput('ciudad')
+                        
+                        buscar lugar *modelo paramsMapbox get*
+                            lugares = await busqueda.Ciudad(termino)
+                                        get paramsMapbox()
+                                        peticion http
+                                          a  axios.create({baseURL,params:this.paramsMapbox})
+                                          b await a.get()
+                                          return b.data.features.map({id,nombre,lng,lat})
+
+                        seleccionar lugar *inquirer*
+                            id await listarLugares(lugares)
+                            if(id == "0") continue
+                                d lugares.find(l => l.id ===id)
+                            
+                        guardar en db *modelo*
+                            busquedas.agregarHistorial(d.nombre)
+                                this.guardarDB()
+                        
+
+                        e await busquedas.climaLugar(d.lat, d.lng) 
+
+                        console.log()
+                            información de la ciudad
+                            ciudad
+                            lat
+                            lng
+                            temperatura
+                            maxima
+                            minima
+                            ¿como esta el clima ?
+
+
+                    2 -Historial de paises
+                            busquedasHIstorialCapitalizado *modelo get*
+                               p map 
+                                 p p  map
+                              busquedas.historialCapitalizado.forEach(lugar => {log
+                                 `${idx} ${lugar} `}
+                            )
+
+
+                    3 -Salir
+                    
+                        console.log("Salir");
+
+        if(opt != 0) await pausa()
+
+    while(opt != 0)
+
+
+main()

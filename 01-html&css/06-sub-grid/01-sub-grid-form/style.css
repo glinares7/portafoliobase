@@ -1,0 +1,22 @@
+
+
+form{
+    display: grid;
+    grid-template-columns: max-content 20%;
+    column-gap: 1em;
+    /* margin: 0 auto; */
+}
+
+.field{
+    grid-column: span 4;
+    display: grid;
+    grid-template-columns: 6em 20%;
+    
+    /** compatible con firefox */
+    /* grid-template-columns: subgrid; */
+    gap: inherit;
+}
+.button{
+    display: flex;
+    justify-content: flex-end;
+}

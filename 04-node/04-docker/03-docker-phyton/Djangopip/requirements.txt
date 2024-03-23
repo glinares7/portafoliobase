@@ -1,0 +1,7 @@
+
+Django==4.2
+python-debian==0.1.39
+python-debianbts==3.1.0
+python-pam==1.8.4
+python-xlib==0.29
+

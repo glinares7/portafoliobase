@@ -1,0 +1,48 @@
+body{
+    font-family: sans-serif;
+    background-color: #eee;
+}
+
+h1{
+    font-size: 45px;
+    color: #00aab5;
+}
+
+h1 span {
+    color: #393e46;
+}
+
+
+
+
+
+ .temas1{
+    background: #eee;
+    position: relative;
+}
+.temas1::after{
+    content: '';
+    /* border-left: 2px solid black; */
+    background: #eee;
+    right: 0;
+    height: 100%;
+    position: absolute;
+    animation: maquinaescribir 2s forwards  alternate steps(12);
+    /* blink .3s  infinite  step-end alternate; */
+
+}
+
+@keyframes maquinaescribir{
+    from{
+        width: 100%;
+    }
+    to{
+        width: 0;
+    }
+}
+
+/* @keyframes blink{
+    50%{
+        border-color: transparent;
+    }
+} */

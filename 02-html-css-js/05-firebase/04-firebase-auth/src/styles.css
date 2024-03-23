@@ -1,0 +1,9 @@
+body {
+  background-color: rgb(37, 24, 156);
+  display: flex;
+  color: aliceblue;
+  transition: all 0.4s;
+  cursor: pointer;
+  -moz-columns: 2;
+       columns: 2;
+}/*# sourceMappingURL=styles.css.map */

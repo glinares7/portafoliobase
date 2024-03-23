@@ -1,0 +1,46 @@
+@use 'sass:list';
+
+
+$margins: 10px 9px 8px;
+
+$nuevaLista: list.append($margins, 7px);
+
+$paddingsA:10px 20px;
+$paddingsB:30px 40px;
+
+
+$padding-complete: list.append($paddingsA, $paddingsB);
+
+.body{
+    margin: $nuevaLista;
+    padding: $padding-complete;
+}
+
+$colores: red green yellow;
+$offset: top left;
+
+@debug list.index($colores, steelblue);
+
+.hero{
+    @if(list.index($offset, top)){
+        margin-top: auto;
+    }@else{
+        margin-bottom: auto;
+    }
+}
+
+// mixins
+
+$layout: bottom, right;
+
+@mixin definePosition($layout) {
+    @if(list.index($layout, top)){
+        background-position: $layout;
+    }@else{
+        object-fit: $layout;
+    }
+}
+
+.img{
+    @include definePosition($layout);
+}

@@ -1,0 +1,78 @@
+body{
+    background-color: #333;
+    color: red;
+}
+
+
+.titulo{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    color: #fff;
+    text-shadow: 2px 5px 20px seashell;
+}
+
+
+/*! grid-layout */
+
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 2fr);
+    gap: 20px;
+    grid-auto-rows: minmax(100px, auto);
+    background-color: rgb(4, 0, 255);
+}
+
+
+.wrapper>div{
+    /* background-color:springgreen ; */
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    border: 3px solid #fff;
+    /* grid-column: 1 / 3; */
+}
+
+.zero{
+    background-color: springgreen;
+    grid-column: 1 / 4;
+    grid-row: 1 ;
+
+}
+ .one {
+    /* background-color: darkgoldenrod; */
+    grid-column: 1 ;
+    grid-row: 2;
+} 
+.two {
+        background-color: darkgoldenrod;
+        grid-column: 2 / 4;
+        grid-row: 2 / 4;
+    }
+    .three {
+        background-color: springgreen;
+        grid-column: 1/4;
+        grid-row: 6;
+    }
+    .four {
+        /* background-color: darkgoldenrod; */
+        grid-column: 3;
+        grid-row: 4 / 6;
+    }
+    .five {
+        /* background-color: darkgoldenrod; */
+        grid-column: 1;
+        grid-row: 3 / 6;
+    }
+    .six {
+      background-color: darkgoldenrod;
+    grid-column: 2;
+    grid-row: 4 / 6;
+  }  
+
+  /* lctura para leer
+        https://developer.mozilla.org/es/docs/Web/CSS/CSS_Grid_Layout
+        https://developer.mozilla.org/es/docs/Web/CSS/grid
+  */

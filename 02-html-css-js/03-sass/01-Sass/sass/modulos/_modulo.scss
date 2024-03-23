@@ -1,0 +1,35 @@
+@use 'sass:map';
+@use 'sass:meta';
+
+$primary: red !default;
+
+$colores: (
+    'primary': #000,
+    'secondary': #f00,
+    'titulo': steelblue
+); 
+
+
+
+@mixin recorrerMap($mapa) {
+    @each $clave, $valor in $mapa{
+        .#{$clave}{
+            @if(meta.type-of($valor) == color){
+                color: $valor;
+            }@else{
+                font-size: $valor;
+            }
+        }
+    }
+}
+
+
+@function sumarElementos($valores...){
+    $suma:0;
+
+    @each $elementoSuma in $valores {
+       $suma: $suma + $elementoSuma;
+    }
+
+    @return $suma * 1px;
+}

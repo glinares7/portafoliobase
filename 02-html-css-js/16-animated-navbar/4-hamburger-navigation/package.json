@@ -1,0 +1,12 @@
+{
+  "name": "4-hamburger-navigation",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "deploy":"gh-pages -d /home/linarespc/Documentos/portafolio/14-animated-navbar/4-hamburger-navigation"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "gh-pages": "^3.2.3"
+  }
+}

@@ -1,0 +1,1 @@
+export default function Loading() { return <p>LOADING PERFIL...</p> }

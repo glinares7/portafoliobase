@@ -1,0 +1,12 @@
+
+configuraciones iniciales
+    npm create vite@latest
+    npm create vite@latest my-proyect --template react **(opcional)**
+
+    npm install
+
+    npm run dev
+
+
+
+

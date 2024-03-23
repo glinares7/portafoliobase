@@ -1,0 +1,16 @@
+instalar VITE
+    node > 12.xx version LTS
+
+     sudo npm i --location=global npm yarn
+
+creat vite con yarn
+    yarn create vite79 WPM
+
+usar vite 
+
+    instalar las dependencias
+        yarn o yarn install
+    ejecutar el modo desarrollo   
+        yarn dev
+
+        

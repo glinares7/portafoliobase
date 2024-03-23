@@ -1,0 +1,55 @@
+runtime -> node.js
+
+
+instalar corepack desde yarn
+    https://yarnpkg.com/getting-started/install
+
+    hara habilitar corepack
+        sudo corepack enable
+
+        corepack -v -> 0.10.0
+
+    para activar la version actual de yarn 
+        corepack prepare yarn@x.y.z --activate
+
+
+    install corepack guide
+    https://yarnpkg.com/getting-started/install
+
+    update yarn 3.2.1
+    https://nodejs.org/dist/latest/docs/api/corepack.html#upgrading-the-global-versions
+    mas info 
+        https://github.com/yarnpkg/yarn/issues/8841
+
+
+    extensiones a usar 
+        activitus bar 
+        es7-redux
+        docker
+        css snippets
+        live sass compiler
+        terminal
+        typescript importer ~ react
+
+
+    para formatear pretier automaticamente
+        configuracion
+            en el buscador
+                save -> editor.formatOnSave > true
+
+
+
+    instalar las lightures en vsc   
+        fuente
+            sudo apt install fonts-firacode
+            ssudo apt-get install fonts-cascadia-code
+        habilitar las lightures
+
+    
+
+    Repositorio del curso 
+        https://github.com/YirsisHertz/codigos-curso-react
+
+    configuracion de vsc
+        https://gist.github.com/YirsisHertz/c77670fffab23cb1c9e3ba1c0caa18ed
+        

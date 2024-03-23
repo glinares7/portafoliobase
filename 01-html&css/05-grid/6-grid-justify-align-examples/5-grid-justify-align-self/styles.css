@@ -1,0 +1,46 @@
+    body{
+        margin: 0;
+        padding: 0;
+    }
+
+    .contenedor{
+        display: grid;
+        grid-template: repeat(4,70px) / repeat(2, 1fr);
+       /* justify-items: end;  */
+       /* align-items: end; */
+        gap: 10px;
+        margin: 50px auto;
+        width: 650px;
+        height: 650px;
+        background: lightcoral;
+    }
+
+    .contenedor__box{
+        display: flex;
+        border: 1px solid black;
+        background: lawngreen;
+    }
+
+
+    /* elementos usando nth-child */
+    .contenedor__box:nth-child(1){
+        background: cyan;
+        justify-self: start;
+        align-self: center;
+        
+        justify-content: center;
+        align-items: end;
+        width: 45px;
+        height: 45px;
+    }
+
+    /* modificando elemento usando clases */
+    /* .contenedor__box--forma{
+        background: rgb(1, 174, 218);
+        justify-self: center;
+        align-self: center;
+        width: 45px;
+        height: 45px;
+        justify-content: end;
+        align-items: center;
+    } */

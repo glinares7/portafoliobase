@@ -1,0 +1,521 @@
+
+
+
+./models/index
+    const ChatMensajes = require("./chat-mensajes");
+
+    module.exports = {
+    ChatMensajes,
+    };
+
+
+./models/server
+    const { createServer } = require("http");
+
+    const { socketController } = require("../sockets/controller");
+
+    class Server{
+        constructor(){
+            this.server = createServer(this.app);
+    this.io = require("socket.io")(this.server);
+
+
+    this.sockets();     
+        }
+
+      sockets() {
+    this.io.on("connection", (socket) => socketController(socket, this.io));
+  }
+
+    listen() {
+        this.server.listen(this.port, () =>
+        console.log("conectado desde el puerto ", this.port)
+        );
+    }
+
+    }
+
+
+./models/chat-mensaje
+    class Mensaje {
+    constructor(uid, nombre, mensaje) {
+        this.uid = uid;
+        this.nombre = nombre;
+        this.mensaje = mensaje;
+    }
+    }
+
+    class ChatMensajes {
+    constructor() {
+        this.mensajes = [];
+        this.usuarios = {};
+    }
+    get ultimos10() {
+        this.mensajes = this.mensajes.splice(0, 10);
+        return this.mensajes;
+    }
+    get usuariosArr() {
+        return Object.values(this.usuarios); // fadfadfadf [{},{},{}]
+    }
+
+    enviarMensaje(uid, nombre, mensaje) {
+        this.mensajes.unshift(new Mensaje(uid, nombre, mensaje));
+    }
+
+    conectarUsuario(usuario) {
+        this.usuarios[usuario.id] = usuario;
+    }
+
+    desconectarUsuario(id) {
+        delete this.usuarios[id];
+    }
+    }
+
+    module.exports = ChatMensajes;
+
+
+../helpers/generarjwt
+    const comprobarJWT = async (token = "") => {
+    try {
+        if (token.length < 10) {
+        return null;
+        }
+        const { uid } = jwt.verify(token, process.env.SECRETORPRIVATEKEY);
+        const usuario = await Usuario.findById(uid);
+
+        if (usuario) {
+        if (usuario.estado) {
+            return usuario;
+        } else {
+            return null;
+        }
+        } else {
+        return null;
+        }
+    } catch (error) {
+        return null;
+    }
+    };
+
+    module.exports = {
+    comprobarJWT,
+    };
+
+
+
+
+../router/auth
+    const { login, googleSignin, renovarToken } = require("../controllers/auth");
+
+
+    router.get("/", validarJWT, renovarToken);
+
+    module.exports = router;
+    
+
+../controllers/auth
+
+        const renovarToken = async (req, res = response) => {
+    const { usuario } = req;
+    //Generar el JWT
+    const token = await generarJWT(usuario.id);
+    res.json({
+        usuario,
+        token,
+    });
+    };
+
+    module.exports = {
+    renovarToken,
+    };
+
+
+../sockets/controller
+
+ const { Socket } = require("socket.io");
+    const { comprobarJWT } = require("../helpers");
+    const { ChatMensajes } = require("../models");
+
+    const chatMensajes = new ChatMensajes();
+
+    const socketController = async (socket = new Socket(), io) => {
+    //   console.log("cliente conectado", socket.id);
+
+    const usuario = await comprobarJWT(socket.handshake.headers["x-token"]);
+    if (!usuario) {
+        return socket.disconnect();
+    }
+
+    // console.log('Se conecto', usuario.nombre);
+
+    //Agregar el ususario conectado
+    chatMensajes.conectarUsuario(usuario);
+    chatMensajes.desconectarUsuario(usuario);
+    io.emit("usuarios-activos", chatMensajes.usuariosArr);
+    socket.emit("recibir-mensajes", chatMensajes.ultimos10);
+
+    //Conectar a una sala especial
+    socket.join(usuario.id); //global,socket.id,usuario.id
+
+    //Limpiar cuando alguien se desconecta
+
+    socket.on("disconnect", () => {
+        chatMensajes.desconectarUsuario(usuario.id);
+        io.emit("usuarios-activos", chatMensajes.usuariosArr);
+    });
+
+    socket.on("enviar-mensaje", ({ uid, mensaje }) => {
+        if (uid) {
+        //Mensaje Privado
+        socket.to(uid).emit("mensaje-privado", { de: usuario.nombre, mensaje });
+        } else {
+        chatMensajes.enviarMensaje(usuario.id, usuario.nombre, mensaje);
+        io.emit("recibir-mensajes", chatMensajes.ultimos10);
+        }
+    });
+    };
+
+    module.exports = {
+    socketController,
+    };
+
+
+
+./public/index.html
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Google Signin</title>
+        <!-- 
+        <meta name="google-signin-client_id"
+            content="1023916028923-mnn067lcjn3itrr0lo8oj1s07kddgrcj.apps.googleusercontent.com"> -->
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+    </head>
+
+    <body class='container'>
+
+        <form class="row mt-5">
+
+            <div class="col-sm-6">
+
+
+                <h1>Google Signin</h1>
+                <hr>
+                <br>
+
+                <div id="g_id_onload"
+                    data-client_id="383927203094-atql7f9ma3p66uh96s08cggpagdt9fef.apps.googleusercontent.com"
+                    data-auto_prompt="false" data-callback="handleCredentialResponse">
+                </div>
+                <div class="g_id_signin" data-type="standard" data-size="large" data-theme="outline"
+                    data-text="sign_in_with" data-shape="rectangular" data-logo_alignment="left">
+                </div>
+
+                <br>
+
+                <button id="google_signout">Signout</button>
+            </div>
+            <div class="col-sm-6">
+                <h1>Login Manual</h1>
+                <hr>
+
+                <form class="d-grid">
+                    <input type="text" name="correo" class="form-control mb-2 " placeholder="Correo">
+                    <input type="password" name="password" class="form-control mb-2 " placeholder="Password">
+
+                    <button type="submit" class="btn btn-primary">Ingresar</button>
+
+
+                </form>
+
+            </div>
+        </form>
+
+
+        <script src="https://accounts.google.com/gsi/client" async defer></script>
+        <script src="./js/auth.js"></script>
+
+
+        </body>
+
+    </html>
+
+
+
+./public/js/auth
+    const miFormulario = document.querySelector("form");
+
+    const url = window.location.hostname.includes("localhost")
+    ? "http://localhost:8080/api/auth/"
+    : "";
+    //   : "https://restserver-curso-fher.herokuapp.com/api/auth/google";
+
+    miFormulario.addEventListener("submit", (ev) => {
+    ev.preventDefault();
+
+    const formData = {};
+
+    for (let el of miFormulario.elements) {
+        if (el.name.length > 0) {
+        formData[el.name] = el.value;
+        }
+    }
+    fetch(url + "login", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: { "COntent-Type": "application/json" },
+    })
+        .then((resp) => resp.json())
+        .then(({ msg, token }) => {
+        //if (msg) {
+            return console.error(msg);
+        }
+        localStorage.setItem("token", token);
+        window.location = "chat.html";
+        })
+        .catch((err) => {
+        console.log(err);
+        });
+    });
+
+    function handleCredentialResponse(response) {
+    // decodeJwtResponse() is a custom function defined by you
+    // to decode the credential response.
+
+    //    google tooken  ID token
+    // console.log("id_token", response.credential);
+
+    const body = { id_token: response.credential };
+
+    fetch(url + "google", {
+        method: "POST",
+        headers: {
+        "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+    })
+        .then((r) => r.json())
+        .then((resp) => {
+        console.log(resp.token);
+        localStorage.setItem("email", resp.usuario.correo);
+        localStorage.setItem("token", resp.token);
+        // location.reload()
+        window.location = "chat.html";
+        })
+        .catch(console.warn);
+
+    // const responsePayload = decodeJwtResponse(response.credential);
+
+    // console.log("ID: " + responsePayload.sub);
+    // console.log('Full Name: ' + responsePayload.name);
+    // console.log('Given Name: ' + responsePayload.given_name);
+    // console.log('Family Name: ' + responsePayload.family_name);
+    // console.log("Image URL: " + responsePayload.picture);
+    // console.log("Email: " + responsePayload.email);
+    }
+
+    const button = document.getElementById("google_signout");
+    button.onclick = () => {
+    console.log(google.accounts.id);
+    google.accounts.id.disableAutoSelect();
+    google.accounts.id.revoke(localStorage.getItem("email"), (done) => {
+        localStorage.clear();
+        location.reload();
+    });
+    };
+
+
+
+
+./public/chat.html
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <title>------</title>
+    </head>
+
+    <body class="container">
+
+        <div class="row mt-5">
+            <div class="col-sm-6">
+                <h3>Enviar mensaje</h3>
+                <hr>
+                <input type="text" id="txtUid" class="form-control mb-2" placeholder="uid" autocomplete="off">
+
+                <input type="text" id="txtMensaje" class="form-control mb-2" placeholder="Mensaje" autocomplete="off">
+
+                <h3>Usuarios</h3>
+                <hr>
+                <ul id="ulUsuarios"></ul>
+            </div>
+
+            <div class="col-sm-6">
+                <h3>Chat completo</h3>
+                <hr>
+                <ul id="ulMensajes">
+
+                </ul>
+            </div>
+
+        </div>
+
+
+        <button id="btnSalir" class="btn btn-outline-danger">
+            Logout
+        </button>
+        <script src="./socket.io/socket.io.js"></script>
+        <script src="./js/chat.js"></script>
+    </body>
+
+    </html>
+
+
+./public/js/chat.js
+
+    const url = window.location.hostname.includes("localhost")
+  ? "http://localhost:8080/api/auth/"
+  : "";
+
+    let usuario = null;
+    let socket = null;
+
+    //Refernencias HTML
+    const txtUid = document.querySelector("#txtUid");
+    const txtMensaje = document.querySelector("#txtMensaje");
+    const ulUsuarios = document.querySelector("#ulUsuarios");
+    const ulMensajes = document.querySelector("#ulMensajes");
+    const btnSalir = document.querySelector("#btnSalir");
+
+    const validarJWT = async () => {
+    const token = localStorage.getItem("token") || "";
+
+    if (token.length <= 10) {
+        window.location = "index.html";
+        throw new Error("No hay token en el servidor");
+    }
+
+    const resp = await fetch(url, {
+        headers: { "x-token": token },
+    });
+
+    const { usuario: userDB, token: tokenDB } = await resp.json();
+    //   console.log("Este es el usuario", userDB, "\n", "Este es el token ", tokenDB);
+
+    localStorage.setItem("token", tokenDB);
+    usuario = userDB;
+    document.title = usuario.nombre;
+
+    await conectarSocket();
+    };
+
+    const conectarSocket = async () => {
+    socket = io({
+        extraHeaders: {
+        "x-token": localStorage.getItem("token"),
+        },
+    });
+
+    socket.on("connect", () => {
+        console.log("Socket online");
+    });
+    socket.on("disconnect", () => {
+        console.log("Socket offline");
+    });
+
+    socket.on("recibir-mensajes", dibujarMensajes);
+    socket.on("usuarios-activos", dibujarUsuarios);
+    //todo
+    // console.log(payload);
+
+    socket.on("mensaje-privado", (payload) => {
+        //todo
+
+        console.log("payload", payload);
+    });
+    };
+
+    const dibujarMensajes = (mensajes = []) => {
+    //todo
+
+    let mensajesHtml = "";
+    mensajes.forEach(({ nombre, mensaje }) => {
+        mensajesHtml += `
+        <li>
+        <p>
+            <h5 class="text-primay">${nombre}</h5>
+            <span >${mensaje}</span>
+        </p>
+        </li>
+        
+
+        `;
+    });
+
+    ulMensajes.innerHTML = mensajesHtml;
+    };
+
+    const dibujarUsuarios = (usuarios = []) => {
+    //todo
+
+    let usersHtml = "";
+    usuarios.forEach(({ nombre, uid }) => {
+        usersHtml += `
+        <li>
+        <p>
+            <h5 class="text-success">${nombre}</h5>
+            <span class="fs-6 text-muted">${uid}</span>
+        </p>
+        </li>
+        
+
+        `;
+    });
+
+    ulUsuarios.innerHTML = usersHtml;
+    };
+
+    txtMensaje.addEventListener("keyup", ({ keyCode }) => {
+    const mensaje = txtMensaje.value;
+    const uid = txtUid.value;
+    if (keyCode !== 13) {
+        return;
+    }
+    if (mensaje.length === 0) {
+        return;
+    }
+
+    socket.emit("enviar-mensaje", { mensaje, uid });
+
+    txtMensaje.value = "";
+    });
+
+    btnSalir.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    window.location = "index.html";
+    });
+
+    const main = async () => {
+    //VALIDAR jwt
+    await validarJWT();
+    };
+
+    main();
+
+

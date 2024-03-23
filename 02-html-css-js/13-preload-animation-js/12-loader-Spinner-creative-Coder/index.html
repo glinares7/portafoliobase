@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>loadre-spinner-CreativeCoder</title>
+</head>
+<body id="page">
+    <div class="loader-wrapper">
+        <div class="loader"></div>
+    </div>
+    <div class="content"></div>
+
+    <script  type="text/javascript">
+        const body1 =document.getElementById('page') 
+        
+        window.addEventListener('load',()=>{
+            setTimeout(() => {
+            body1.classList.add('loded')
+        }, 3000);
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,190 @@
+
+package.json
+    cors            2.8.5
+    dotenv          16.0.3
+    express         4.18.2
+    socket.io       4.6.1
+
+
+
+.env
+    PORT=8080
+
+
+app.js
+
+    const Server = require("./models/server");
+
+    require("dotenv").config();
+    const server = new Server();
+
+    server.listen();
+
+
+
+./models/server
+
+    const express = require("express");
+    const cors = require("cors");
+
+    const {socketController}=require("../sockets/controller")
+
+
+    class Server{
+
+        constructor(){
+            this.app=express();
+            this.port=process.env.PORT
+            this.server =require("http").createServer(this.app)
+            this.io=require("socket.io")(this.server)
+            this.paths={}
+
+                // Middlewares
+            this.middlewares();
+
+            // Rutas de mi aplicación
+            this.routes();
+
+            //configuracion de socket
+            this.sockets();
+        }
+
+            middlewares() {
+            // CORS
+            this.app.use(cors());
+
+            // Lectura y parseo del body
+
+            // Directorio Público
+            this.app.use(express.static("public"));
+
+            // fileuploads -  Carga de archivos
+         }
+
+          routes() {
+            // this.app.use(this.paths.auth, require("../routes/auth"));
+        }
+
+          sockets() {
+            this.io.on("connection", socketController);
+        }
+
+        listen() {
+        this.server.listen(this.port, () => {
+        console.log("Servidor corriendo en puerto", this.port);
+        });
+         }
+
+    }
+    module.exports = Server;
+
+
+
+../sockets/controller
+
+    const socketController = (socket) => {
+    console.log("cliente conectado", socket.id);
+
+    socket.on("disconnect", () => {
+        console.log("Cliente desconectado", socket.id);
+    });
+
+    socket.on("enviar-mensaje", (payload, callback) => {
+        const id = 123456789;
+
+        callback({ id, fecha: new Date().getTime() });
+
+        socket.broadcast.emit("enviar-mensaje", payload);
+    });
+    };
+
+    module.exports = {
+    socketController,
+    };
+
+
+
+
+../public/index.html
+
+
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <link>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous" />
+    <title>socket client</title>
+    </link>
+
+    <body class="container">
+        <h1 class="mt-2">Socket Client</h1>
+        <hr />
+
+        <p>
+            server status:
+            <span id="lblOnline" class="text-success">Online</span>
+            <span id="lblOffline" class="text-danger">Offline</span>
+        </p>
+
+        <div class="row">
+            <div class="col">
+                <input type="text" id="txtMensaje" class="form-control">
+            </div>
+
+            <div class="col">
+                <button id="btnEnviar" class="btn btn-primary">
+                    Enviar
+                </button>
+            </div>
+        </div>
+        <script src="./socket.io/socket.io.js"></script>
+        <script src="./js/socket-client.js"></script>
+    </body>
+
+    </html>
+
+
+
+../public/js/socket-client.js
+
+    const lblOnline = document.querySelector("#lblOnline");
+    const lblOffline = document.querySelector("#lblOffline");
+
+    const txtMensaje = document.querySelector("#txtMensaje");
+    const btnEnviar = document.querySelector("#btnEnviar");
+
+    const socket = io();
+
+    socket.on("connect", () => {
+    // console.log("conectado");
+
+    lblOffline.style.display = "none";
+    lblOnline.style.display = "";
+    });
+    
+    socket.on("disconnect", () => {
+    // console.log("desconectado del servidor");
+
+    lblOnline.style.display = "none";
+    lblOffline.style.display = "";
+    });
+
+    socket.on("enviar-mensaje", (payload) => {
+    console.log(payload);
+    });
+    btnEnviar.addEventListener("click", () => {
+    const mensaje = txtMensaje.value;
+    const payload = {
+        mensaje,
+        id: "123abc",
+        fecha: new Date().getTime(),
+    };
+
+    socket.emit("enviar-mensaje", payload, (id) => {
+        console.log("Desde el server ", id);
+    });
+    });

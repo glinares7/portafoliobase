@@ -1,0 +1,26 @@
+
+
+instalación de socket io
+    https://www.npmjs.com/package/socket.io
+        npm i socket.io
+        npm i express dotenv  cors
+    
+    verificar que el paquete este instalado en el servidor de express 
+        http://localhost:8080/socket.io/socket.io.js
+        
+    documentación oficial de socket io
+        https://socket.io/docs/v4/
+
+
+    *** recordar ***
+
+        dentro del controller
+             se esta obviando el this.io en su lugar se coloca al socket(cliente) , en este caso realiza la misma funcion de envio de datos a los demas usuarios 
+
+        this.io del server 
+            se considera cuando sea un servicio- rest  ya que se encuentra en la propiedad del server 
+
+        para comunicación sincrona de envio de datos a n usuarios basta con el socket (cliente)
+
+        broadcast
+            envio de datos a todos los usuarios excepto al mismo emisor

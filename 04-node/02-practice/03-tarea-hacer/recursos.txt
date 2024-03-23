@@ -1,0 +1,64 @@
+
+Definimos que tendra el proyecto
+
+-------------------------------------------
+En que consiste el prouecto
+    En una alicación de consola 
+    eligiremos una opcion (6 opciones)
+        traera un array con la lista 
+            ya sea total o de un dato 
+        se podra actualizar o eliminar
+    podremos 
+        regresar al menu
+        salir de la aplicacion
+    fin
+
+------------------------------------------
+    librerias necesarias
+        inquirer
+        uuid
+        colors
+
+    buscar información sobre 
+        node
+            fs
+                writeFileSync
+                readFileSync
+
+    creamos el modelo que va tener nuestros datos
+
+        cargarTareasFromArray
+        
+        tareas
+            leerInput('valor')
+                crearTarea
+
+            listadoCompleto
+
+            listarPendientesCompletados(true)
+            
+            listarPendientesCompletados(false)
+
+            mostrarListadoCheckList(array)
+                togleCompletadas(idx)
+                
+            listarTareasBorrar(array)
+                confirmar('¿seguro?')
+                    borrarTTareas(id)
+
+            
+        tarea
+
+
+    crear la db
+        file.json
+            id
+            desc
+            completadoEn
+
+    nuestros archivos a ser reutilizados
+        guardarArchivo
+        inquirer
+        mensaje
+
+    

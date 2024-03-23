@@ -1,0 +1,48 @@
+body{
+    background-color: #333;
+    color: #fff;
+}
+
+
+.jabom-main{
+    position: relative;
+    
+}
+
+.elemento-main{
+    position: absolute;
+    top: 3%;
+    left: 3%;
+}
+
+
+.elemento-main::before,
+.elemento-main::after{
+    content: '';
+    position: absolute;
+}
+
+
+.elemento-main::before{
+    width: 3px;
+    height: 100%;
+    background-color: lightskyblue;
+    left: -20px;
+    z-index: -1;
+
+
+}
+.elemento-main::after{
+    width: 10px;
+    height: 10px;
+    
+    background-color: #333;
+    border: 3px solid lightskyblue;
+    border-radius: 50%;
+    top: 50%;;
+    left: -13px;
+    transform: translate(-13px,-50%);
+    z-index: 20;
+}
+
+

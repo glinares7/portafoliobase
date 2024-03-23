@@ -1,0 +1,53 @@
+
+Topicos de la sección
+    props
+    snapshot
+    report coverage
+
+
+jest
+    fn
+        mock
+        simular respuestas API
+        puede ser seteado dentro, fuera y antes del describe
+function
+    toBeInTheDocument
+        exista la prueba en el documento (especifica)
+    veforeEach
+        un solo componente se manipula en varias partes
+    afterEach
+        se ejecuta antes cada una de las pruevas
+    toMatchSnapshot
+        agregar un snapshot
+        getAllByLabelText
+            debe existir el componente
+        findAll getAllByLabelText
+            el componente puede o no existir
+            
+    coverage -> 
+            reporte de covertura
+                icov-report
+                    index.html
+                        mapeo de coberturas - estado del app
+        ver la cobertura de la app
+        "coverage": "yarn test --coverage"
+        "coverage": "npm run test -- --coverage
+        
+snipets
+    desc
+    it
+    test
+
+    API gratuitos ~ snapshot
+        tienen limite de peticiones diarias
+    en su ligar usar los mocks
+
+    fetch - snapshot
+        instalar axios
+
+    mocks
+        archivos locales, no van a internet para no gastar en el servicio
+        tomar datos o simular respuestas
+        hacer pruebas a peticiones
+        
+

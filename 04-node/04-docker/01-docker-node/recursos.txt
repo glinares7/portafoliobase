@@ -1,0 +1,95 @@
+FROM node:18-bullseye as bot
+WORKDIR /app
+COPY package*.json ./
+RUN npm i
+COPY . .
+ARG RAILWAY_STATIC_URL
+ARG PUBLIC_URL
+ARG PORT
+CMD ["npm", "start"]
+
+
+
+para saber toda la ruta donde te encuentras 
+    pwd
+
+para crear archivos
+    touch
+
+para agregar contenido a los archivos
+    cat 
+
+
+
+    Se requiere instalar docker 
+        https://docs.docker.com/desktop/install/linux-install/
+
+            instalar los pre-requisitos
+
+
+
+    una vez instalador probar
+        construir la imagen
+            sudo docker build  -t botwhatsapp:latest .
+
+        iniciar contenedor
+            sudo docker run -e PORT=3001 -p 3001:3001 botwhatsapp:latest
+
+
+    otra forma de ejecutar los contenedores
+        sudo docker build -t node3 .
+        sudo docker  run -d --name webapp -p 6080:80   node3
+
+            -p p1:p2
+                El puerto p1 es el puerto del host de la web
+                El puerot p2 es el puerto del contenedor de docker,y debe
+                de ser el mismo al puerto al que se conecta al servidor del backed
+
+
+*****************************************************************************************
+     sudo docker run -d -p 7080:7080 --name mi-contenedor imagen-docker-hub
+*****************************************************************************************
+
+
+
+    para copiar archivos a un contenedor a otro contenedor
+        linux
+            sudo docker run -dit --name myweb   -p 3000:80  -v "$PWD":/usr/local/apache2/htdocs/  httpd
+
+        windows
+            sudo docker run -dit --name myweb   -p 3000:80  -v ${PWD}:/usr/local/apache2/htdocs/  httpd
+    -----------------------------------------------
+    para mostrar los contenedores 
+        sudo docker ps -a
+
+    para detener todos los contenedores 
+            sudo docker rm $(docker ps -aq)
+
+        eliminar el contenedor 
+            sudo docker  rm 4352345235423
+
+    para mostrar las imagenes (volumenes)
+        sudo docker images
+            en caso sean todos los contenedores
+            sudo docker rm $(docker ps -a -q)
+
+        eliminar las imagenes 
+            sudo docker rmi images 1313134234
+
+            en caso sean multiples
+                sudo docker rmi -f  7d9f1a112f0a
+
+            en caso sea todas 
+                docker rmi $(docker images -q)
+
+    ------------------------------------------------
+    
+
+
+        en caso sea desinstalar docker  
+            sudo apt-get purge docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin docker-ce-rootless-extras
+
+
+            tudos sus datos
+                sudo rm -rf /var/lib/docker
+                sudo rm -rf /var/lib/containerd

@@ -1,0 +1,26 @@
+.faq__main {
+  display: flex;
+  flex-direction: column;
+
+  min-height: 90vh;
+  padding-bottom: 16px;
+
+  .faq__posicion {
+    padding: 0px 20px;
+    .faq__formato {
+      position: relative;
+      left: 20px;
+    }
+    .faq__link {
+      text-decoration: none;
+    }
+  }
+
+  .faq__posicion:nth-child(2) {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    flex-grow: 1;
+    // border: 1px solid red;
+  }
+}

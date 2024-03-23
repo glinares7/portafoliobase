@@ -1,0 +1,651 @@
+
+./models/Server
+
+
+    class Server{
+
+        constructor(){
+
+        this.paths={
+            buscar:"/api/buscar",
+            categoria:"/api/categorias",
+            productos:"/api/productos,
+        }
+
+        this.routes()
+          
+        }
+
+
+        routes(){
+            this.app.use(this.paths.buscar,require('../routes/buscar'))
+            this.app.use(this.paths.categoria,require('../routes/categoria'))
+            this.app.use(this.paths.productos,require('../routes/productos'))
+        }
+
+    }
+
+
+    ../models/index
+    ../models
+
+
+        const Categoria=require("./Categoria")
+
+        const Producto=require("./Producto")
+
+        const Role=require("./Role")
+
+        const Server= require("./Server")
+
+        const Usuario= require("./Usuario")
+
+
+        module.exports={
+                Categoria,
+                Producto,
+                Role,
+                Server,
+                Usuario,
+        }
+
+
+
+    ../models/categoria
+
+
+        const { Schema, model } = require("mongoose");
+
+        const CategoriaSchema = Schema({
+        nombre: {
+            type: String,
+            required: [true, "El nombre  es obligatorio"],
+            unique: true,
+        },
+        estado: {
+            type: Boolean,
+            default: true,
+            required: true,
+        },
+        usuario: {
+            type: Schema.Types.ObjectId,
+            ref: "Usuario",
+            required: true,
+        },
+        });
+
+        //todo he agregado este fragmento de codigo
+        CategoriaSchema.methods.toJSON = function () {
+        const { __v, estado, ...data } = this.toObject();
+
+        // data.uid = _id;
+        return data;
+        };
+
+        module.exports = model("Categoria", CategoriaSchema);
+
+
+    
+    ../models/producto
+
+
+        const { Schema, model } = require("mongoose");
+
+        const ProductoSchema = Schema({
+        nombre: {
+            type: String,
+            required: [true, "El nombre  es obligatorio"],
+            unique: true,
+        },
+        estado: {
+            type: Boolean,
+            default: true,
+            required: true,
+        },
+        usuario: {
+            type: Schema.Types.ObjectId,
+            ref: "Usuario",
+            required: true,
+        },
+        precio: {
+            type: Number,
+            default: 0,
+        },
+        categoria: {
+            type: Schema.Types.ObjectId,
+            ref: "Categoria",
+            required: true,
+        },
+        descripcion: { type: String },
+        disponible: { type: Boolean, default: true },
+        });
+
+        //todo he agregado este fragmento de codigo
+        ProductoSchema.methods.toJSON = function () {
+        const { __v, estado, ...data } = this.toObject();
+
+        // data.uid = _id;
+        return data;
+        };
+
+        module.exports = model("Producto", ProductoSchema);
+
+
+
+
+
+    ../helpers/db-validator
+
+
+        const {Producto,Usuario,Categoria,Role} =require(../models)
+
+        const existeCategoriaPorId = async(id) =>{
+            
+            const existeCategoria= await Categoria.findById(id)
+
+            if(!existeCategoria){
+                throw new Error(`El id no existe ${id} - Categoria`)
+            }
+        }
+
+        const existeProductoPorId=async(id)=>{
+            const existeProducto = await Producto.findById(id)
+
+            if(!existeProducto){
+                throw new Error(`EL id no existe ${id} - Producto `)
+            }
+
+        }
+
+
+        module.exports={
+            existeCategoriaPorId,
+            existeProductoPorId
+        }
+
+    
+    ../middlewares/index
+
+        const validaCampos = require("../middlewares/validar-campos");
+        const validarJWT = require("../middlewares/validar-jwt");
+        const validaRoles = require("../middlewares/validar-roles");
+
+        module.exports = {
+        ...validaCampos,
+        ...validarJWT,
+        ...validaRoles,
+        };
+
+    
+
+
+    ../routes/categorias
+
+
+        const {Router}=require('express')
+        const {check}=require('express-validator')
+
+
+        const {
+            obtenerCategorias,
+            obtenerCategoria,
+            crearCategoria,
+            actualizarCategoria,
+            borrarCategoria
+
+        }=require('../controllers/categorias')
+
+        const {existeCategoriaPorId}=require('../helpers/db-validators')
+
+        const {
+            validarJWT,
+            validarCampos,
+            esAdminRole,
+            tieneRole
+        } =require('../middlewares')
+
+
+        const router=Router()
+
+        router.get("/",obtenerCategorias)
+
+        router.get("/:id",[
+            check("id", "No es un id de Mongo valido").isMongoId(),
+            check("id").custom(existeCategoriaPorId),
+            validarCampos,
+        ],obtenerCategoria)
+
+        router.post("/",[
+             validarJWT,
+            check("nombre", "El nombre es obligatorio").not().isEmpty(),
+            validarCampos,
+        ],crearCategoria)
+
+        router.put("/:id",[
+            validarJWT,
+            check("nombre", "El nombre es obligatorio").not().isEmpty(),
+            check("id").custom(existeCategoriaPorId),
+            validarCampos,
+        ],actualizarCategoria)
+
+        router.delete("/:id",[
+            validarJWT,
+            esAdminRole,
+            check("id", "El id no es valido").isMongoId(),
+            check("id").custom(existeCategoriaPorId),
+            tieneRole("ADMIN_ROLE", "VENTAS_ROLE", "OTRO_ROLE"),
+            validarCampos,
+        ],borrarCategoria)
+
+
+        module.exports= router
+
+
+
+    ../controllers/categorias
+
+
+        const { response } = require("express");
+        const { Categoria } = require("../models");
+
+
+        const obtenerCategorias = async (req, res = response) => {
+        const { limite = 5, desde = 0 } = req.query;
+
+        const query = { estado: true };
+
+        const [total, categorias] = await Promise.all([
+            Categoria.countDocuments(query),
+            Categoria.find(query)
+            .skip(Number(desde))
+            .limit(Number(limite))
+            .populate("usuario", "nombre"),
+        ]);
+
+        res.json({
+            total,
+            categorias,
+        });
+        };
+
+
+        const obtenerCategoria = async (req, res = response) => {
+        const { id } = req.params;
+        const categorias = await Categoria.findById(id).populate("usuario", "nombre");
+
+        res.json({
+            categorias,
+        });
+        };
+
+        const crearCategoria = async (req, res = response) => {
+        const nombre = req.body.nombre.toUpperCase();
+
+        const categoriaDB = await Categoria.findOne({ nombre });
+
+        if (categoriaDB) {
+            return res.status(400).json({
+            msg: `La categoria ${categoriaDB.nombre}, ya existe`,
+            });
+        }
+
+
+        const data = {
+            nombre,
+            usuario: req.usuario._id,
+        };
+
+        const categoria = new Categoria(data);
+
+        //* guardar DB
+
+        await categoria.save();
+        res.status(201).json(categoria);
+        };
+
+
+
+        const actualizarCategoria = async (req, res = response) => {
+        const { id } = req.params;
+        const { estado, usuario, ...data } = req.body;
+        data.nombre = data.nombre.toUpperCase();
+        data.usuario = req.usuario._id;
+
+        const categoria = await Categoria.findByIdAndUpdate(id, data, { new: true });
+        res.json(categoria);
+        };
+
+
+        const borrarCategoria = async (req, res) => {
+        const { id } = req.params;
+
+        const categoria = await Categoria.findByIdAndUpdate(
+            id,
+            { estado: false },
+            { new: true }
+        );
+
+        res.json(categoria);
+        };
+
+        module.exports = {
+        crearCategoria,
+        obtenerCategorias,
+        obtenerCategoria,
+        actualizarCategoria,
+        borrarCategoria,
+        };
+
+
+
+    ../routes/productos
+
+
+        const { Router, response } = require("express");
+
+        const {
+        crearProducto,
+        obtenerProductos,
+        obtenerProducto,
+        actualizarProducto,
+        borrarProducto,
+        } = require("../controllers/productos");
+        
+        const {
+        validarJWT,
+        validarCampos,
+        esAdminRole,
+        // tieneRole,
+        } = require("../middlewares");
+        const { check } = require("express-validator");
+        const {
+        existeProductoPorId,
+        existeCategoriaPorId,
+        } = require("../helpers/db-validators");
+
+        const router = Router();
+
+        
+        router.get("/", obtenerProductos);
+
+     
+        router.get(
+        "/:id",
+        [
+            check("id", "No es un id de mongo valido").isMongoId(),
+            check("id").custom(existeProductoPorId),
+            validarCampos,
+        ],
+        obtenerProducto
+        );
+
+      
+        router.post(
+        "/",
+        [
+            validarJWT,
+            check("nombre", "El nombre es obligatorio").not().isEmpty(),
+            validarCampos,
+            check("categoria", "No es un id de Mongo").isMongoId(),
+            check("categoria").custom(existeCategoriaPorId),
+            validarCampos,
+        ],
+        crearProducto
+        );
+
+      
+        router.put(
+        "/:id",
+        [
+            validarJWT,
+            check("id", "No es un id valido de mongo ").isMongoId(),
+            check("id").custom(existeProductoPorId),
+            validarCampos,
+        ],
+        actualizarProducto
+        );
+
+       
+        router.delete(
+        "/:id",
+        [
+            validarJWT,
+            esAdminRole,
+            check("id", "No es un id valido de mongo ").isMongoId(),
+            check("id").custom(existeProductoPorId),
+            // tieneRole("ADMIN_ROLE", "VENTAS_ROLE", "OTRO_ROLE"),
+            validarCampos,
+        ],
+        borrarProducto
+        );
+
+        module.exports = router;
+
+
+    
+    ../controllers/productos
+
+
+        const { response } = require("express");
+        const Producto = require("../models/producto");
+
+        const obtenerProductos = async (req, res = response) => {
+        const { limite = 5, desde = 0 } = req.query;
+
+        const query = { estado: true };
+
+        const [total, productos] = await Promise.all([
+            Producto.countDocuments(query),
+            Producto.find(query)
+            .skip(Number(desde))
+            .limit(Number(limite))
+            .populate("usuario", "nombre")
+            .populate("categoria", "nombre"),
+        ]);
+
+        res.json({ total, productos });
+        };
+
+        const obtenerProducto = async (req, res = response) => {
+        const { id } = req.params;
+
+        const producto = await Producto.findById(id)
+            .populate("usuario", "nombre")
+            .populate("categoria", "nombre");
+        res.json({ producto });
+        };
+
+        const crearProducto = async (req, res = response) => {
+        const { estado, usuario, ...body } = req.body;
+
+        const productoDB = await Producto.findOne({ nombre: body.nombre });
+
+        if (productoDB) {
+            return res.status(400).json({
+            msg: `El producto ${productoDB.nombre}, ya existe`,
+            });
+        }
+
+        const data = {
+            ...body,
+            nombre: body.nombre.toUpperCase(),
+            usuario: req.usuario._id,
+        };
+        const producto = new Producto(data);
+
+        await producto.save();
+        res.status(201).json({ producto });
+        };
+
+        const actualizarProducto = async (req, res = response) => {
+        const { id } = req.params;
+
+        const { estado, usuario, ...data } = req.body;
+
+        if (data.nombre) {
+            data.nombre = data.nombre.toUpperCase();
+        }
+
+        data.usuario = req.usuario._id;
+
+        const producto = await Producto.findByIdAndUpdate(id, data, {
+            new: true,
+        })
+            .populate("categoria", "nombre")
+            .populate("usuario", "nombre");
+        res.json({ producto });
+        };
+
+        const borrarProducto = async (req, res = response) => {
+        const { id } = req.params;
+
+        const productoBorrado = await Producto.findByIdAndUpdate(
+            id,
+            { estado: false },
+            { new: true }
+        );
+        res.json({ productoBorrado });
+        };
+
+        module.exports = {
+        crearProducto,
+        obtenerProductos,
+        obtenerProducto,
+        actualizarProducto,
+        borrarProducto,
+        };
+
+
+    
+    ../routes/buscar
+
+
+        const { Router } = require("express");
+        const { buscar } = require("../controllers/buscar");
+
+        const router = Router();
+
+        router.get("/:coleccion/:termino", buscar);
+
+        module.exports = router;
+
+
+
+    ../controllers/buscar
+
+
+        const { response } = require("express");
+        const { ObjectId } = require("mongoose").Types;
+
+        const { Usuario, Categoria, Producto } = require("../models");
+
+        const coleccionesPermitidas = ["usuarios", "categorias", "productos", "roles"];
+
+        const buscarUsuarios = async (termino = "", res = response) => {
+        const esMongoID = ObjectId.isValid(termino); //TRUE
+
+        if (esMongoID) {
+            const usuario = await Usuario.findById(termino);
+            return res.json({
+            result: usuario ? [usuario] : [],
+            });
+        }
+
+        const regex = new RegExp(termino, "i");
+        const total = await Usuario.count();
+        const usuarios = await Usuario.find({
+            $or: [{ nombre: regex }, { correo: regex }],
+            $and: [{ estado: true }],
+        });
+
+        res.json({
+            total,
+            result: usuarios,
+        });
+        };
+
+        const buscarCategorias = async (termino = "", res = response) => {
+        const esMongoID = ObjectId.isValid(termino); //TRUE
+
+        if (esMongoID) {
+            const categoria = await Categoria.findById(termino);
+            return res.json({
+            result: categoria ? [categoria] : [],
+            });
+        }
+
+        const regex = new RegExp(termino, "i");
+        const total = await Categoria.count();
+        const categorias = await Categoria.find({ nombre: regex, estado: true });
+
+        res.json({
+            total,
+            result: categorias,
+        });
+        };
+
+        const buscarProductos = async (termino = "", res = response) => {
+        const esMongoID = ObjectId.isValid(termino);
+
+        if (esMongoID) {
+            const producto = await Producto.findById(termino).populate(
+            "categoria",
+            "nombre"
+            );
+            return res.status(201).json({
+            results: producto ? [producto] : [],
+            });
+        }
+
+        const regex = new RegExp(termino, "i");
+        const total = await Producto.countDocuments();
+        const producto = await Producto.find({
+            $or: [{ nombre: regex }],
+            $and: [{ estado: true }],
+        }).populate("categoria", "nombre");
+
+        res.json({
+            total,
+            results: producto,
+        });
+        };
+
+        const buscar = (req, res = response) => {
+        const { coleccion, termino } = req.params;
+
+        if (!coleccionesPermitidas.includes(coleccion)) {
+            return res.status(400).json({
+            msg: `Las colecciones permitidas son ${coleccionesPermitidas} `,
+            });
+        }
+
+        switch (coleccion) {
+            case "usuarios":
+            buscarUsuarios(termino, res);
+            break;
+            case "categorias":
+            buscarCategorias(termino, res);
+            break;
+            case "productos":
+            buscarProductos(termino, res);
+            break;
+
+            default:
+            res.status(500).json({
+                msg: "Se le olvido hacer esta busqueda",
+            });
+        }
+        ¡
+        };
+
+        module.exports = {
+        buscar,
+        };
+
+
+
+
+
+
+
+

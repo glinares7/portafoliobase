@@ -1,0 +1,49 @@
+instalar npm
+    dentro de la carpeta agregar
+        npm i -S redux
+    
+    loose-envify
+        proyecta variables de entorno ~ 4 year ago
+    lodash
+        colección de funciones utilitarias para programación funcional ~ 2 year ago
+
+React
+    npm i -S react-redux redux react-dom
+
+Test -redux
+    yarn add tape tap-spec
+
+        "react-scripts test",
+        "tape -r babel-core/register test/index.js | tap-spec"
+
+
+
+
+    react redux tutorial connect
+        https://youtu.be/gFZiQnM3Is4
+
+    advance react redux Performance
+        https://youtu.be/7pO3563Qi1Y
+        https://github.com/joshribakoff/redux-10000-todos
+    
+    Meetup -Performance react + redux version spanish languaje
+        https://youtu.be/g4Lb27ixCAk
+
+
+
++++++     redux - example connect      +++++++
+
+    React Redux Tutorial | Redux in React - How to Connect Redux to React
+        https://youtu.be/aEmG9nc8eLg
+        https://github.com/monsterlessonsacademy/monsterlessonsacademy/tree/90-react-redux-connect
+
+
+    MapStateToProps and MapDispatchToProps in React Redux
+        https://youtu.be/VrKiQikkMXI
+        https://github.com/monsterlessonsacademy/monsterlessonsacademy/tree/91-mapstatetoprops-mapdispatch-to-props
+
+    react performance optimization selectors & reselect
+        https://youtu.be/KZ6UOUCdyd4
+        https://github.com/monsterlessonsacademy/monsterlessonsacademy/tree/95-redux-selectors
+
+

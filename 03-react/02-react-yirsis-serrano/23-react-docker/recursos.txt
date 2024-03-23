@@ -1,0 +1,171 @@
+
+create-react-app
+    https:://create-react-app.dev
+
+        create-react-app  app-file --template cra-templata-pwa
+vite
+    https://vitejs.dev
+
+    dpcler
+        sistema operativo propio
+        app para produccion
+
+    yarn create vite
+
+    yarn create vite react-docker  --template react
+
+        templates soportadas
+
+            vanilla vanilla-ts vue vue-ts react react-ts preact preact-ts lit lit-ts svelte-ts svelte-ts
+
+    
+        install docker 
+            https://docker.com/products/docker-desktop
+
+            windows-docker
+                installar WSL
+                    docs-microsoft.com/en-us/windows/ws/install
+
+                    wsl --install
+                    wsl --set-default-version 2
+    
+    using docker
+        docker
+        yarn
+
+        yarn preview
+            acceder a dist
+        
+
+            .dockerignore
+                node_modules
+                dist
+                .dockerignore
+                DockerFile
+        
+        package.json
+            yarn dev
+                compila en modo desarrollo
+            yarn build
+            yarn preview
+                se compila en modo produccion
+                localhost con diferente puerto
+
+    servicios 
+    github pages
+    netifly
+    versel
+
+    Docker servidores
+        AWS
+        nginx
+        azure
+
+
+
+    https://hub.docker.com
+        iso
+            docker pull ubuntu
+
+
+
+    copy en docker
+        servidores soportados 
+            nginx
+            apache
+        COPY package.json ./
+        COPY yarn.lock ./
+        .
+        .
+        .
+
+    generar imagen de docker
+        sudo docker build -t reactapp .
+        sudo docker images
+
+    levantar la imagen de docker
+            sudo docker run -p 5000:80 reactapp
+
+        
+
+    detener y remover servicios
+         sudo docker ps -a
+          sudo docker  stop 8f779ff52919
+
+
+    remover system docker
+
+            sudo docker system prune
+            sudo docker system prune -a
+            udo docker images purge
+
+    sudo docker pull nginx
+
+
+
+
+-------------------------------------------------------------
+instalar el yarn o npm como produccion 
+    npm run build
+    yarn build
+
+    el contenedor no deben contener numeros
+
+    no se puede en un PWA(aun por indagar)
+
+para eliminar el contenedor se debe parar el servicio
+    sudo docker stop id-service
+    sudo docker rm id-service
+
+        luego proceder a remover el docker
+            sudo docker rmi id-docker
+
+
+--------------------------------------------------------------
+
+
+vite
+#Node
+FROM node:lts-alpine as build-stage
+
+RUN mkdir app
+
+WORKDIR /app
+
+COPY  package.json ./
+COPY  yarn.lock ./
+
+RUN yarn install
+
+COPY . .
+
+RUN yarn build
+
+FROM nginx:1.21.6-alpine as production-stage
+COPY --from=build-stage /app/dist  /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx","-g","daemon off;"]
+
+
+
+
+react   
+#Node
+FROM node:lts-alpine as build-stage
+
+RUN mkdir app
+
+WORKDIR /app
+
+COPY  package.json ./
+
+RUN npm  install
+
+COPY . .
+
+RUN npm run  build
+
+FROM nginx:1.21.6-alpine as production-stage
+COPY --from=build-stage /app/build  /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx","-g","daemon off;"]

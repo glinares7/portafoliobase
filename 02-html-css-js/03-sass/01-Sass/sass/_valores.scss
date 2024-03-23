@@ -1,0 +1,19 @@
+// @use 'sass:math';
+@use 'sass:string';
+@use 'sass:meta';
+
+// quoted string '' " "
+// unquoted string 
+
+$strings-sincomillas: header header header; 
+$strings-comillas: 'center';
+
+
+.title{
+    text-align: string.unquote($strings-comillas);
+}
+
+.grid{
+    grid-template-areas: '#{$strings-sincomillas}';
+}
+

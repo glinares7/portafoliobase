@@ -1,0 +1,16 @@
+.footer__app {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  background-color: pink;
+  color: white;
+  border: 2px solid yellow;
+  box-sizing: border-box;
+
+  .pie__footer {
+    display: flex;
+    padding: 0 1em;
+    gap: 15px;
+    justify-content: center;
+  }
+}

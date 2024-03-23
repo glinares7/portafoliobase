@@ -1,0 +1,91 @@
+
+patron store != a context 
+    en la tienda tien toda la información 
+    solo se usa donde se encuentre
+
+    aocacopm
+            accion
+                dispatcher (sync)
+                    general reducer 
+                        store(new state)
+                middeware(async)
+
+    Redux
+        https://es.redux.js.org/
+
+            npm i -S redux
+        
+    react-redux
+        integración con react via redux
+            https://react-redux.js.org/
+                npm i -S react-redux
+                npm i -D redux-devtools
+
+
+    al instalar redux no se puede crear PWA
+        npx create-react-app 10-redux-firebase
+
+        yarn add react-redux redux
+
+        yarn add react-router-dom
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+    # Redux + Plain JS template
+    npx create-react-app my-app --template redux
+
+    # Redux + TypeScript template
+    npx create-react-app my-app --template redux-typescript
+
+    **** EN EL CURSO SE ESTA USANDO LA V5 DE REACT-ROUTER-DOM *****
+
+- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
+    firebase
+        
+            autenticación
+                correo electronico
+                google
+                    yarn add firebase
+                        signInWithProvider -> abre una ventana emergente
+                    config-firebase.js
+
+        
+    Materiañize
+        https://materializecss.com/getting-started.html
+            CDN -> index.html
+
+
+    google  
+        yarn add react-google-button
+
+    extensiones
+        redux dev tools
+            configurar
+                https://github.com/zalmoxisus/redux-devtools-extension#usage
+
+                    activar redux
+                        dentro del store.js agregar al createRedux(reduxer,
+                         window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+                        )
+
+    para soportar más de 2 reducers
+        cobineReducers
+
+    thunky -> libraries 
+                se usa por que las peticiones no se pueden leer debido a ser sincronas y se necesita un middeware
+        redux-thunk
+            https://www.npmjs.com/package/redux-thunk
+
+            agregar al store.js 
+                const composeEnhancers = (typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__) || compose;
+
+        
+
+    
+
+
+    
+    
+    
+

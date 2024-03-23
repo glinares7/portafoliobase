@@ -1,0 +1,21 @@
+.header__app {
+  position: relative;
+  // width: 100%;
+  background-color: greenyellow;
+  border: 1px solid blue;
+  box-sizing: border-box;
+
+  .nav__header {
+    display: flex;
+    gap: 25px;
+    justify-content: flex-end;
+    padding: 0 1.5em;
+    .item__nav {
+      list-style: none;
+      a {
+        text-decoration: none;
+        color: blue;
+      }
+    }
+  }
+}

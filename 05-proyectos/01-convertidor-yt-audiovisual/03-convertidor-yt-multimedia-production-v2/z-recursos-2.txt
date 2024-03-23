@@ -1,0 +1,1129 @@
+
+
+https://console.cloud.google.com/
+
+    creamos el proyecto
+
+
+
+
+
+https://developers.google.com/youtube/v3/docs/list
+
+    en la paleta buscamos youtube data api v3
+        habilitamos
+
+    
+            ¿que api estas usando ?
+                eligimos la api que hemos instalado -> youtube data api v3
+
+
+
+    API_KEY=AIzaSyDSX0YmIw1jhZskr9j8P7D96cnBfehP3Ac 
+
+
+
+
+    **********************************************************************************************************
+
+
+
+    <script src="https://apis.google.com/js/api.js"></script>
+<script>
+  /**
+   * Sample JavaScript code for youtube.playlists.list
+   * See instructions for running APIs Explorer code samples locally:
+   * https://developers.google.com/explorer-help/code-samples#javascript
+   */
+
+  function authenticate() {
+    return gapi.auth2.getAuthInstance()
+        .signIn({scope: "https://www.googleapis.com/auth/youtube.readonly"})
+        .then(function() { console.log("Sign-in successful"); },
+              function(err) { console.error("Error signing in", err); });
+  }
+  function loadClient() {
+    gapi.client.setApiKey("YOUR_API_KEY");
+    return gapi.client.load("https://www.googleapis.com/discovery/v1/apis/youtube/v3/rest")
+        .then(function() { console.log("GAPI client loaded for API"); },
+              function(err) { console.error("Error loading GAPI client for API", err); });
+  }
+  // Make sure the client is loaded and sign-in is complete before calling this method.
+  function execute() {
+    return gapi.client.youtube.playlists.list({
+      "part": [
+        "snippet,contentDetails"
+      ],
+      "channelId": "UCWPFJjIt6F3QtSKHpLhl2BA",
+      "maxResults": 25
+    })
+        .then(function(response) {
+                // Handle the results here (response.result has the parsed body).
+                console.log("Response", response);
+              },
+              function(err) { console.error("Execute error", err); });
+  }
+  gapi.load("client:auth2", function() {
+    gapi.auth2.init({client_id: "YOUR_CLIENT_ID"});
+  });
+</script>
+<button onclick="authenticate().then(loadClient)">authorize and load</button>
+<button onclick="execute()">execute</button>
+
+
+
+
+
+
+REFERENCIAS DE youtube
+
+    API YOUTUBE
+        https://www.youtube.com/watch?v=DuudSp4sHmg
+
+
+    canal de wilirex
+        https://www.youtube.com/channel/UC8rNKrqBxJqL9izOOMxBJtw
+
+
+    api youtube data
+        https://developers.google.com/youtube/v3/docs/playlists/list?hl=es-419&apix_params=%7B%22part%22%3A%5B%22snippet%2CcontentDetails%22%5D%2C%22channelId%22%3A%22UC8rNKrqBxJqL9izOOMxBJtw%22%2C%22maxResults%22%3A25%7D&apix=true
+
+
+
+    How to download a YouTube video using the YouTube's API
+        https://stackoverflow.com/questions/8081676/how-to-download-a-youtube-video-using-the-youtubes-api
+
+
+    
+    credenciales
+        https://console.cloud.google.com/apis/credentials?project=youtube-api-388203
+
+    integración con otras bibliotecas 
+        https://es.legacy.reactjs.org/docs/integrating-with-other-libraries.html
+
+    
+
+     uso de fetch API en Javascript
+        https://pablomonteserin.com/curso/javascript/ejemplos-api-fetch/
+
+
+
+documentacion
+
+        GET https://youtube.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&channelId=UC8rNKrqBxJqL9izOOMxBJtw&maxResults=25&&key=[YOUR_API_KEY] HTTP/1.1
+
+        Authorization: Bearer [YOUR_ACCESS_TOKEN]
+        Accept: application/json
+
+
+
+
+  api youtube ~ playlist
+    res.items[i].id -> id lista de reproduccion
+
+    res.snippet.channelId -> id canal del youtuber
+
+  
+    GET https://youtube.googleapis.com/youtube/v3/playlists?part=snippet%2CcontentDetails&channelId=UC8rNKrqBxJqL9izOOMxBJtw&maxResults=25&key=AIzaSyDSX0YmIw1jhZskr9j8P7D96cnBfehP3Ac
+
+
+  videos
+
+    GET https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=Ks-_Mh1QhMc&key=[YOUR_API_KEY]
+
+
+
+    GET https://youtube.googleapis.com/youtube/v3/videos?part=snippet%2CcontentDetails%2Cstatistics&id=Ks-_Mh1QhMc&key=AIzaSyDSX0YmIw1jhZskr9j8P7D96cnBfehP3Ac
+
+
+
+
+datos de la api de youtube
+
+
+      filesize_approx: 7719344,
+      http_headers: [Object],
+      video_ext: 'mp4',
+      audio_ext: 'none',
+      vbr: 218.505,
+      abr: 0,
+      format: '18 - 640x360 (360p)'
+    },
+    {
+      asr: null,
+      filesize: 5069166,
+      format_id: '243',
+      format_note: '360p',
+      source_preference: -1,
+      fps: 30,
+      audio_channels: null,
+      height: 360,
+      quality: 6,
+      has_drm: false,
+      tbr: 147.23,
+      url: 'https://rr3---sn-uqx2-aph6s.googlevideo.com/videoplayback?expire=1685409404&ei=HPp0ZOqIA4-QobIPrauo6AI&ip=190.237.123.82&id=o-AEHtZElRduT8-uy4BBe3rr2qgmBoAWFXNHXKUst6r8vB&itag=243&source=youtube&requiressl=yes&mh=cs&mm=31%2C29&mn=sn-uqx2-aph6s%2Csn-nja7sner&ms=au%2Crdu&mv=m&mvi=3&pcm2cms=yes&pl=24&initcwndbps=1516250&spc=qEK7B9xb7r9ONgwcA6jF6kuCXrQIsdY&vprv=1&svpuc=1&mime=video%2Fwebm&gir=yes&clen=5069166&dur=275.441&lmt=1665253923929433&mt=1685387332&fvip=4&keepalive=yes&fexp=24007246%2C24363391&beids=24350017&c=ANDROID&txp=5437434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIhAOkfTIb_BkaE0IcXRHQIgXCfgJpsD3E4PL2zn0MFtcUIAiAHXlosuVK7Y9XnE-OLFh0zL9vdHT6FUgdCRXpIgfMIoQ%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIhAM2ddNaSXOsYkXQw8nZbT_DR0wW4r66AgTIAk6OHEtUYAiB9ud7a_NDtlBKjq3Ulbc4-kuYUMoJWJTcqRiCsvhZuPw%3D%3D',
+      width: 640,
+      language: null,
+      language_preference: -1,
+      preference: null,
+      ext: 'webm',
+      vcodec: 'vp9',
+      acodec: 'none',
+      dynamic_range: 'SDR',
+      vbr: 147.23,
+      protocol: 'http_dash_segments',
+      fragments: [Array],
+      container: 'webm_dash',
+      resolution: '640x360',
+      aspect_ratio: 1.78,
+      http_headers: [Object],
+      video_ext: 'webm',
+      audio_ext: 'none',
+      format: '243 - 640x360 (360p)'
+    },
+    {
+      asr: null,
+      filesize: 4897733,
+      format_id: '135',
+      format_note: '480p',
+      source_preference: -1,
+      fps: 30,
+      audio_channels: null,
+      height: 480,
+      quality: 7,
+      has_drm: false,
+      tbr: 142.251,
+      url: 'https://rr3---sn-uqx2-aph6s.googlevideo.com/videoplayback?expire=1685409404&ei=HPp0ZOqIA4-QobIPrauo6AI&ip=190.237.123.82&id=o-AEHtZElRduT8-uy4BBe3rr2qgmBoAWFXNHXKUst6r8vB&itag=135&source=youtube&requiressl=yes&mh=cs&mm=31%2C29&mn=sn-uqx2-aph6s%2Csn-nja7sner&ms=au%2Crdu&mv=m&mvi=3&pcm2cms=yes&pl=24&initcwndbps=1516250&spc=qEK7B9xb7r9ONgwcA6jF6kuCXrQIsdY&vprv=1&svpuc=1&mime=video%2Fmp4&gir=yes&clen=4897733&dur=275.441&lmt=1665253488913476&mt=1685387332&fvip=4&keepalive=yes&fexp=24007246%2C24363391&beids=24350017&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRAIgURnG1F-XGzHsFt7i0jA6x5V5HufNQDpLjqHIrJ4kGsQCICqj5JqREvQGMRKJCUbCYNzJPTN8fqII08ledRi-pUpJ&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIhAM2ddNaSXOsYkXQw8nZbT_DR0wW4r66AgTIAk6OHEtUYAiB9ud7a_NDtlBKjq3Ulbc4-kuYUMoJWJTcqRiCsvhZuPw%3D%3D',
+      width: 854,
+      language: null,
+      language_preference: -1,
+      preference: null,
+      ext: 'mp4',
+      vcodec: 'avc1.4d401f',
+      acodec: 'none',
+      dynamic_range: 'SDR',
+      vbr: 142.251,
+      protocol: 'http_dash_segments',
+      fragments: [Array],
+      container: 'mp4_dash',
+      resolution: '854x480',
+      aspect_ratio: 1.78,
+      http_headers: [Object],
+      video_ext: 'mp4',
+      audio_ext: 'none',
+      format: '135 - 854x480 (480p)'
+    },
+    {
+      asr: null,
+      filesize: 8409774,
+      format_id: '244',
+      format_note: '480p',
+      source_preference: -1,
+      fps: 30,
+      audio_channels: null,
+      height: 480,
+      quality: 7,
+      has_drm: false,
+      tbr: 244.256,
+      url: 'https://rr3---sn-uqx2-aph6s.googlevideo.com/videoplayback?expire=1685409404&ei=HPp0ZOqIA4-QobIPrauo6AI&ip=190.237.123.82&id=o-AEHtZElRduT8-uy4BBe3rr2qgmBoAWFXNHXKUst6r8vB&itag=244&source=youtube&requiressl=yes&mh=cs&mm=31%2C29&mn=sn-uqx2-aph6s%2Csn-nja7sner&ms=au%2Crdu&mv=m&mvi=3&pcm2cms=yes&pl=24&initcwndbps=1516250&spc=qEK7B9xb7r9ONgwcA6jF6kuCXrQIsdY&vprv=1&svpuc=1&mime=video%2Fwebm&gir=yes&clen=8409774&dur=275.441&lmt=1665253877630579&mt=1685387332&fvip=4&keepalive=yes&fexp=24007246%2C24363391&beids=24350017&c=ANDROID&txp=5437434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAK5mVEwky2zfRnD9FYkHp0--dxWVjk9X4D1nmQz3jtRiAiEAw_k2FPy7Gs1A4b8yjhNZ_3jcFEIb3i7e0qMxyWLjcQM%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIhAM2ddNaSXOsYkXQw8nZbT_DR0wW4r66AgTIAk6OHEtUYAiB9ud7a_NDtlBKjq3Ulbc4-kuYUMoJWJTcqRiCsvhZuPw%3D%3D',
+      width: 854,
+      language: null,
+      language_preference: -1,
+      preference: null,
+      ext: 'webm',
+      vcodec: 'vp9',
+      acodec: 'none',
+      dynamic_range: 'SDR',
+      vbr: 244.256,
+      protocol: 'http_dash_segments',
+      fragments: [Array],
+      container: 'webm_dash',
+      resolution: '854x480',
+      aspect_ratio: 1.78,
+      http_headers: [Object],
+      video_ext: 'webm',
+      audio_ext: 'none',
+      format: '244 - 854x480 (480p)'
+    },
+    {
+      asr: 44100,
+      filesize: null,
+      format_id: '22',
+      format_note: '720p',
+      source_preference: -5,
+      fps: 30,
+      audio_channels: 2,
+      height: 720,
+      quality: 8,
+      has_drm: false,
+      tbr: 352.947,
+      url: 'https://rr3---sn-uqx2-aph6s.googlevideo.com/videoplayback?expire=1685409404&ei=HPp0ZOqIA4-QobIPrauo6AI&ip=190.237.123.82&id=o-AEHtZElRduT8-uy4BBe3rr2qgmBoAWFXNHXKUst6r8vB&itag=22&source=youtube&requiressl=yes&mh=cs&mm=31%2C29&mn=sn-uqx2-aph6s%2Csn-nja7sner&ms=au%2Crdu&mv=m&mvi=3&pcm2cms=yes&pl=24&initcwndbps=1516250&spc=qEK7B9xb7r9ONgwcA6jF6kuCXrQIsdY&vprv=1&svpuc=1&mime=video%2Fmp4&cnr=14&ratebypass=yes&dur=275.504&lmt=1665253527553449&mt=1685387332&fvip=4&fexp=24007246%2C24363391&beids=24350017&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Ccnr%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRQIgX08697tq-AduyYjS5_5IlcVk2YRS9kwYcSfvC16A5T8CIQDYqvfr58M_KJPIU4L8j_vU3hZs_q9zx5aHawznNXn-zw%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIhAM2ddNaSXOsYkXQw8nZbT_DR0wW4r66AgTIAk6OHEtUYAiB9ud7a_NDtlBKjq3Ulbc4-kuYUMoJWJTcqRiCsvhZuPw%3D%3D',
+      width: 1280,
+      language: null,
+      language_preference: -1,
+      preference: null,
+      ext: 'mp4',
+      vcodec: 'avc1.64001F',
+      acodec: 'mp4a.40.2',
+      dynamic_range: 'SDR',
+      protocol: 'https',
+      resolution: '1280x720',
+      aspect_ratio: 1.78,
+      filesize_approx: 12468911,
+      http_headers: [Object],
+      video_ext: 'mp4',
+      audio_ext: 'none',
+      vbr: 352.947,
+      abr: 0,
+      format: '22 - 1280x720 (720p)'
+    },
+    {
+      asr: null,
+      filesize: 7714015,
+      format_id: '136',
+      format_note: '720p',
+      source_preference: -1,
+      fps: 30,
+      audio_channels: null,
+      height: 720,
+      quality: 8,
+      has_drm: false,
+      tbr: 224.048,
+      url: 'https://rr3---sn-uqx2-aph6s.googlevideo.com/videoplayback?expire=1685409404&ei=HPp0ZOqIA4-QobIPrauo6AI&ip=190.237.123.82&id=o-AEHtZElRduT8-uy4BBe3rr2qgmBoAWFXNHXKUst6r8vB&itag=136&source=youtube&requiressl=yes&mh=cs&mm=31%2C29&mn=sn-uqx2-aph6s%2Csn-nja7sner&ms=au%2Crdu&mv=m&mvi=3&pcm2cms=yes&pl=24&initcwndbps=1516250&spc=qEK7B9xb7r9ONgwcA6jF6kuCXrQIsdY&vprv=1&svpuc=1&mime=video%2Fmp4&gir=yes&clen=7714015&dur=275.441&lmt=1665253514739478&mt=1685387332&fvip=4&keepalive=yes&fexp=24007246%2C24363391&beids=24350017&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAJDOdf_SNUGgFwrXEJctDpVqdLfkBCVvR3Pj_3U0Ap_uAiEAiloYN-G0ZMu2wOS1_oFrq4KxTZ0U8mOvYtoqKfs_naI%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIhAM2ddNaSXOsYkXQw8nZbT_DR0wW4r66AgTIAk6OHEtUYAiB9ud7a_NDtlBKjq3Ulbc4-kuYUMoJWJTcqRiCsvhZuPw%3D%3D',
+      width: 1280,
+      language: null,
+      language_preference: -1,
+      preference: null,
+      ext: 'mp4',
+      vcodec: 'avc1.4d401f',
+      acodec: 'none',
+      dynamic_range: 'SDR',
+      vbr: 224.048,
+      protocol: 'http_dash_segments',
+      fragments: [Array],
+      container: 'mp4_dash',
+      resolution: '1280x720',
+      aspect_ratio: 1.78,
+      http_headers: [Object],
+      video_ext: 'mp4',
+      audio_ext: 'none',
+      format: '136 - 1280x720 (720p)'
+    },
+    {
+      asr: null,
+      filesize: 15769096,
+      format_id: '247',
+      format_note: '720p',
+      source_preference: -1,
+      fps: 30,
+      audio_channels: null,
+      height: 720,
+      quality: 8,
+      has_drm: false,
+      tbr: 458.002,
+      url: 'https://rr3---sn-uqx2-aph6s.googlevideo.com/videoplayback?expire=1685409404&ei=HPp0ZOqIA4-QobIPrauo6AI&ip=190.237.123.82&id=o-AEHtZElRduT8-uy4BBe3rr2qgmBoAWFXNHXKUst6r8vB&itag=247&source=youtube&requiressl=yes&mh=cs&mm=31%2C29&mn=sn-uqx2-aph6s%2Csn-nja7sner&ms=au%2Crdu&mv=m&mvi=3&pcm2cms=yes&pl=24&initcwndbps=1516250&spc=qEK7B9xb7r9ONgwcA6jF6kuCXrQIsdY&vprv=1&svpuc=1&mime=video%2Fwebm&gir=yes&clen=15769096&dur=275.441&lmt=1665253882978812&mt=1685387332&fvip=4&keepalive=yes&fexp=24007246%2C24363391&beids=24350017&c=ANDROID&txp=5437434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIgfDjkfDtWdcmEVzJb-sn7eL-xow6xssjNgEuC4wSpdKMCIQDOtGvzg6VIoa8GzrHhQfXuRDDcB4Y4WuxpY6SOkHT32g%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIhAM2ddNaSXOsYkXQw8nZbT_DR0wW4r66AgTIAk6OHEtUYAiB9ud7a_NDtlBKjq3Ulbc4-kuYUMoJWJTcqRiCsvhZuPw%3D%3D',
+      width: 1280,
+      language: null,
+      language_preference: -1,
+      preference: null,
+      ext: 'webm',
+      vcodec: 'vp9',
+      acodec: 'none',
+      dynamic_range: 'SDR',
+      vbr: 458.002,
+      protocol: 'http_dash_segments',
+      fragments: [Array],
+      container: 'webm_dash',
+      resolution: '1280x720',
+      aspect_ratio: 1.78,
+      http_headers: [Object],
+      video_ext: 'webm',
+      audio_ext: 'none',
+      format: '247 - 1280x720 (720p)'
+    },
+    {
+      asr: null,
+      filesize: 29640275,
+      format_id: '137',
+      format_note: '1080p',
+      source_preference: -1,
+      fps: 30,
+      audio_channels: null,
+      height: 1080,
+      quality: 9,
+      has_drm: false,
+      tbr: 860.882,
+      url: 'https://rr3---sn-uqx2-aph6s.googlevideo.com/videoplayback?expire=1685409404&ei=HPp0ZOqIA4-QobIPrauo6AI&ip=190.237.123.82&id=o-AEHtZElRduT8-uy4BBe3rr2qgmBoAWFXNHXKUst6r8vB&itag=137&source=youtube&requiressl=yes&mh=cs&mm=31%2C29&mn=sn-uqx2-aph6s%2Csn-nja7sner&ms=au%2Crdu&mv=m&mvi=3&pcm2cms=yes&pl=24&initcwndbps=1516250&spc=qEK7B9xb7r9ONgwcA6jF6kuCXrQIsdY&vprv=1&svpuc=1&mime=video%2Fmp4&gir=yes&clen=29640275&dur=275.441&lmt=1665253502607135&mt=1685387332&fvip=4&keepalive=yes&fexp=24007246%2C24363391&beids=24350017&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRgIhANb0-cerlSKCW9z9VApMtt3OXjm38OZu9R7shwbRcZ2zAiEA1F5aYpLV4DDhP66-on7hPXGfsERvkO5mmHCxYY-tQNQ%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIhAM2ddNaSXOsYkXQw8nZbT_DR0wW4r66AgTIAk6OHEtUYAiB9ud7a_NDtlBKjq3Ulbc4-kuYUMoJWJTcqRiCsvhZuPw%3D%3D',
+      width: 1920,
+      language: null,
+      language_preference: -1,
+      preference: null,
+      ext: 'mp4',
+      vcodec: 'avc1.640028',
+      acodec: 'none',
+      dynamic_range: 'SDR',
+      vbr: 860.882,
+      protocol: 'http_dash_segments',
+      fragments: [Array],
+      container: 'mp4_dash',
+      resolution: '1920x1080',
+      aspect_ratio: 1.78,
+      http_headers: [Object],
+      video_ext: 'mp4',
+      audio_ext: 'none',
+      format: '137 - 1920x1080 (1080p)'
+    },
+    {
+      asr: null,
+      filesize: 31911293,
+      format_id: '248',
+      format_note: '1080p',
+      source_preference: -1,
+      fps: 30,
+      audio_channels: null,
+      height: 1080,
+      quality: 9,
+      has_drm: false,
+      tbr: 926.842,
+      url: 'https://rr3---sn-uqx2-aph6s.googlevideo.com/videoplayback?expire=1685409404&ei=HPp0ZOqIA4-QobIPrauo6AI&ip=190.237.123.82&id=o-AEHtZElRduT8-uy4BBe3rr2qgmBoAWFXNHXKUst6r8vB&itag=248&source=youtube&requiressl=yes&mh=cs&mm=31%2C29&mn=sn-uqx2-aph6s%2Csn-nja7sner&ms=au%2Crdu&mv=m&mvi=3&pcm2cms=yes&pl=24&initcwndbps=1516250&spc=qEK7B9xb7r9ONgwcA6jF6kuCXrQIsdY&vprv=1&svpuc=1&mime=video%2Fwebm&gir=yes&clen=31911293&dur=275.441&lmt=1665253714826682&mt=1685387332&fvip=4&keepalive=yes&fexp=24007246%2C24363391&beids=24350017&c=ANDROID&txp=5437434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAMm9fmIsX6HAhl6WVz6OE6pJx3QAJewo3s652IwRPZ6pAiEA7vz-panv6MHTyPaoJLX1Hu3NpXFlqcWRWW77--qwypo%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIhAM2ddNaSXOsYkXQw8nZbT_DR0wW4r66AgTIAk6OHEtUYAiB9ud7a_NDtlBKjq3Ulbc4-kuYUMoJWJTcqRiCsvhZuPw%3D%3D',
+      width: 1920,
+      language: null,
+      language_preference: -1,
+      preference: null,
+      ext: 'webm',
+      vcodec: 'vp9',
+      acodec: 'none',
+      dynamic_range: 'SDR',
+      vbr: 926.842,
+      protocol: 'http_dash_segments',
+      fragments: [Array],
+      container: 'webm_dash',
+      resolution: '1920x1080',
+      aspect_ratio: 1.78,
+      http_headers: [Object],
+      video_ext: 'webm',
+      audio_ext: 'none',
+      format: '248 - 1920x1080 (1080p)'
+    }
+  ],
+  thumbnails: [
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/3.jpg',
+      preference: -37,
+      id: '0'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/3.webp',
+      preference: -36,
+      id: '1'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/2.jpg',
+      preference: -35,
+      id: '2'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/2.webp',
+      preference: -34,
+      id: '3'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/1.jpg',
+      preference: -33,
+      id: '4'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/1.webp',
+      preference: -32,
+      id: '5'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/mq3.jpg',
+      preference: -31,
+      id: '6'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/mq3.webp',
+      preference: -30,
+      id: '7'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/mq2.jpg',
+      preference: -29,
+      id: '8'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/mq2.webp',
+      preference: -28,
+      id: '9'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/mq1.jpg',
+      preference: -27,
+      id: '10'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/mq1.webp',
+      preference: -26,
+      id: '11'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/hq3.jpg',
+      preference: -25,
+      id: '12'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/hq3.webp',
+      preference: -24,
+      id: '13'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/hq2.jpg',
+      preference: -23,
+      id: '14'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/hq2.webp',
+      preference: -22,
+      id: '15'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/hq1.jpg',
+      preference: -21,
+      id: '16'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/hq1.webp',
+      preference: -20,
+      id: '17'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/sd3.jpg',
+      preference: -19,
+      id: '18'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/sd3.webp',
+      preference: -18,
+      id: '19'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/sd2.jpg',
+      preference: -17,
+      id: '20'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/sd2.webp',
+      preference: -16,
+      id: '21'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/sd1.jpg',
+      preference: -15,
+      id: '22'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/sd1.webp',
+      preference: -14,
+      id: '23'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/default.jpg',
+      preference: -13,
+      id: '24'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/default.jpg?v=633209ee',
+      height: 90,
+      width: 120,
+      preference: -13,
+      id: '25',
+      resolution: '120x90'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/default.webp',
+      preference: -12,
+      id: '26'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/mqdefault.jpg',
+      preference: -11,
+      id: '27'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/mqdefault.jpg?v=633209ee',
+      height: 180,
+      width: 320,
+      preference: -11,
+      id: '28',
+      resolution: '320x180'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/mqdefault.webp',
+      preference: -10,
+      id: '29'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/0.jpg',
+      preference: -9,
+      id: '30'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/0.webp',
+      preference: -8,
+      id: '31'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/hqdefault.jpg',
+      preference: -7,
+      id: '32'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/hqdefault.jpg?sqp=-oaymwEiCKgBEF5IWvKriqkDFQgBFQAAAAAYASUAAMhCPQCAokN4AQ==&rs=AOn4CLAzmMPG_sr6qvr6oDI6RTVGFZ61Eg',
+      height: 94,
+      width: 168,
+      preference: -7,
+      id: '33',
+      resolution: '168x94'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/hqdefault.jpg?sqp=-oaymwEiCMQBEG5IWvKriqkDFQgBFQAAAAAYASUAAMhCPQCAokN4AQ==&rs=AOn4CLDQAC2w3_IfJc5vBPiSKVJXWFDsyA',
+      height: 110,
+      width: 196,
+      preference: -7,
+      id: '34',
+      resolution: '196x110'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/hqdefault.jpg?sqp=-oaymwEjCPYBEIoBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLAjpzS7SA0wcn3l_s_yuwqQtJtbTw',
+      height: 138,
+      width: 246,
+      preference: -7,
+      id: '35',
+      resolution: '246x138'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/hqdefault.jpg?sqp=-oaymwEjCNACELwBSFryq4qpAxUIARUAAAAAGAElAADIQj0AgKJDeAE=&rs=AOn4CLADnb4mdd1nG2OhhhzWnbubx5jOwA',
+      height: 188,
+      width: 336,
+      preference: -7,
+      id: '36',
+      resolution: '336x188'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/hqdefault.jpg?v=633209ee',
+      height: 360,
+      width: 480,
+      preference: -7,
+      id: '37',
+      resolution: '480x360'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/hqdefault.webp',
+      preference: -6,
+      id: '38'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/sddefault.jpg',
+      preference: -5,
+      id: '39'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/sddefault.jpg?v=633209ee',
+      height: 480,
+      width: 640,
+      preference: -5,
+      id: '40',
+      resolution: '640x480'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/sddefault.webp',
+      preference: -4,
+      id: '41'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/hq720.jpg',
+      preference: -3,
+      id: '42'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/hq720.webp',
+      preference: -2,
+      id: '43'
+    },
+    {
+      url: 'https://i.ytimg.com/vi/DDL3-xC-Aro/maxresdefault.jpg',
+      height: 1080,
+      width: 1920,
+      preference: -1,
+      id: '44',
+      resolution: '1920x1080'
+    },
+    {
+      url: 'https://i.ytimg.com/vi_webp/DDL3-xC-Aro/maxresdefault.webp',
+      preference: 0,
+      id: '45'
+    }
+  ],
+  thumbnail: 'https://i.ytimg.com/vi/DDL3-xC-Aro/maxresdefault.jpg',
+  description: `Caitlin Myers' English cover of "RIDE ON TIME" by Tatsuro Yamashita\n` +
+    '⪢➣ DOWNLOAD ⪢➣ https://ffm.to/rideontime (iTunes, Spotify, etc) \n' +
+    '➣ PATREON ➣ https://www.patreon.com/posts/city-poppin-vol-72665727\n' +
+    '\n' +
+    '----------------------------------------­­­­­­­----------------------------------­-------------------­\n' +
+    '• Credits • ("RIDE ON TIME" - Originally by: Tatsuro Yamashita) \n' +
+    '✧ Vocals and Lyrics: Caitlin Myers\n' +
+    '✧ BG Vocals: @Un3hcorn \n' +
+    '✧ Vocal and Instrumental Mix: @niu_arx (Twitter)\n' +
+    '✧ Tuning: @sagisapon \n' +
+    '✧ Timing: @estherdotexe \n' +
+    '✧ Arrangement: @vanfanco  with assistance from @Lowlander_  and thecyrax96\n' +
+    '✧ Guitar, Bass, and Drums: Johnathan "MJ/MIRA" Miller\n' +
+    '✧ Sax: Soneji\n' +
+    '✧ Art: Seica\n' +
+    '✧ Video: @ContestChar \n' +
+    '----------------------------------------­­­­­­­----------------------------------­-------------------­\n' +
+    '\n' +
+    '• FOLLOW ME •\n' +
+    '✸ Patreon: https://www.patreon.com/caitlinmyers\n' +
+    '☆ Instagram: https://www.instagram.com/mom0ki/\n' +
+    '✸ Twitter: https://twitter.com/CaitlinMyers\n' +
+    '☆ Website: http://www.caitlin-myers.com/\n' +
+    '\n' +
+    '----------------------------------------­­­­­­­----------------------------------­-------------------­\n' +
+    '▼ WANT TO USE THIS COVER SONG? ▼\n' +
+    'Non-profit use only. Please be sure to credit, link back to this video in the description, and link it to me so I can see!\n' +
+    '----------------------------------------­­­­­­­----------------------------------­-------------------­\n' +
+    '\n' +
+    'Lyrics:\n' +
+    'Can you see, shimmering in our view, the horizon is leading you\n' +
+    'Do you feel the flow of time, intertwined, (with) humankind, as it beckons\n' +
+    'Oh, seem’s the world is turning anew, and we’re speeding towards the thrillin’ hues\n' +
+    'All the dreams we thought we’d lost, and forgot, now grow hot, and approach us!\n' +
+    '\n' +
+    'Ride on time, singing out the things I’ve longed to say\n' +
+    'Only you can make me feel this way, yeah, you take my breath away\n' +
+    'Oh ride on time, Take my flaming heart out for a spin\n' +
+    'Cruisin’ as our merriment begins, baby we can ride on time\n' +
+    '\n' +
+    'So c’mon, keep the sparkle in your eye, as you’re making your way through the sky\n' +
+    'You can watch the days fly by, beautifully, next to me, see what can be\n' +
+    'Oh, lovin’ you is so unreal, let me show you how ya make me feel\n' +
+    "Doesn’t matter where you are, near or far, you're my star, can’t deny it\n" +
+    'Ride On Time - Takin’ off into that rising sun\n' +
+    'Watch as you’re outshining everyone, yeah, you know ya leave me stunned\n' +
+    'Oh, ride on time - take my flaming heart out for a ride\n' +
+    'Fly until we reach our paradise, baby we can ride on time\n' +
+    'Ooo, you’re the only one for me, (a) living dream, a fantasy, my reality\n' +
+    'Oh - Ride On Time - Takin’ off into that rising sun\n' +
+    'Watch as you’re outshining everyone, yeah, you know ya leave me stunned\n' +
+    'Oh ride on time, Take my flaming heart out for a spin\n' +
+    'Cruisin’ as our merriment begins, baby we can ride on time\n' +
+    '\n' +
+    'Oh - oh - Oh, Ride on time, singing out the things I’ve longed to say\n' +
+    'Only you can make me feel this way, yeah, you take my breath away\n' +
+    'Oh ride on time, Take my flaming heart out for a spin\n' +
+    'Cruisin’ as our merriment begins, baby we can ride on time\n' +
+    '----------------------------------------­­­­­­­----------------------------------­-------------------­\n' +
+    '\n' +
+    '#TatsuroYamashita #RIDEONTIME #CaitlinMyers',
+  uploader: 'Caitlin Myers',
+  uploader_id: '@caitlinmyers',
+  uploader_url: 'http://www.youtube.com/@caitlinmyers',
+  channel_id: 'UCDzdRLILLWlHxXnj3HhXW0A',
+  channel_url: 'https://www.youtube.com/channel/UCDzdRLILLWlHxXnj3HhXW0A',
+  duration: 276,
+  view_count: 253268,
+  average_rating: null,
+  age_limit: 0,
+  webpage_url: 'https://www.youtube.com/watch?v=DDL3-xC-Aro',
+  categories: [ 'Entertainment' ],
+  tags: [
+    'RIDE ON TIME',    'Tatsuro Yamashita',
+    'Tatsuro',         'yamashita',
+    'Ride',            'on',
+    'Time',            'Ride on',
+    'city pop',        "city poppin'",
+    'night music',     "80's",
+    'funk',            'groove',
+    'future funk',     'vol.',
+    'volume',          'two',
+    'Vtuber',          'Un3hcorn',
+    'tiktok song',     'vtuber',
+    'English',         'cover',
+    'english version', 'official',
+    'Caitlin Myers',   'Caitlin',
+    'Myers',           'tiktok',
+    'Japanese',        'Ride on Time cover'
+  ],
+  playable_in_embed: true,
+  live_status: 'not_live',
+  release_timestamp: 1665244811,
+  _format_sort_fields: [
+    'quality',  'res',
+    'fps',      'hdr:12',
+    'source',   'vcodec:vp9.2',
+    'channels', 'acodec',
+    'lang',     'proto'
+  ],
+  automatic_captions: {
+    af: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ak: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    sq: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    am: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ar: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    hy: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    as: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ay: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    az: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    bn: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    eu: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    be: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    bho: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    bs: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    bg: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    my: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ca: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ceb: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    'zh-Hans': [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    'zh-Hant': [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    co: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    hr: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    cs: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    da: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    dv: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    nl: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    'en-orig': [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    en: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    eo: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    et: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ee: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    fil: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    fi: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    fr: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    gl: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    lg: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ka: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    de: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    el: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    gn: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    gu: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ht: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ha: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    haw: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    iw: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    hi: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    hmn: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    hu: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    is: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ig: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    id: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ga: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    it: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ja: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    jv: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    kn: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    kk: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    km: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    rw: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ko: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    kri: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ku: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ky: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    lo: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    la: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    lv: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ln: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    lt: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    lb: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    mk: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    mg: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ms: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ml: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    mt: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    mi: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    mr: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    mn: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ne: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    nso: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    no: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ny: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    or: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    om: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ps: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    fa: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    pl: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    pt: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    pa: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    qu: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ro: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ru: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    sm: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    sa: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    gd: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    sr: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    sn: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    sd: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    si: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    sk: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    sl: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    so: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    st: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    es: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    su: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    sw: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    sv: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    tg: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ta: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    tt: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    te: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    th: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ti: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ts: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    tr: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    tk: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    uk: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ur: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    ug: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    uz: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    vi: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    cy: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    fy: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    xh: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    yi: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    yo: [ [Object], [Object], [Object], [Object], [Object], [Object] ],
+    zu: [ [Object], [Object], [Object], [Object], [Object], [Object] ]
+  },
+  subtitles: { live_chat: [ [Object] ] },
+  comment_count: 348,
+  chapters: null,
+  like_count: 8499,
+  channel: 'Caitlin Myers',
+  channel_follower_count: 200000,
+  upload_date: '20221008',
+  availability: 'public',
+  original_url: 'https://www.youtube.com/watch?v=DDL3-xC-Aro',
+  webpage_url_basename: 'watch',
+  webpage_url_domain: 'youtube.com',
+  extractor: 'youtube',
+  extractor_key: 'Youtube',
+  playlist: null,
+  playlist_index: null,
+  display_id: 'DDL3-xC-Aro',
+  fulltitle: 'RIDE ON TIME | ENGLISH VERSION | Caitlin Myers',
+  duration_string: '4:36',
+  release_date: '20221008',
+  is_live: false,
+  was_live: false,
+  requested_subtitles: null,
+  _has_drm: null,
+  requested_downloads: [
+    {
+      requested_formats: [Array],
+      format: '248 - 1920x1080 (1080p)+251 - audio only (medium)',
+      format_id: '248+251',
+      ext: 'webm',
+      protocol: 'http_dash_segments+http_dash_segments',
+      format_note: '1080p+medium',
+      filesize_approx: 36536537,
+      tbr: 1061.1689999999999,
+      width: 1920,
+      height: 1080,
+      resolution: '1920x1080',
+      fps: 30,
+      dynamic_range: 'SDR',
+      vcodec: 'vp9',
+      vbr: 926.842,
+      aspect_ratio: 1.78,
+      acodec: 'opus',
+      abr: 134.327,
+      asr: 48000,
+      audio_channels: 2,
+      epoch: 1685387804,
+      _filename: 'RIDE ON TIME ｜ ENGLISH VERSION ｜ Caitlin Myers [DDL3-xC-Aro].webm',
+      __write_download_archive: false
+    }
+  ],
+  requested_formats: [
+    {
+      asr: null,
+      filesize: 31911293,
+      format_id: '248',
+      format_note: '1080p',
+      source_preference: -1,
+      fps: 30,
+      audio_channels: null,
+      height: 1080,
+      quality: 9,
+      has_drm: false,
+      tbr: 926.842,
+      url: 'https://rr3---sn-uqx2-aph6s.googlevideo.com/videoplayback?expire=1685409404&ei=HPp0ZOqIA4-QobIPrauo6AI&ip=190.237.123.82&id=o-AEHtZElRduT8-uy4BBe3rr2qgmBoAWFXNHXKUst6r8vB&itag=248&source=youtube&requiressl=yes&mh=cs&mm=31%2C29&mn=sn-uqx2-aph6s%2Csn-nja7sner&ms=au%2Crdu&mv=m&mvi=3&pcm2cms=yes&pl=24&initcwndbps=1516250&spc=qEK7B9xb7r9ONgwcA6jF6kuCXrQIsdY&vprv=1&svpuc=1&mime=video%2Fwebm&gir=yes&clen=31911293&dur=275.441&lmt=1665253714826682&mt=1685387332&fvip=4&keepalive=yes&fexp=24007246%2C24363391&beids=24350017&c=ANDROID&txp=5437434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAMm9fmIsX6HAhl6WVz6OE6pJx3QAJewo3s652IwRPZ6pAiEA7vz-panv6MHTyPaoJLX1Hu3NpXFlqcWRWW77--qwypo%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIhAM2ddNaSXOsYkXQw8nZbT_DR0wW4r66AgTIAk6OHEtUYAiB9ud7a_NDtlBKjq3Ulbc4-kuYUMoJWJTcqRiCsvhZuPw%3D%3D',
+      width: 1920,
+      language: null,
+      language_preference: -1,
+      preference: null,
+      ext: 'webm',
+      vcodec: 'vp9',
+      acodec: 'none',
+      dynamic_range: 'SDR',
+      vbr: 926.842,
+      protocol: 'http_dash_segments',
+      fragments: [Array],
+      container: 'webm_dash',
+      resolution: '1920x1080',
+      aspect_ratio: 1.78,
+      http_headers: [Object],
+      video_ext: 'webm',
+      audio_ext: 'none',
+      format: '248 - 1920x1080 (1080p)'
+    },
+    {
+      asr: 48000,
+      filesize: 4625244,
+      format_id: '251',
+      format_note: 'medium',
+      source_preference: -1,
+      fps: null,
+      audio_channels: 2,
+      height: null,
+      quality: 3,
+      has_drm: false,
+      tbr: 134.327,
+      url: 'https://rr3---sn-uqx2-aph6s.googlevideo.com/videoplayback?expire=1685409404&ei=HPp0ZOqIA4-QobIPrauo6AI&ip=190.237.123.82&id=o-AEHtZElRduT8-uy4BBe3rr2qgmBoAWFXNHXKUst6r8vB&itag=251&source=youtube&requiressl=yes&mh=cs&mm=31%2C29&mn=sn-uqx2-aph6s%2Csn-nja7sner&ms=au%2Crdu&mv=m&mvi=3&pcm2cms=yes&pl=24&initcwndbps=1516250&spc=qEK7B9xb7r9ONgwcA6jF6kuCXrQIsdY&vprv=1&svpuc=1&mime=audio%2Fwebm&gir=yes&clen=4625244&dur=275.461&lmt=1665252523016765&mt=1685387332&fvip=4&keepalive=yes&fexp=24007246%2C24363391&beids=24350017&c=ANDROID&txp=5432434&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Cgir%2Cclen%2Cdur%2Clmt&sig=AOq0QJ8wRQIgbb9owRQRHL7Ilq8TkmCICid5sWRpD9yBUNMlLKu8IKQCIQDNnleqDP9zVlRCk9Vysj6aj7B0uKGAOLk-OdQb5YIldQ%3D%3D&lsparams=mh%2Cmm%2Cmn%2Cms%2Cmv%2Cmvi%2Cpcm2cms%2Cpl%2Cinitcwndbps&lsig=AG3C_xAwRQIhAM2ddNaSXOsYkXQw8nZbT_DR0wW4r66AgTIAk6OHEtUYAiB9ud7a_NDtlBKjq3Ulbc4-kuYUMoJWJTcqRiCsvhZuPw%3D%3D',
+      width: null,
+      language: null,
+      language_preference: -1,
+      preference: null,
+      ext: 'webm',
+      vcodec: 'none',
+      acodec: 'opus',
+      dynamic_range: null,
+      abr: 134.327,
+      protocol: 'http_dash_segments',
+      fragments: [Array],
+      container: 'webm_dash',
+      resolution: 'audio only',
+      aspect_ratio: null,
+      http_headers: [Object],
+      audio_ext: 'webm',
+      video_ext: 'none',
+      format: '251 - audio only (medium)'
+    }
+  ],
+  format: '248 - 1920x1080 (1080p)+251 - audio only (medium)',
+  format_id: '248+251',
+  ext: 'webm',
+  protocol: 'http_dash_segments+http_dash_segments',
+  language: null,
+  format_note: '1080p+medium',
+  filesize_approx: 36536537,
+  tbr: 1061.1689999999999,
+  width: 1920,
+  height: 1080,
+  resolution: '1920x1080',
+  fps: 30,
+  dynamic_range: 'SDR',
+  vcodec: 'vp9',
+  vbr: 926.842,
+  stretched_ratio: null,
+  aspect_ratio: 1.78,
+  acodec: 'opus',
+  abr: 134.327,
+  asr: 48000,
+  audio_channels: 2,
+  epoch: 1685387804,
+  _type: 'video',
+  _version: {
+    version: '2023.03.04',
+    current_git_head: null,
+    release_git_head: '392389b7df7b818f794b231f14dc396d4875fbad',
+    repository: 'yt-dlp/yt-dlp'
+  }
+}
+
+[
+  undefined, undefined, undefined,
+  undefined, undefined, undefined,
+  undefined, undefined, undefined,
+  undefined, undefined, undefined,
+  undefined, undefined, undefined,
+  undefined, undefined, undefined,
+  undefined, undefined, undefined,
+  undefined, undefined, undefined,
+  undefined, undefined, undefined
+]
+
+
+
+.env
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+.env
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+
+
+Para subir nuestro frontend a produccion 
+  npm run build
+    se creara el directorio
+          dist
+             copiar la información en el directorio 
+                  public
+
+configuración del docker
+  crear los directorios 
+    Dockerfile
+      # Selecciona la imagen base de Node.js
+      FROM node:latest
+
+      # Establece el directorio de trabajo en /usr/src/app
+      WORKDIR /usr/src/app
+
+      # Copia los archivos de package.json y package-lock.json
+      COPY package*.json ./
+
+      # Instala las dependencias del proyecto
+      RUN npm install
+
+      # Copia los archivos del proyecto
+      COPY . .
+
+      #expone el puerto 8000
+      EXPOSE 3000
+
+
+
+      # Especifica el comando que se ejecutará cuando se inicie el contenedor
+      CMD [ "npm","run", "start" ]
+
+    .dockerignore
+      node_modules
+      npm-debug.log
+
+
+Probar que el docker funcione con los comandos
+    docker build -f ./Dockerfile -t  dockermultimedia .
+    docker run -p 3000:3000 dockermultimedia
+

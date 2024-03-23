@@ -1,0 +1,1 @@
+export default function Loading() { return <p>CARGANDO EL HOME ...</p> }

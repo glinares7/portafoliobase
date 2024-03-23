@@ -1,0 +1,43 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    font-family: Arial;
+}
+
+.ilustration{
+    display: block;
+    width: 50%;
+    min-width: 400px;
+    margin: 60px auto;
+}
+
+#star1{
+    transform: translate(16%,26%);
+    animation: moveStar 1s .75s both alternate infinite;
+}
+#star2{
+    transform: translate(37%,26%);
+    animation: moveStar 1s 1s both  alternate infinite;
+}
+#star3{
+    transform: translate(57%,26%);
+    animation: moveStar 1s 1.25s both alternate infinite;
+}
+
+
+@keyframes moveStar{
+    100%{
+        transform: unset;
+    }
+  
+    /* 0%{
+        transform: translate(0%,26%);
+    } */
+
+
+}

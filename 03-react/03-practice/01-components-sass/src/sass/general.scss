@@ -1,0 +1,13 @@
+@import "./components/header.scss";
+@import "./components/main.scss";
+@import "./components/footer.scss";
+
+@import "./pages/Capitulo5.scss";
+@import "./pages/Capitulo6.scss";
+@import "./pages/Capitulo7.scss";
+body {
+  background-color: skyblue;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}

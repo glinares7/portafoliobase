@@ -1,0 +1,260 @@
+instalaciones necesarias
+
+    google chrome
+    vsc
+    postman
+    mongo compass
+    git
+        git config --global user.name "tu-usuario"
+        git config --global user.email "tu-email"
+        git config --global -l
+
+
+    pwd -> ubicación actual
+    ls --all
+
+    filesystem
+      writeFile
+    
+    inquirer
+      https://www.npmjs.com/package/inquirer
+
+    uuid
+      https://www.npmjs.com/package/uuid
+
+    peticiones http
+      reqres
+        https://reqres.in/
+          extension
+            JSON view axios
+          
+      mapbox.com
+      mapbox.com/api/search/geocoding
+        https://fakecredit.cards/Credit-Card-Generator-With-Money/index.html
+        googleplaces geolocalizacion
+
+          dotenv
+            npm.com/package/dotenv
+
+      openweather
+          https://openweathermap.org/
+        
+      request
+        https://www.npmjs.com/package/request
+      fetch
+        https://www.npmjs.com/package/fetch
+      axios
+        https://www.npmjs.com/package/axios
+      
+
+      express
+        https://www.npmjs.com/package/express
+        https://expressjs.com/
+
+          handlebars
+            https://www.npmjs.com/package/handlebars
+              hbs
+                https://github.com/pillarjs/hbs
+      deploy
+        http-server
+           https://www.npmjs.com/package/httpserver
+        
+        cors
+          https://www.npmjs.com/package/cors
+
+      http-server en desarrollo
+        sudo npm install --global http-server
+        https://www.npmjs.com/package/http-server
+
+    programa de modelado base de datos
+      https://www.draw.io
+      https://app.diagrams.net/
+    
+    mongoDB
+      compress
+        https://www.mongodb.com/try/download/compass
+      atlas
+        https://www.mongodb.com/atlas/database
+      mongoose
+        https://mongoosejs.com/
+        https://mongoosejs.com/docs/index.html
+        queries
+        conexiones
+      encrypt
+        npm i bcryptjs
+      express-validator
+        npm i express-validator
+        JWT
+          npm i jsonwebtoken
+      
+
+
+
+****************************************************************************
+
+    extensiones
+        activity-bar
+        Material Icon Theme
+        Monokai Night Theme
+        TypeScript Importer
+        tema usado
+            anterior
+                andromeda bordered
+                monokai night theme
+        bracket-pair-colonizer2
+            anterior
+                "bracket-pair-colorizer-2.colors": [
+                    "#fafafa",
+                    "#f300ff",
+                    "#F7C244",
+                    "#F07850",
+                    "#9CDD29",
+                    "#0098FA"
+                ],
+            actual
+                "bracket-pair-colorizer-2.colors": [
+                    "#fafafa",
+                    "#9F51B6",
+                    "#F7C244",
+                    "#F07850",
+                    "#9CDD29",
+                    "#C497D4"
+                ],
+
+         
+
+
+documentacion
+  filesystem
+    https://nodejs.org/docs/latest-v16.x/api/fs.html#fswritefilefile-data-options-callback
+node
+  install nodemon
+    npm install -g nodemon
+
+    npm init
+
+    instalar nuevamente las dependencias
+      npm install
+      
+
+  yargs
+    https://yargs.js.org/docs/#api-reference-optionkey-opt
+
+    git
+      regresionar git cambios
+        git checkout -- .
+        
+
+    
+
+  dependencia de desarrollo
+      npm install paquete_node --save-dev
+      npm uninstall paquete_node
+      npm i colors@1.0.0
+      npm update
+  
+  
+
+
+
+**********************************************************************************************
+    ******************************configuración.json ***************************************
+**********************************************************************************************
+              "terminal.integrated.profiles.linux": {
+    "bash": {
+      "path": "bash",
+      "icon": "github-inverted"
+    },
+    "zsh": {
+      "path": "zsh"
+    },
+    "fish": {
+      "path": "fish"
+    },
+    "tmux": {
+      "path": "tmux",
+      "icon": "terminal-tmux"
+    },
+    "pwsh": {
+      "path": "pwsh",
+      "icon": "terminal-powershell"
+    }
+  },
+  "terminal.integrated.defaultProfile.linux": "bash",
+  "editor.wordWrap": "on",
+  "workbench.colorCustomizations": {
+    "editorCursor.foreground": "#f5b400",
+    "terminalCursor.foreground": "#f5b400"
+  },
+  "editor.renderWhitespace": "all",
+  "editor.cursorSmoothCaretAnimation": true,
+  "editor.cursorBlinking": "expand",
+
+  "workbench.iconTheme": "material-icon-theme",
+  "git.autofetch": true,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "autoprefixer.options": {
+    "browsers": [
+      "last 4 versions",
+      "> 1%",
+      "ie >= 8",
+      "edge >= 15",
+      "ie_mob >= 10",
+      "ff >= 45",
+      "chrome >= 45",
+      "safari >= 7",
+      "opera >= 23",
+      "ios >= 7",
+      "android >= 4",
+      "bb >= 10"
+    ]
+  },
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "debug.disassemblyView.showSourceCode": false,
+  "cSpell.userWords": ["Avenir"],
+  "gitlens.plusFeatures.enabled": false,
+  "bracket-pair-colorizer-2.depreciation-notice": false,
+  "kite.showWelcomeNotificationOnStartup": false,
+  "git.suggestSmartCommit": false,
+  "emmet.includeLanguages": {
+    "javascript": "javascriptreact"
+  },
+  "githubPullRequests.fileListLayout": "tree",
+  "[html]": {
+    "editor.defaultFormatter": "vscode.html-language-features"
+  },
+  "editor.bracketPairColorization.enabled": true,
+  "workbench.colorTheme": "Andromeda Bordered",
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "editor.inlineSuggest.enabled": true,
+  "npm.keybindingsChangedWarningShown": true,
+  "editor.guides.bracketPairs": true,
+  "editor.guides.bracketPairsHorizontal": true,
+  "bracket-pair-colorizer-2.colors": [
+    "#fafafa",
+    "#9F51B6",
+    "#F7C244",
+    "#F07850",
+    "#9CDD29",
+    "#C497D4"
+  ],
+  "workbench.sideBar.location": "right",
+  "editor.fontFamily": "\"Cascadia Code\",\"Fira Code\",monospace",
+  "editor.fontLigatures": true,
+  "liveServer.settings.donotVerifyTags": true,
+  "liveServer.settings.donotShowInfoMsg": true,
+  "editor.formatOnSave": true,
+  "window.zoomLevel": 1,
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true
+  },
+  "editor.minimap.enabled": false
+}
+

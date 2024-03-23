@@ -1,0 +1,79 @@
+
+    create react app
+        https://create-react-app.dev/
+
+    deacuerdo al proyecto usar template
+        https://create-react-app.dev/docs/custom-templates
+            npx create-react-app my-app --template [template-name]
+
+        
+    usando react
+        npx create-react-app my-app --template cra-template-pwa
+
+    typescript
+        npx create-react-app my-app --template cra-template-pwa-typescript
+
+        al momento de crear el react App en el src notaremos el service worker configurado
+
+    
+    para activar el service worker solo de debe cambiar en  index.js el metodo unregister() por register()
+
+
+****************************************************
+    para crear los use state usamos
+                        ->  useStateSnippets
+    para crear los prototypes usamos
+        rafcp
+****************************************************
+
+    build
+        compila el proyecto
+            github
+                creamos una carpeta ./docs para subirlo
+                
+    Modular codigo
+        crear nuevos componentes dentro de otros componentes
+        sirve para codigo que se repite muchas veces
+    handler(function)
+        -> modifica un elemento del componente de forma especifica
+    
+    helpers
+        -> modular codigo solamente de js,etc (excluir jsx)
+            se tiene que exportar el codigoi desde helpers
+            e importar donde se piensa reusar las funciones 
+            retornando valores que necesitaremos
+
+
+Extendsiones 
+    se agrego la extension en el navegador 
+        react developer Tools 
+            dentro de la extension (dellates) -> permitir en privado
+
+
+*********************************************************
+estructura del proyecto
+    parte del public/index.html 
+        luego se crea un identificador (id=root)
+
+    para renderizar nos dirigimos a 
+                                -> src/index.js
+                                (ciclo de vida del serviceWorker)
+                            
+    se crean los componentes bases
+                                -> src/app.js
+
+components
+    se crea una carpeta componentes para tener los componentes de forma espefica(jsx,css)
+                                -> components/file.jsx
+
+helpers
+    modulamos codigo que se repite dentro de 
+                                -> helpers/file.js
+                                (retornamos todos las funciones,valores que se abstraen de un componente)
+    
+************************************************************
+
+
+netlity                         angular
+    https://www.netlify.com/    react
+                                vues
